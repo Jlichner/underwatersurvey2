@@ -1,0 +1,59 @@
+from math import cos, pi, sin
+
+import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
+
+def __radians(degrees):
+    return pi / 2 - float(degrees) / 360 * 2 * pi
+
+def draw(plt, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data):
+    ((x_min, y_min), (x_max, y_max)) = input_corner_coordinates
+    curser = landmark_coordinates[input_landmark]
+    total_surveyed = input_total_surveyed
+    for data in input_data:
+        clazz = type(data).__name__
+        if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine':
+            (x0, y0) = curser
+            (x1, y1) = (x0 + data.length * cos(__radians(data.angle)), y0 + data.length * sin(__radians(data.angle)))
+            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle)
+            mid_x = (x0 + x1) / 2 + 8 * sin(__radians(data.angle))
+            mid_y = (y0 + y1) / 2 - 8 * cos(__radians(data.angle))
+            mid_x = (x0 + x1) / 2 + 8 * sin(__radians(data.angle))
+            mid_y = (y0 + y1) / 2 - 8 * cos(__radians(data.angle))
+            if (data.flip_text_side):
+                mid_x = (x0 + x1) / 2 - 8 * sin(__radians(data.angle))
+                mid_y = (y0 + y1) / 2 + 8 * cos(__radians(data.angle))                
+            if data.alt_text is None:
+                text = '{}\''.format(data.length)
+                text_rotation = (45 - data.angle) % 90 - 45
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
+                total_surveyed += data.length
+            else:
+                text = data.alt_text
+                text_rotation = (45 - data.angle) % 90 + 45
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
+            curser=(x1, y1)
+        elif clazz == 'HomeArrow':
+            (x0, y0) = curser
+            (x1, y1) = (x0 + data.distance * cos(__radians(data.angle)), y0 + data.distance * sin(__radians(data.angle)))
+            plt.plot(x1, y1, color='black', marker=(3, 0, -data.angle), markerfacecolor='white', markersize=6, zorder=3)
+        elif clazz == 'SaveLandmark':
+            landmark_coordinates[data.landmark] = curser
+        elif clazz == 'Jump':
+            (x0, y0) = curser
+            (x1, y1) = (x0 + data.length * cos(__radians(data.angle)), y0 + data.length * sin(__radians(data.angle)))
+            curser = (x1, y1)
+        elif clazz == 'Stake':
+            (x, y) = curser
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=4, zorder=3)
+        elif clazz == 'TieOff':
+            (x, y) = curser
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=4, zorder=3)
+        else:
+          print('what is class {}'.format(clazz))
+        (x, y) = curser
+        x_min = min(x, x_min)
+        x_max = max(x, x_max)
+        y_min = min(y, y_min)
+        y_max = max(y, y_max)
+    return (total_surveyed, ((x_min, y_min), (x_max, y_max)), landmark_coordinates)
