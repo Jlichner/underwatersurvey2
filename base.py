@@ -1,12 +1,13 @@
 from math import cos, pi, sin
 
 import matplotlib.pyplot as plt
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.collections import LineCollection
 
 def __radians(degrees):
     return pi / 2 - float(degrees) / 360 * 2 * pi
 
-def draw(plt, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data):
+def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data):
     ((x_min, y_min), (x_max, y_max)) = input_corner_coordinates
     curser = landmark_coordinates[input_landmark]
     total_surveyed = input_total_surveyed
@@ -36,21 +37,28 @@ def draw(plt, input_total_surveyed, input_corner_coordinates, landmark_coordinat
         elif clazz == 'HomeArrow':
             (x0, y0) = curser
             (x1, y1) = (x0 + data.distance * cos(__radians(data.angle)), y0 + data.distance * sin(__radians(data.angle)))
-            plt.plot(x1, y1, color='black', marker=(3, 0, -data.angle), markerfacecolor='white', markersize=6, zorder=3)
+            plt.plot(x1, y1, color='black', marker=(3, 0, -data.angle), markerfacecolor='white', markersize=7, zorder=3)
         elif clazz == 'SaveLandmark':
             landmark_coordinates[data.landmark] = curser
+            if data.path:
+                plt.plot(x, y, color='white', marker='o', markersize=16, zorder=3)
+                (x, y) = curser
+                im = OffsetImage(plt.imread(data.path), zoom=50/ax.figure.dpi)
+                im.image.axes = ax
+                im_ab = AnnotationBbox(im, landmark_coordinates[data.landmark], frameon=False)
+                ax.add_artist(im_ab)
         elif clazz == 'Jump':
             (x0, y0) = curser
             (x1, y1) = (x0 + data.length * cos(__radians(data.angle)), y0 + data.length * sin(__radians(data.angle)))
             curser = (x1, y1)
         elif clazz == 'Stake':
             (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=4, zorder=3)
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=5, zorder=data.zorder)
         elif clazz == 'TieOff':
             (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=4, zorder=3)
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=5, zorder=data.zorder)
         else:
-          print('what is class {}'.format(clazz))
+            raise Exception('{} is not a recognized data class'.format('clazz'))
         (x, y) = curser
         x_min = min(x, x_min)
         x_max = max(x, x_max)

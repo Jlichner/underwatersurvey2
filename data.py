@@ -49,11 +49,13 @@ class Jump:
 @dataclass(frozen=True)
 class SaveLandmark:
     landmark: Landmark = None
+    path: str = None
 
 @dataclass(frozen=True)
 class Stake:
     color: str = 'brown' 
     marker: str = 's'
+    zorder: int = 3
 
 @dataclass(frozen=True)
 class RemovedStake:
@@ -64,10 +66,11 @@ class RemovedStake:
 class TieOff:
     color: str = 'blue' 
     marker: str = 'h'
+    zorder: int = 3
 
 @dataclass(frozen=True)
 class HomeArrow:
-    distance: int = 10
+    distance: int = 9
     angle: int = 0.0
 
 PokerRun = (
@@ -75,7 +78,7 @@ PokerRun = (
     HomeArrow(angle=180),
     Stake(),
     SurveyedLine(length=50, angle=300),
-    SaveLandmark(Landmark.SKELETON),
+    SaveLandmark(Landmark.SKELETON, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'),
     SurveyedLine(length=87, angle=60),
     Stake(),
     SurveyedLine(length=72, angle=50),
@@ -83,14 +86,14 @@ PokerRun = (
     SurveyedLine(length=35, angle=60, color='red'),
     TieOff(),
     SurveyedLine(length=15, angle=60),
-    SaveLandmark(landmark=Landmark.CAR),
+    SaveLandmark(landmark=Landmark.CAR, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
     HomeArrow(angle=240),
     Jump(length=0, angle=0),
     SurveyedLine(length=95, angle=300),
-    SaveLandmark(landmark=Landmark.UMBRELLA),
+    SaveLandmark(landmark=Landmark.UMBRELLA, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png'),
     Jump(length=0, angle=0),
     SurveyedLine(length=150, angle=240),
-    SaveLandmark(landmark=Landmark.ANCHOR),
+    SaveLandmark(landmark=Landmark.ANCHOR, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png'),
     Jump(length=0, angle=0),
     HomeArrow(angle=175),
     SurveyedLine(length=63, angle=175),
@@ -113,10 +116,10 @@ CarToKibbetts = (
     UnsurveyedLine(length=270, angle=50),
     Stake(),
     SurveyedLine(length=17, angle=340),
-    SaveLandmark(landmark=Landmark.WAGON_WHEELS),
+    SaveLandmark(landmark=Landmark.WAGON_WHEELS, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
     Jump(length=17, angle=160),
     UnsurveyedLine(length=396, angle=50),
-    SaveLandmark(landmark=Landmark.LISAS_GIFT),
+    SaveLandmark(landmark=Landmark.LISAS_GIFT, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
     UnsurveyedLine(length=50, angle=320, alt_text=''),
     Jump(length=50, angle=140),
     UnsurveyedLine(length=268, angle=70),
@@ -178,7 +181,7 @@ UmbrellaToRockIsland = (
     Stake(),
     SurveyedLine(length=22, angle=310, flip_text_side=True),
     SurveyedLine(length=15, angle=40),
-    SaveLandmark(Landmark.ROWBOAT),
+    SaveLandmark(Landmark.ROWBOAT, path='icons/rowboat.png'),
     Jump(length=15, angle=220),
     SurveyedLine(length=15, angle=315, flip_text_side=True),
     Stake(),
@@ -198,8 +201,8 @@ UmbrellaToRockIsland = (
     )
 
 UmbrellaToOxygenTanks = (
-    SurveyedLine(length=3, angle=340),
-    Stake(),
+    SurveyedLine(length=3, angle=340, alt_text=''),
+    Stake(zorder=2),
     SurveyedLine(length=49, angle=340),
     Stake(),
     SurveyedLine(length=49, angle=335),
@@ -225,7 +228,7 @@ UmbrellaToOxygenTanks = (
     SurveyedLine(length=48, angle=240),
     Stake(),
     SurveyedLine(length=24, angle=280),
-    SaveLandmark(Landmark.OXYGEN_TANKS),
+    SaveLandmark(Landmark.OXYGEN_TANKS, path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
 )
 
 RockIslandTNorthwest = (
@@ -243,6 +246,17 @@ RockIslandTNorthwest = (
     Stake(),
     SurveyedLine(length=52, angle=220),
     Stake(),
+    SurveyedLine(length=52, angle=235),
+    Stake(),
+    SurveyedLine(length=48, angle=220),
+    Stake(),
+    SurveyedLine(length=48, angle=250),
+    UnsurveyedLine(length=50, angle=135, alt_text='Broken'),
+    Jump(length=50, angle=315),
+    TieOff(),
+    SurveyedLine(length=72, angle=220),
+    TieOff(),
+    UnsurveyedLine(length=25, angle=240, alt_text=''),
     )
 
 RockIslandTSoutheast = (
