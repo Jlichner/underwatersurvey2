@@ -43,7 +43,7 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
             if data.path:
                 plt.plot(x, y, color='white', marker='o', markersize=16, zorder=3)
                 (x, y) = curser
-                im = OffsetImage(plt.imread(data.path), zoom=50/ax.figure.dpi)
+                im = OffsetImage(plt.imread(data.path), zoom=55/ax.figure.dpi)
                 im.image.axes = ax
                 im_ab = AnnotationBbox(im, landmark_coordinates[data.landmark], frameon=False)
                 ax.add_artist(im_ab)

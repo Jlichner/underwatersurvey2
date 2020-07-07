@@ -58,6 +58,13 @@ ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 
 class ImageHandler(HandlerBase):
+
+    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(0, 0), image_offset=(0, 0)):
+        super(ImageHandler, self).__init__(xpad, ypad, update_func)
+        self.image_data = plt.imread(image_path)
+        self.image_stretch = image_stretch
+        self.image_offset = image_offset
+
     def create_artists(self, legend, orig_handle,
                        xdescent, ydescent, width, height, fontsize,
                        trans):
@@ -80,31 +87,18 @@ class ImageHandler(HandlerBase):
 
         return [image]
 
-    def set_image(self, image_path, image_stretch=(0, 0), image_offset=(0, 0)):
-        self.image_data = plt.imread(image_path)
-        self.image_stretch = image_stretch
-        self.image_offset = image_offset
-
-skeleton_handler = ImageHandler()
-skeleton_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-car_handler = ImageHandler()
-car_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-umbrella_handler = ImageHandler()
-umbrella_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-anchor_handler = ImageHandler()
-anchor_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-wheel_handler = ImageHandler()
-wheel_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-gift_handler = ImageHandler()
-gift_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-rowboat_handler = ImageHandler()
-rowboat_handler.set_image('icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12)),
-oxygen_handler = ImageHandler()
-oxygen_handler.set_image('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
+oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 
 ax.legend(
-	handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, REMOVED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN],
-	handler_map={
+    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, REMOVED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN],
+    handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,
         UMBRELLA: umbrella_handler,
@@ -113,9 +107,9 @@ ax.legend(
         GIFT: gift_handler,
         ROWBOAT: rowboat_handler,
         OXYGEN: oxygen_handler,},
-	fontsize=10,
-	labelspacing=1.5,
-	loc='lower right')
+    fontsize=10,
+    labelspacing=1.2,
+    loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed))
 
