@@ -32,9 +32,9 @@ landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
 plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
-plt.title('Copyright 2020 NEUE. All Rights Reserved\n', fontsize=30)
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
+ax.text(x_max, y_min - 50, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
 
 #####
 #
