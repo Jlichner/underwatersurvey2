@@ -17,6 +17,7 @@ class Landmark(Enum):
     OXYGEN_TANKS = 12
     PLATFORM_SW = 13
     MY_BOAT = 14 # For the README
+    FOUR_WAY = 15
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,7 @@ class AbstractLine:
     flip_text_side: bool = False
     alt_text: str = None
     text_rotation: int = None
+    include_in_total_surveyed: bool = True
 
 @dataclass(frozen=True)
 class SurveyedLine(AbstractLine):
@@ -39,6 +41,7 @@ class SurveyedLine(AbstractLine):
 class UnsurveyedLine(AbstractLine):
     color: str = 'black'
     linestyle: str = 'dotted'
+    include_in_total_surveyed = False
 
 @dataclass(frozen=True)
 class RemovedLine(AbstractLine):
@@ -119,16 +122,16 @@ PokerRun = (
 )
 
 CarToKibbetts = (
-    UnsurveyedLine(length_ft=270, angle=50),
+    UnsurveyedLine(length_ft=270, angle=50, include_in_total_surveyed=True),
     Stake(),
     SurveyedLine(length_ft=17, angle=340),
     SaveLandmark(landmark=Landmark.WAGON_WHEELS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
     Jump(length_ft=17, angle=160),
-    UnsurveyedLine(length_ft=396, angle=50),
+    UnsurveyedLine(length_ft=396, angle=50, include_in_total_surveyed=True),
     SaveLandmark(landmark=Landmark.LISAS_GIFT, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
-    UnsurveyedLine(length_ft=50, angle=320, alt_text=''),
+    UnsurveyedLine(length_ft=50, angle=320, alt_text='', include_in_total_surveyed=True),
     Jump(length_ft=50, angle=140),
-    UnsurveyedLine(length_ft=268, angle=70),
+    UnsurveyedLine(length_ft=268, angle=70, include_in_total_surveyed=True),
     SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/rowboat.png'),
 )
 
@@ -291,9 +294,8 @@ PlatformToIslander = (
     SurveyedLine(length_ft=9, angle=250, alt_text=''),
     SurveyedLine(length_ft=63, angle=315),
     TieOff(),
-    SurveyedLine(length_ft=42, angle=315),
-    UnsurveyedLine(length_ft=50, angle=330, alt_text=''),
-    Jump(length_ft=50, angle=150),
+    SurveyedLine(length_ft=42, angle=315, flip_text_side=True),
+    SaveLandmark(Landmark.FOUR_WAY),
     UnsurveyedLine(length_ft=50, angle=300, alt_text=''), # new
     Jump(length_ft=50, angle=120),
     SurveyedLine(length_ft=31, angle=260, flip_text_side=True),
@@ -309,6 +311,22 @@ PlatformToIslander = (
     SurveyedLine(length_ft=83, angle=250),
     TieOff(),
     UnsurveyedLine(length_ft=50, angle=250, alt_text=''),
+    )
+
+FourWayToRockIsland = (
+    SurveyedLine(length_ft=30, angle=330),
+    TieOff(),
+    SurveyedLine(length_ft=29, angle=340),
+    Stake(),
+    UnsurveyedLine(length_ft=100, angle=300, alt_text='Josh\'s deep line', flip_text_side=True),
+    Jump(length_ft=100, angle=120),
+    SurveyedLine(length_ft=35, angle=320),
+    TieOff(),
+    SurveyedLine(length_ft=21, angle=300),
+    SurveyedLine(length_ft=8, angle=345, alt_text=''),
+    SurveyedLine(length_ft=28, angle=340),
+    Stake(),
+    UnsurveyedLine(length_ft=50, angle=10, alt_text='')
     )
 
 ExampleData = (

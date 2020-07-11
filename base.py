@@ -31,13 +31,14 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
                     text = '{} {}\"'.format(text, data.length_in)
                 text_rotation = (45 - data.angle) % 90 - 45
                 plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
-                total_surveyed += data.length_ft
             else:
                 text = data.alt_text
                 text_rotation = data.text_rotation
                 if text_rotation is None:
-                   text_rotation = 90 - data.angle
+                   text_rotation = (180 - data.angle) % 180 - 90
                 plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
+            if data.include_in_total_surveyed:
+                total_surveyed += length
             curser=(x1, y1)
         elif clazz == 'HomeArrow':
             (x0, y0) = curser

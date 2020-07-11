@@ -1,5 +1,5 @@
 from base import draw
-from data import Landmark, PokerRun, CarToKibbetts, PlatformToIslander, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast
+from data import Landmark, PokerRun, CarToKibbetts, PlatformToIslander, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast, FourWayToRockIsland
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -28,6 +28,7 @@ landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToIslander)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
