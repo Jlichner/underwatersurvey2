@@ -15,6 +15,7 @@ class Landmark(Enum):
     KIBBETTS = 10
     ROWBOAT = 11
     OXYGEN_TANKS = 12
+    PLATFORM_SW = 13
 
 
 @dataclass(frozen=True)
@@ -50,6 +51,7 @@ class Jump:
 class SaveLandmark:
     landmark: Landmark = None
     path: str = None
+    zoom: int = 52
 
 @dataclass(frozen=True)
 class Stake:
@@ -99,17 +101,16 @@ PokerRun = (
     SurveyedLine(length=63, angle=175),
     Jump(length=0, angle=0), # Lower platform
     SurveyedLine(length=66, angle=290),
-    Stake(),
-    SurveyedLine(length=15, angle=240),
-    SaveLandmark(landmark=Landmark.CONROY),
+    TieOff(),
+    SurveyedLine(length=15, angle=240, alt_text=''),
+    SaveLandmark(landmark=Landmark.CONROY, path='icons/conroy.png', zoom=12),
     HomeArrow(angle=150),
     Jump(length=0, angle=0),
-    SurveyedLine(length=49, angle=150),
-    Stake(),
-    UnsurveyedLine(length=50, angle=210, alt_text='To Islander'),
-    Jump(length=50, angle=30),
+    SurveyedLine(length=49, angle=160),
+    TieOff(),
+    SaveLandmark(landmark=Landmark.PLATFORM_SW),
     HomeArrow(angle=90),
-    SurveyedLine(length=85, angle=90),
+    SurveyedLine(length=84, angle=85),
 )
 
 CarToKibbetts = (
@@ -215,9 +216,13 @@ UmbrellaToOxygenTanks = (
     Stake(),
     SurveyedLine(length=40, angle=280),
     TieOff(), # ROCK1
-    SurveyedLine(length=34, angle=215),
+    # SurveyedLine(length=34, angle=215),
+    # TieOff(), # ROCK2
+    # SurveyedLine(length=32, angle=220),
+    # TieOff(), # ROCK3
+    SurveyedLine(length=34, angle=35),
     TieOff(), # ROCK2
-    SurveyedLine(length=32, angle=220),
+    SurveyedLine(length=32, angle=40),
     TieOff(), # ROCK3
     SurveyedLine(length=46, angle=280),
     Stake(),
@@ -262,3 +267,46 @@ RockIslandTNorthwest = (
 RockIslandTSoutheast = (
     UnsurveyedLine(length=50, angle=45, alt_text=''),
     )
+
+PlatformToIslander = (
+    SurveyedLine(length=78, angle=215),
+    TieOff(),
+    SurveyedLine(length=15, angle=260),
+    SurveyedLine(length=57, angle=230),
+    TieOff(),
+    SurveyedLine(length=63, angle=250),
+    TieOff(),
+    SurveyedLine(length=10, angle=250, alt_text=''),
+    SurveyedLine(length=73, angle=240, alt_text='83\''),
+    TieOff(),
+    SurveyedLine(length=36, angle=222.5),
+    TieOff(),
+    UnsurveyedLine(length=50, angle=185),
+    Jump(length=50, angle=5),
+    SurveyedLine(length=69, angle=270),
+    TieOff(),
+    SurveyedLine(length=38, angle=245),
+    TieOff(),
+    SurveyedLine(length=9, angle=250, alt_text=''),
+    SurveyedLine(length=63, angle=315),
+    TieOff(),
+    SurveyedLine(length=42, angle=315),
+    UnsurveyedLine(length=50, angle=330, alt_text=''),
+    Jump(length=50, angle=150),
+    UnsurveyedLine(length=50, angle=300, alt_text=''), # new
+    Jump(length=50, angle=120),
+    SurveyedLine(length=31, angle=260),
+    # WICKER CHAIR TO RIGHT
+    SurveyedLine(length=25, angle=240),
+    Stake(),
+    SurveyedLine(length=24, angle=210),
+    TieOff(),
+    SurveyedLine(length=20, angle=280),
+    TieOff(),
+    SurveyedLine(length=58, angle=210),
+    TieOff(),
+    SurveyedLine(length=83, angle=250),
+    TieOff(),
+    UnsurveyedLine(length=50, angle=250),
+    )
+

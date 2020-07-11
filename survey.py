@@ -1,5 +1,5 @@
 from base import draw
-from data import Landmark, PokerRun, CarToKibbetts, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast
+from data import Landmark, PokerRun, CarToKibbetts, PlatformToIslander, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -27,10 +27,12 @@ landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToIslander)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
-plt.title('Copyright 2020 NEUE. All Rights Reserved.', fontsize=24)
+plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
+plt.title('Copyright 2020 NEUE. All Rights Reserved\n', fontsize=30)
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 
@@ -56,6 +58,7 @@ WHEEL = Line2D([0], [0], label='Wagon wheels')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
+CONROY = Line2D([0], [0], label='Conroy')
 
 class ImageHandler(HandlerBase):
 
@@ -93,11 +96,12 @@ umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
+conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 
 ax.legend(
-    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, REMOVED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN],
+    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, REMOVED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
     handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,
@@ -106,7 +110,9 @@ ax.legend(
         WHEEL: wheel_handler,
         GIFT: gift_handler,
         ROWBOAT: rowboat_handler,
-        OXYGEN: oxygen_handler,},
+        OXYGEN: oxygen_handler,
+        CONROY: conroy_handler,
+        },
     fontsize=10,
     labelspacing=1.2,
     loc='lower right')
