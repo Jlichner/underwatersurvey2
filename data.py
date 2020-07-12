@@ -2,22 +2,22 @@ from dataclasses import dataclass
 from enum import Enum
 
 class Landmark(Enum):
-    MOORING_BLOCK = 0
-    SKELETON = 1
-    CAR = 2
-    UMBRELLA = 3
-    ANCHOR = 4
-    CONROY = 5
-    ISLANDER_T = 6
-    ROCK_ISLAND_T = 7
-    WAGON_WHEELS = 8
-    LISAS_GIFT = 9
-    KIBBETTS = 10
-    ROWBOAT = 11
-    OXYGEN_TANKS = 12
-    PLATFORM_SW = 13
-    MY_BOAT = 14 # For the README
-    FOUR_WAY = 15
+    ANCHOR = 0
+    CAR = 1
+    CONROY = 2
+    FOUR_WAY = 3
+    ISLANDER_T = 4
+    KIBBETTS = 5
+    LISAS_GIFT = 6
+    MOORING_BLOCK = 7
+    MY_BOAT = 8 # For the README
+    OXYGEN_TANKS = 9
+    PLATFORM_SW = 10
+    ROCK_ISLAND_T = 11
+    ROWBOAT = 12
+    SKELETON = 13
+    UMBRELLA = 14
+    WAGON_WHEELS = 15
 
 
 @dataclass(frozen=True)
@@ -281,7 +281,8 @@ PlatformToIslander = (
     SurveyedLine(length_ft=63, angle=250),
     TieOff(),
     SurveyedLine(length_ft=10, angle=250, alt_text=''),
-    SurveyedLine(length_ft=73, angle=240, alt_text='83\''),
+    # SurveyedLine(length_ft=73, angle=240, alt_text='83\''),
+    SurveyedLine(length_ft=73, angle=240),
     TieOff(),
     SurveyedLine(length_ft=36, angle=222.5, flip_text_side=True),
     TieOff(),

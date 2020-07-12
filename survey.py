@@ -1,14 +1,15 @@
-from base import draw
+from base import draw, ImageHandler
 from data import Landmark, PokerRun, CarToKibbetts, PlatformToIslander, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast, FourWayToRockIsland
 
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch
-from matplotlib.lines import Line2D
-from matplotlib.legend_handler import HandlerBase
-from matplotlib.image import BboxImage
-from matplotlib.transforms import Bbox, TransformedBbox
 from matplotlib._png import read_png
+from matplotlib.lines import Line2D
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.patches import Patch
+from matplotlib.transforms import Bbox
+
+DRAW_DISTANCE = False
 
 matplotlib.rcParams['figure.dpi'] = 300
 
@@ -21,14 +22,14 @@ corner_coordinates = ((0, 0), (0, 0))
 landmark_coordinates = dict()
 landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.MOORING_BLOCK, PokerRun)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.CAR, CarToKibbetts)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToIslander)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.MOORING_BLOCK, PokerRun)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.CAR, CarToKibbetts)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToIslander)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
@@ -36,6 +37,18 @@ plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 ax.text(x_max, y_min - 50, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
+
+#####
+#
+# Add compass rose
+#
+#####
+
+im = OffsetImage(plt.imread('icons/compass.png'), zoom=35/ax.figure.dpi)
+im.image.axes = ax
+im_ab = AnnotationBbox(im, ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max)), frameon=False)
+ax.add_artist(im_ab)
+
 
 #####
 #
@@ -47,8 +60,8 @@ HOME_ARROW = Line2D([0], [0], label='Home Arrow', color='black', linewidth=0, ma
 # PLATFORM = Patch(label='Platform', facecolor='darkgoldenrod')
 TIE_OFF = Line2D([0], [0], label='Tie Off', color='blue', linewidth=0, marker='h', markersize=5)
 STAKE = Line2D([0], [0], label='Stake', color='brown', linewidth=0, marker='s', markersize=5)
-SURVEYED_LINE = Line2D([0], [0], label='Surveyed Line', color='black', linestyle='solid')
-UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed Line', color='black', linestyle='dotted')
+SURVEYED_LINE = Line2D([0], [0], label='Surveyed Line', color='black', linestyle='solid', linewidth=2)
+UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed Line', color='black', linestyle='dotted', linewidth=2)
 REMOVED_LINE = Line2D([0], [0], label='Removed Line', color='lightgrey', linestyle='solid')
 
 SKELETON = Line2D([0], [0], label='Skeleton')
@@ -61,36 +74,6 @@ ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
 
-class ImageHandler(HandlerBase):
-
-    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(0, 0), image_offset=(0, 0)):
-        super(ImageHandler, self).__init__(xpad, ypad, update_func)
-        self.image_data = plt.imread(image_path)
-        self.image_stretch = image_stretch
-        self.image_offset = image_offset
-
-    def create_artists(self, legend, orig_handle,
-                       xdescent, ydescent, width, height, fontsize,
-                       trans):
-
-        # enlarge the image by these margins
-        sx, sy = self.image_stretch
-        ox, oy = self.image_offset
-
-        # create a bounding box to house the image
-        bb = Bbox.from_bounds(xdescent - sx + ox,
-                              ydescent - sy + oy,
-                              width + sx,
-                              height + sy)
-
-        tbb = TransformedBbox(bb, trans)
-        image = BboxImage(tbb)
-        image.set_data(self.image_data)
-
-        self.update_prop(image, orig_handle, legend)
-
-        return [image]
-
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
@@ -102,7 +85,7 @@ rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 
 ax.legend(
-    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, REMOVED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
+    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
     handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,

@@ -1,13 +1,46 @@
 from math import cos, pi, sin
 
 import matplotlib.pyplot as plt
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.collections import LineCollection
+from matplotlib.image import BboxImage
+from matplotlib.legend_handler import HandlerBase
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.transforms import Bbox, TransformedBbox
+
+class ImageHandler(HandlerBase):
+
+    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(0, 0), image_offset=(0, 0)):
+        super(ImageHandler, self).__init__(xpad, ypad, update_func)
+        self.image_data = plt.imread(image_path)
+        self.image_stretch = image_stretch
+        self.image_offset = image_offset
+
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize,
+                       trans):
+
+        # enlarge the image by these margins
+        sx, sy = self.image_stretch
+        ox, oy = self.image_offset
+
+        # create a bounding box to house the image
+        bb = Bbox.from_bounds(xdescent - sx + ox,
+                              ydescent - sy + oy,
+                              width + sx,
+                              height + sy)
+
+        tbb = TransformedBbox(bb, trans)
+        image = BboxImage(tbb)
+        image.set_data(self.image_data)
+
+        self.update_prop(image, orig_handle, legend)
+
+        return [image]
 
 def __radians(degrees):
     return pi / 2 - float(degrees) / 360 * 2 * pi
 
-def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data):
+def draw(ax, draw_distance, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data):
     ((x_min, y_min), (x_max, y_max)) = input_corner_coordinates
     curser = landmark_coordinates[input_landmark]
     total_surveyed = input_total_surveyed
@@ -17,7 +50,7 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
             (x0, y0) = curser
             length = data.length_ft + data.length_in / 12
             (x1, y1) = (x0 + length * cos(__radians(data.angle)), y0 + length * sin(__radians(data.angle)))
-            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle)
+            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=2)
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(data.angle))
             mid_y = (y0 + y1) / 2 - 8 * cos(__radians(data.angle))
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(data.angle))
@@ -25,7 +58,7 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
             if (data.flip_text_side):
                 mid_x = (x0 + x1) / 2 - 8 * sin(__radians(data.angle))
                 mid_y = (y0 + y1) / 2 + 8 * cos(__radians(data.angle))                
-            if data.alt_text is None:
+            if data.alt_text is None and draw_distance:
                 text = '{}\''.format(data.length_ft)
                 if data.length_in:
                     text = '{} {}\"'.format(text, data.length_in)
