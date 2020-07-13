@@ -73,10 +73,10 @@ def draw(ax, draw_distance, input_total_surveyed, input_corner_coordinates, land
             if data.include_in_total_surveyed:
                 total_surveyed += length
             curser=(x1, y1)
-        elif clazz == 'HomeArrow':
+        elif clazz == 'Arrow':
             (x0, y0) = curser
             (x1, y1) = (x0 + data.distance * cos(__radians(data.angle)), y0 + data.distance * sin(__radians(data.angle)))
-            plt.plot(x1, y1, color='black', marker=(3, 0, -data.angle), markerfacecolor='white', markersize=7, zorder=3)
+            plt.plot(x1, y1, color='black', marker=(3, 0, -data.angle), markerfacecolor=data.color, markersize=7, zorder=3)
         elif clazz == 'SaveLandmark':
             landmark_coordinates[data.landmark] = curser
             if data.icon_path:
@@ -94,6 +94,8 @@ def draw(ax, draw_distance, input_total_surveyed, input_corner_coordinates, land
         elif clazz == 'Stake':
             (x, y) = curser
             plt.plot(x, y, color=data.color, marker=data.marker, markersize=5, zorder=data.zorder)
+            if data.text is not None:
+                plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
         elif clazz == 'TieOff':
             (x, y) = curser
             plt.plot(x, y, color=data.color, marker=data.marker, markersize=6, zorder=data.zorder)

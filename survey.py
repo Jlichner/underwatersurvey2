@@ -34,9 +34,9 @@ landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
 plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
-plt.xlim(x_min, x_max)
-plt.ylim(y_min, y_max)
-ax.text(x_max, y_min - 50, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
+plt.xlim(x_min - 50, x_max + 50)
+plt.ylim(y_min - 50, y_max + 50)
+ax.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
 
 #####
 #
@@ -56,13 +56,14 @@ ax.add_artist(im_ab)
 #
 #####
 
-HOME_ARROW = Line2D([0], [0], label='Home Arrow', color='black', linewidth=0, marker='^', markersize=7, markerfacecolor='white')
+ARROW = Line2D([0], [0], label='Arrow', color='black', linewidth=0, marker='^', markersize=7, markerfacecolor='white')
 # PLATFORM = Patch(label='Platform', facecolor='darkgoldenrod')
 TIE_OFF = Line2D([0], [0], label='Tie Off', color='blue', linewidth=0, marker='h', markersize=5)
 STAKE = Line2D([0], [0], label='Stake', color='brown', linewidth=0, marker='s', markersize=5)
 SURVEYED_LINE = Line2D([0], [0], label='Surveyed Line', color='black', linestyle='solid', linewidth=2)
 UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed Line', color='black', linestyle='dotted', linewidth=2)
 REMOVED_LINE = Line2D([0], [0], label='Removed Line', color='lightgrey', linestyle='solid')
+MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='red', linestyle='solid')
 
 SKELETON = Line2D([0], [0], label='Skeleton')
 CAR = Line2D([0], [0], label='Car')
@@ -85,7 +86,7 @@ rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 
 ax.legend(
-    handles=[STAKE, TIE_OFF, HOME_ARROW, SURVEYED_LINE, UNSURVEYED_LINE, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
+    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
     handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,

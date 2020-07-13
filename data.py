@@ -65,6 +65,8 @@ class Stake:
     color: str = 'brown' 
     marker: str = 's'
     zorder: int = 3
+    text: str = None
+    text_rotation: int = 0
 
 @dataclass(frozen=True)
 class RemovedStake:
@@ -78,14 +80,15 @@ class TieOff:
     zorder: int = 3
 
 @dataclass(frozen=True)
-class HomeArrow:
-    distance: int = 9
+class Arrow:
+    distance: int = 9 # default for home arrows
     angle: int = 0.0
+    color: str = 'white'
 
 PokerRun = (
     UnsurveyedLine(length_ft=25, angle=0, alt_text='To shore', text_rotation=270),
-    HomeArrow(angle=180),
-    HomeArrow(distance=18, angle=180),
+    Arrow(angle=180),
+    Arrow(distance=18, angle=180),
     Stake(),
     SurveyedLine(length_ft=50, angle=300),
     SaveLandmark(Landmark.SKELETON, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'),
@@ -97,7 +100,7 @@ PokerRun = (
     TieOff(),
     SurveyedLine(length_ft=15, angle=60),
     SaveLandmark(landmark=Landmark.CAR, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
-    HomeArrow(angle=240),
+    Arrow(angle=240),
     Jump(length_ft=0, angle=0),
     SurveyedLine(length_ft=95, angle=300),
     SaveLandmark(landmark=Landmark.UMBRELLA, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png'),
@@ -105,19 +108,19 @@ PokerRun = (
     SurveyedLine(length_ft=150, angle=240),
     SaveLandmark(landmark=Landmark.ANCHOR, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png'),
     Jump(length_ft=0, angle=0),
-    HomeArrow(angle=175),
+    Arrow(angle=175),
     SurveyedLine(length_ft=63, angle=175),
     Jump(length_ft=0, angle=0), # Lower platform
     SurveyedLine(length_ft=66, angle=290),
     TieOff(),
     SurveyedLine(length_ft=15, angle=240, alt_text=''),
     SaveLandmark(landmark=Landmark.CONROY, icon_path='icons/conroy.png', zoom=12),
-    HomeArrow(angle=150),
+    Arrow(angle=150),
     Jump(length_ft=0, angle=0),
     SurveyedLine(length_ft=49, angle=160),
     TieOff(),
     SaveLandmark(landmark=Landmark.PLATFORM_SW),
-    HomeArrow(angle=90),
+    Arrow(angle=90),
     SurveyedLine(length_ft=84, angle=85),
 )
 
@@ -286,8 +289,8 @@ PlatformToIslander = (
     TieOff(),
     SurveyedLine(length_ft=36, angle=222.5, flip_text_side=True),
     TieOff(),
-    UnsurveyedLine(length_ft=50, angle=5, alt_text=''),
-    Jump(length_ft=50, angle=185),
+    UnsurveyedLine(length_ft=50, angle=185, alt_text=''),
+    Jump(length_ft=50, angle=5),
     SurveyedLine(length_ft=69, angle=270),
     TieOff(),
     SurveyedLine(length_ft=38, angle=245),
@@ -297,7 +300,7 @@ PlatformToIslander = (
     TieOff(),
     SurveyedLine(length_ft=42, angle=315, flip_text_side=True),
     SaveLandmark(Landmark.FOUR_WAY),
-    UnsurveyedLine(length_ft=50, angle=300, alt_text=''), # new
+    UnsurveyedLine(length_ft=50, angle=300),
     Jump(length_ft=50, angle=120),
     SurveyedLine(length_ft=31, angle=260, flip_text_side=True),
     # WICKER CHAIR TO RIGHT
@@ -311,7 +314,27 @@ PlatformToIslander = (
     TieOff(),
     SurveyedLine(length_ft=83, angle=250),
     TieOff(),
-    UnsurveyedLine(length_ft=50, angle=250, alt_text=''),
+    SurveyedLine(length_ft=20, angle=230),
+    TieOff(),
+    Arrow(angle=50, distance=5, color='red'),
+    UnsurveyedLine(length_ft=50, angle=310),
+    Jump(length_ft=50, angle=130),
+    SurveyedLine(length_ft=15, length_in=6, angle=210),
+    TieOff(),
+    SurveyedLine(length_ft=35, length_in=6, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=23, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=24, angle=210),
+    TieOff(),
+    SurveyedLine(length_ft=16, angle=215),
+    TieOff(),
+    SurveyedLine(length_ft=36, angle=250),
+    TieOff(),
+    SurveyedLine(length_ft=11, angle=235),
+    TieOff(),
+    SurveyedLine(length_ft=53, angle=240, color='red'),
+    TieOff(),
     )
 
 FourWayToRockIsland = (
@@ -319,7 +342,7 @@ FourWayToRockIsland = (
     TieOff(),
     SurveyedLine(length_ft=29, angle=340),
     Stake(),
-    UnsurveyedLine(length_ft=100, angle=300, alt_text='Josh\'s deep line', flip_text_side=True),
+    UnsurveyedLine(length_ft=100, angle=300, alt_text='\n\nJosh\'s\ndeep line', flip_text_side=True),
     Jump(length_ft=100, angle=120),
     SurveyedLine(length_ft=35, angle=320),
     TieOff(),
@@ -327,7 +350,11 @@ FourWayToRockIsland = (
     SurveyedLine(length_ft=8, angle=345, alt_text=''),
     SurveyedLine(length_ft=28, angle=340),
     Stake(),
-    UnsurveyedLine(length_ft=50, angle=10, alt_text='')
+    SurveyedLine(length_ft=30, angle=300),
+    Stake(text='Nate\'s\nstake\n\n\n', text_rotation='70'),
+    SurveyedLine(length_ft=109, angle=60),
+    Stake(),
+    UnsurveyedLine(length_ft=50, angle=60),
     )
 
 ExampleData = (
