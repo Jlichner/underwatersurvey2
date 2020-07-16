@@ -93,7 +93,7 @@ def draw(ax, draw_distance, input_total_surveyed, input_corner_coordinates, land
             curser = (x1, y1)
         elif clazz == 'Stake':
             (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=5, zorder=data.zorder)
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=data.markersize, zorder=data.zorder)
             if data.text is not None:
                 plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
         elif clazz == 'TieOff':

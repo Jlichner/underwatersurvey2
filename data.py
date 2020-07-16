@@ -18,6 +18,7 @@ class Landmark(Enum):
     SKELETON = 13
     UMBRELLA = 14
     WAGON_WHEELS = 15
+    NATES_TIEOFF = 16
 
 
 @dataclass(frozen=True)
@@ -64,6 +65,7 @@ class SaveLandmark:
 class Stake:
     color: str = 'brown' 
     marker: str = 's'
+    markersize: int = 5
     zorder: int = 3
     text: str = None
     text_rotation: int = 0
@@ -81,7 +83,7 @@ class TieOff:
 
 @dataclass(frozen=True)
 class Arrow:
-    distance: int = 9 # default for home arrows
+    distance: int = 10 # default for home arrows
     angle: int = 0.0
     color: str = 'white'
 
@@ -338,6 +340,7 @@ PlatformToIslander = (
     )
 
 FourWayToRockIsland = (
+    Arrow(angle=135, distance=5),
     SurveyedLine(length_ft=30, angle=330),
     TieOff(),
     SurveyedLine(length_ft=29, angle=340),
@@ -351,7 +354,7 @@ FourWayToRockIsland = (
     SurveyedLine(length_ft=28, angle=340),
     Stake(),
     SurveyedLine(length_ft=30, angle=300),
-    Stake(text='Nate\'s\nstake\n\n\n', text_rotation='70'),
+    SaveLandmark(Landmark.NATES_TIEOFF, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png'),
     SurveyedLine(length_ft=109, angle=60),
     Stake(),
     UnsurveyedLine(length_ft=50, angle=60),

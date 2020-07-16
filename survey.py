@@ -74,6 +74,7 @@ GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
+NATES_TIEOFF = Line2D([0], [0], label='Nate\'s tieoff')
 
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
@@ -84,9 +85,10 @@ gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
+nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 
 ax.legend(
-    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY],
+    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF],
     handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,
@@ -97,6 +99,7 @@ ax.legend(
         ROWBOAT: rowboat_handler,
         OXYGEN: oxygen_handler,
         CONROY: conroy_handler,
+        NATES_TIEOFF: nates_tieoff_handler,
         },
     fontsize=10,
     labelspacing=1.2,
