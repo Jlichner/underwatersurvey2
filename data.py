@@ -19,6 +19,7 @@ class Landmark(Enum):
     UMBRELLA = 14
     WAGON_WHEELS = 15
     NATES_TIEOFF = 16
+    BYPASS_SOUTHWEST = 17
 
 
 @dataclass(frozen=True)
@@ -277,7 +278,7 @@ RockIslandTSoutheast = (
     UnsurveyedLine(length_ft=50, angle=45, alt_text=''),
     )
 
-PlatformToIslander = (
+PlatformToFourWay = (
     SurveyedLine(length_ft=78, angle=215),
     TieOff(),
     SurveyedLine(length_ft=15, angle=260),
@@ -302,8 +303,9 @@ PlatformToIslander = (
     TieOff(),
     SurveyedLine(length_ft=42, angle=315, flip_text_side=True),
     SaveLandmark(Landmark.FOUR_WAY),
-    UnsurveyedLine(length_ft=50, angle=300),
-    Jump(length_ft=50, angle=120),
+    )
+
+JJJ = (
     SurveyedLine(length_ft=31, angle=260, flip_text_side=True),
     # WICKER CHAIR TO RIGHT
     SurveyedLine(length_ft=25, angle=240),
@@ -317,10 +319,9 @@ PlatformToIslander = (
     SurveyedLine(length_ft=83, angle=250),
     TieOff(),
     SurveyedLine(length_ft=20, angle=230),
-    TieOff(),
-    Arrow(angle=50, distance=5, color='red'),
-    UnsurveyedLine(length_ft=50, angle=310),
-    Jump(length_ft=50, angle=130),
+    Arrow(angle=50, distance=0, color='red'),
+    UnsurveyedLine(length_ft=50, angle=300),
+    Jump(length_ft=50, angle=120),
     SurveyedLine(length_ft=15, length_in=6, angle=210),
     TieOff(),
     SurveyedLine(length_ft=35, length_in=6, angle=230),
@@ -335,18 +336,18 @@ PlatformToIslander = (
     TieOff(),
     SurveyedLine(length_ft=11, angle=235),
     TieOff(),
-    SurveyedLine(length_ft=53, angle=240, color='red'),
+    SurveyedLine(length_ft=53, angle=230),
     TieOff(),
     )
 
 FourWayToRockIsland = (
-    Arrow(angle=135, distance=5),
+    Arrow(angle=135, distance=0),
     SurveyedLine(length_ft=30, angle=330),
     TieOff(),
     SurveyedLine(length_ft=29, angle=340),
     Stake(),
-    UnsurveyedLine(length_ft=100, angle=300, alt_text='\n\nJosh\'s\ndeep line', flip_text_side=True),
-    Jump(length_ft=100, angle=120),
+    UnsurveyedLine(length_ft=150, angle=300, alt_text='Josh\'s deep line', flip_text_side=True),
+    Jump(length_ft=150, angle=120),
     SurveyedLine(length_ft=35, angle=320),
     TieOff(),
     SurveyedLine(length_ft=21, angle=300),
@@ -358,6 +359,70 @@ FourWayToRockIsland = (
     SurveyedLine(length_ft=109, angle=60),
     Stake(),
     UnsurveyedLine(length_ft=50, angle=60),
+    )
+
+FourWayToEndBypassSixtyFoot = (
+    SurveyedLine(length_ft=47, angle=305),
+    TieOff(),
+    SurveyedLine(length_ft=52, angle=300),
+    TieOff(),
+    SurveyedLine(length_ft=47, angle=265),
+    SurveyedLine(length_ft=12, angle=240),
+    TieOff(),
+    SurveyedLine(length_ft=65, angle=235),
+    TieOff(),
+    SurveyedLine(length_ft=19, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=50, angle=245),
+    TieOff(),
+    SurveyedLine(length_ft=34, angle=255),
+    UnsurveyedLine(length_ft=50, angle=300), # crossover
+    Jump(length_ft=100, angle=120),
+    UnsurveyedLine(length_ft=50, angle=300),
+    SurveyedLine(length_ft=33, angle=255),
+    TieOff(),
+    SurveyedLine(length_ft=50, angle=230),
+    SurveyedLine(length_ft=11, angle=220),
+    SurveyedLine(length_ft=3, length_in=6, angle=200),
+    SurveyedLine(length_ft=48, angle=160),
+    TieOff(),
+    SurveyedLine(length_ft=45, angle=210),
+    SurveyedLine(length_ft=30, angle=160),
+    TieOff(),
+    SurveyedLine(length_ft=26, angle=175),
+    UnsurveyedLine(length_ft=50, angle=50),
+    Jump(length_ft=50, angle=230),
+    SurveyedLine(length_ft=60, angle=250),
+    TieOff(),
+    SurveyedLine(length_ft=94, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=46, angle=220),
+    TieOff(),
+    SurveyedLine(length_ft=50, angle=220),
+    UnsurveyedLine(length_ft=50, angle=350),
+    Jump(length_ft=50, angle=170),
+    Arrow(distance=0, angle=40),
+    SurveyedLine(length_ft=25, angle=220),
+    TieOff(),
+    SurveyedLine(length_ft=104, angle=250),
+    TieOff(),
+    SurveyedLine(length_ft=12, angle=270),
+    TieOff(),
+    SurveyedLine(length_ft=25, angle=250),
+    SurveyedLine(length_ft=25, angle=245),
+    SurveyedLine(length_ft=24, angle=240),
+    SurveyedLine(length_ft=22, angle=235),
+    SurveyedLine(length_ft=21, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=15, angle=185),
+    TieOff(),
+    SurveyedLine(length_ft=55, angle=205),
+    TieOff(),
+    SurveyedLine(length_ft=61, angle=205),
+    TieOff(),
+    SurveyedLine(length_ft=54, angle=200),
+    TieOff(),
+    UnsurveyedLine(length_ft=50, angle=150),
     )
 
 ExampleData = (

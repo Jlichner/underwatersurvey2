@@ -1,5 +1,16 @@
 from base import draw, ImageHandler
-from data import Landmark, PokerRun, CarToKibbetts, PlatformToIslander, UmbrellaToRockIsland, UmbrellaToOxygenTanks, RockIslandTNorthwest, RockIslandTSoutheast, FourWayToRockIsland
+from data import (Landmark,
+    PokerRun,
+    CarToKibbetts,
+    PlatformToFourWay,
+    UmbrellaToRockIsland,
+    UmbrellaToOxygenTanks,
+    RockIslandTNorthwest,
+    RockIslandTSoutheast,
+    FourWayToRockIsland,
+    FourWayToEndBypassSixtyFoot,
+    JJJ
+)
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -28,8 +39,10 @@ landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToIslander)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
 (total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToEndBypassSixtyFoot)
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, JJJ)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
@@ -58,11 +71,11 @@ ax.add_artist(im_ab)
 
 ARROW = Line2D([0], [0], label='Arrow', color='black', linewidth=0, marker='^', markersize=7, markerfacecolor='white')
 # PLATFORM = Patch(label='Platform', facecolor='darkgoldenrod')
-TIE_OFF = Line2D([0], [0], label='Tie Off', color='blue', linewidth=0, marker='h', markersize=5)
+TIE_OFF = Line2D([0], [0], label='Tie off', color='blue', linewidth=0, marker='h', markersize=5)
 STAKE = Line2D([0], [0], label='Stake', color='brown', linewidth=0, marker='s', markersize=5)
-SURVEYED_LINE = Line2D([0], [0], label='Surveyed Line', color='black', linestyle='solid', linewidth=2)
-UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed Line', color='black', linestyle='dotted', linewidth=2)
-REMOVED_LINE = Line2D([0], [0], label='Removed Line', color='lightgrey', linestyle='solid')
+SURVEYED_LINE = Line2D([0], [0], label='Surveyed line', color='black', linestyle='solid', linewidth=2)
+UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed line', color='black', linestyle='dotted', linewidth=2)
+REMOVED_LINE = Line2D([0], [0], label='Removed line', color='lightgrey', linestyle='solid')
 MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='red', linestyle='solid')
 
 SKELETON = Line2D([0], [0], label='Skeleton')
