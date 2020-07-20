@@ -19,7 +19,8 @@ class Landmark(Enum):
     UMBRELLA = 14
     WAGON_WHEELS = 15
     NATES_TIEOFF = 16
-    BYPASS_SOUTHWEST = 17
+    BYPASS_END_SIXTY_FOOT = 17
+    BYPASS_END_JJJ = 18
 
 
 @dataclass(frozen=True)
@@ -338,6 +339,7 @@ JJJ = (
     TieOff(),
     SurveyedLine(length_ft=53, angle=230),
     TieOff(),
+    SaveLandmark(Landmark.BYPASS_END_JJJ),
     )
 
 FourWayToRockIsland = (
@@ -361,7 +363,7 @@ FourWayToRockIsland = (
     UnsurveyedLine(length_ft=50, angle=60),
     )
 
-FourWayToEndBypassSixtyFoot = (
+FourWayToBypassEndSixtyFoot = (
     SurveyedLine(length_ft=47, angle=305),
     TieOff(),
     SurveyedLine(length_ft=52, angle=300),
@@ -390,8 +392,10 @@ FourWayToEndBypassSixtyFoot = (
     SurveyedLine(length_ft=30, angle=160),
     TieOff(),
     SurveyedLine(length_ft=26, angle=175),
-    UnsurveyedLine(length_ft=50, angle=50),
-    Jump(length_ft=50, angle=230),
+    SaveLandmark(Landmark.BYPASS_END_SIXTY_FOOT),
+    )
+
+BypassEndToIslander = (
     SurveyedLine(length_ft=60, angle=250),
     TieOff(),
     SurveyedLine(length_ft=94, angle=230),

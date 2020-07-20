@@ -1,15 +1,16 @@
-from base import draw, ImageHandler
+from base import distance_angle, draw, ImageHandler
 from data import (Landmark,
-    PokerRun,
+    BypassEndToIslander,
     CarToKibbetts,
+    FourWayToBypassEndSixtyFoot,
+    FourWayToRockIsland,
+    JJJ,
     PlatformToFourWay,
-    UmbrellaToRockIsland,
-    UmbrellaToOxygenTanks,
+    PokerRun,
     RockIslandTNorthwest,
     RockIslandTSoutheast,
-    FourWayToRockIsland,
-    FourWayToEndBypassSixtyFoot,
-    JJJ
+    UmbrellaToOxygenTanks,
+    UmbrellaToRockIsland,
 )
 
 import matplotlib
@@ -19,8 +20,6 @@ from matplotlib.lines import Line2D
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.patches import Patch
 from matplotlib.transforms import Bbox
-
-DRAW_DISTANCE = False
 
 matplotlib.rcParams['figure.dpi'] = 300
 
@@ -33,16 +32,43 @@ corner_coordinates = ((0, 0), (0, 0))
 landmark_coordinates = dict()
 landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.MOORING_BLOCK, PokerRun)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.CAR, CarToKibbetts)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToEndBypassSixtyFoot)
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(ax, DRAW_DISTANCE, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, JJJ)
+(distance_jjj, angle_jjj) = distance_angle(FourWayToBypassEndSixtyFoot)
+(distance_sixty_foot, angle_sixty_foot) = distance_angle(JJJ)
+mid_distance = (distance_jjj + distance_sixty_foot) / 2
+mid_angle = (angle_jjj + angle_sixty_foot) / 2
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.MOORING_BLOCK, PokerRun)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.CAR, CarToKibbetts)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch = (distance_sixty_foot / mid_distance), rotation = (mid_angle - angle_sixty_foot))
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, JJJ, stretch = (distance_jjj / mid_distance), rotation = (mid_angle - angle_jjj))
+
+(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
+    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.BYPASS_END_JJJ, BypassEndToIslander)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')
@@ -87,7 +113,7 @@ GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
-NATES_TIEOFF = Line2D([0], [0], label='Nate\'s tieoff')
+NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
