@@ -1,14 +1,16 @@
-from base import distance_angle, draw, ImageHandler
+from base import survey_distance_angle, straight_distance_angle, draw, ImageHandler
 from data import (Landmark,
     BypassEndToIslander,
     CarToKibbetts,
     FourWayToBypassEndSixtyFoot,
-    FourWayToRockIsland,
+    FourWayToNatesTieoff,
     JJJ,
+    NatesTieoffToRockIsland,
     PlatformToFourWay,
     PokerRun,
-    RockIslandTNorthwest,
-    RockIslandTSoutheast,
+    RockIslandBottleClockwise,
+    RockIslandBottleCounterClockwise,
+    RockIslandTClockwise,
     UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
 )
@@ -29,46 +31,56 @@ ax.set_aspect(aspect='equal')
 
 total_surveyed = 0
 corner_coordinates = ((0, 0), (0, 0))
-landmark_coordinates = dict()
-landmark_coordinates[Landmark.MOORING_BLOCK] = (0, 0)
 
-(distance_jjj, angle_jjj) = distance_angle(FourWayToBypassEndSixtyFoot)
-(distance_sixty_foot, angle_sixty_foot) = distance_angle(JJJ)
-mid_distance = (distance_jjj + distance_sixty_foot) / 2
-mid_angle = (angle_jjj + angle_sixty_foot) / 2
+######
+#
+# Draw some of the map, forcing the bypass and the jjj line to intersect
+#
+######
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.MOORING_BLOCK, PokerRun)
+(distance_jjj, angle_jjj) = survey_distance_angle(FourWayToBypassEndSixtyFoot)
+(distance_sixty_foot, angle_sixty_foot) = survey_distance_angle(JJJ)
+stretch_jjj = 2 * distance_jjj / (distance_jjj + distance_sixty_foot)
+stretch_sixty_foot = 2 * distance_sixty_foot / (distance_jjj + distance_sixty_foot)
+rotation_jjj = (angle_sixty_foot - angle_jjj) / 2
+rotation_sixty_foot = (angle_jjj - angle_sixty_foot) / 2
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.CAR, CarToKibbetts)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.MOORING_BLOCK, PokerRun)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.CAR, CarToKibbetts)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTNorthwest)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTSoutheast)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToRockIsland)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, FourWayToNatesTieoff)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch = (distance_sixty_foot / mid_distance), rotation = (mid_angle - angle_sixty_foot))
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.FOUR_WAY, JJJ, stretch = (distance_jjj / mid_distance), rotation = (mid_angle - angle_jjj))
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
 
-(total_surveyed, corner_coordinates, landmark_coordinates) = draw(
-    ax, total_surveyed, corner_coordinates, landmark_coordinates, Landmark.BYPASS_END_JJJ, BypassEndToIslander)
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.BYPASS_END_JJJ, BypassEndToIslander)
+
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
+
+######
+#
+# Draw more of the map, forcing the box to be a closed
+#
+######
+
+(distance_rock, angle_rock) = straight_distance_angle(Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T)
+(distance_nate, angle_nate) = survey_distance_angle(NatesTieoffToRockIsland)
+stretch_nate = distance_rock / distance_nate
+rotation_nate = angle_nate - angle_rock
+
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
+
+(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 plt.axis('off')

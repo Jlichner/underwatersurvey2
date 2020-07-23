@@ -1,3 +1,5 @@
+from data import Landmark, SurveyedLine, UnsurveyedLine, Arrow, Jump, RemovedLine, SaveLandmark
+
 from math import atan, cos, pi, sin, sqrt
 
 import matplotlib.pyplot as plt
@@ -14,6 +16,8 @@ from matplotlib.transforms import Bbox, TransformedBbox
 #####
 
 DRAW_DISTANCE = False
+__LANDMARK_COORDINATES = dict()
+__LANDMARK_COORDINATES[Landmark.MOORING_BLOCK] = (0, 0)
 
 class ImageHandler(HandlerBase):
 
@@ -51,9 +55,9 @@ def __radians(degrees):
 def __degrees(radians):
     return (radians + pi / 2) / 2 / pi * 360
 
-def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinates, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
+def draw(ax, input_total_surveyed, input_corner_coordinates, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
     ((x_min, y_min), (x_max, y_max)) = input_corner_coordinates
-    curser = landmark_coordinates[input_landmark]
+    curser = __LANDMARK_COORDINATES[input_landmark]
     total_surveyed = input_total_surveyed
     for data in input_data:
         clazz = type(data).__name__
@@ -91,13 +95,13 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
             (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))
             plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=7, zorder=3)
         elif clazz == 'SaveLandmark':
-            landmark_coordinates[data.landmark] = curser
+            __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
                 (x, y) = curser
                 plt.plot(x, y, color='white', marker='o', markersize=16, zorder=3)
                 im = OffsetImage(plt.imread(data.icon_path), zoom=data.zoom/ax.figure.dpi)
                 im.image.axes = ax
-                im_ab = AnnotationBbox(im, landmark_coordinates[data.landmark], frameon=False)
+                im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
                 ax.add_artist(im_ab)
         elif clazz == 'Jump':
             (x0, y0) = curser
@@ -120,10 +124,10 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, landmark_coordinate
         x_max = max(x, x_max)
         y_min = min(y, y_min)
         y_max = max(y, y_max)
-    return (total_surveyed, ((x_min, y_min), (x_max, y_max)), landmark_coordinates)
+    return (total_surveyed, ((x_min, y_min), (x_max, y_max)))
 
 
-def distance_angle(input_data):
+def survey_distance_angle(input_data):
     curser = (0, 0)
     for data in input_data:
         clazz = type(data).__name__
@@ -139,3 +143,16 @@ def distance_angle(input_data):
     else:
         angle = atan(y / x) + pi
     return (distance, __degrees(angle))
+
+def straight_distance_angle(landmark0, landmark1):
+    (x0, y0) = __LANDMARK_COORDINATES[landmark0]
+    (x1, y1) = __LANDMARK_COORDINATES[landmark1]
+    x = (x1 - x0)
+    y = (y1 - y0)
+    distance = sqrt(x * x + y * y)
+    if (x >= 0):
+        angle = atan(y / x)
+    else:
+        angle = atan(y / x) + pi
+    return (distance, __degrees(angle))
+

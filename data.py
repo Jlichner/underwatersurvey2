@@ -21,6 +21,7 @@ class Landmark(Enum):
     NATES_TIEOFF = 16
     BYPASS_END_SIXTY_FOOT = 17
     BYPASS_END_JJJ = 18
+    ROCK_ISLAND_BOTTLE = 19
 
 
 @dataclass(frozen=True)
@@ -213,7 +214,7 @@ UmbrellaToRockIsland = (
     Stake(),
     SurveyedLine(length_ft=15, angle=325),
     Stake(),
-    SaveLandmark(Landmark.ROCK_ISLAND_T)
+    SaveLandmark(Landmark.ROCK_ISLAND_BOTTLE)
     )
 
 UmbrellaToOxygenTanks = (
@@ -247,7 +248,7 @@ UmbrellaToOxygenTanks = (
     SaveLandmark(Landmark.OXYGEN_TANKS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
 )
 
-RockIslandTNorthwest = (
+RockIslandBottleClockwise = (
     SurveyedLine(length_ft=35, angle=225),
     Stake(),
     SurveyedLine(length_ft=54, angle=235),
@@ -267,15 +268,17 @@ RockIslandTNorthwest = (
     SurveyedLine(length_ft=48, angle=220),
     Stake(),
     SurveyedLine(length_ft=48, angle=250),
-    UnsurveyedLine(length_ft=50, angle=135, alt_text='Broken'),
-    Jump(length_ft=50, angle=315),
     TieOff(),
+    SaveLandmark(Landmark.ROCK_ISLAND_T)
+    )
+
+RockIslandTClockwise = (
     SurveyedLine(length_ft=72, angle=220),
     TieOff(),
     UnsurveyedLine(length_ft=25, angle=240, alt_text=''),
     )
 
-RockIslandTSoutheast = (
+RockIslandBottleCounterClockwise = (
     UnsurveyedLine(length_ft=50, angle=45, alt_text=''),
     )
 
@@ -342,23 +345,30 @@ JJJ = (
     SaveLandmark(Landmark.BYPASS_END_JJJ),
     )
 
-FourWayToRockIsland = (
+FourWayToNatesTieoff = (
     Arrow(angle=135, distance=0),
     SurveyedLine(length_ft=30, angle=330),
     TieOff(),
     SurveyedLine(length_ft=29, angle=340),
     Stake(),
-    UnsurveyedLine(length_ft=150, angle=300, alt_text='Josh\'s deep line', flip_text_side=True),
-    Jump(length_ft=150, angle=120),
-    SurveyedLine(length_ft=35, angle=320),
+    UnsurveyedLine(length_ft=150, angle=305, alt_text='Josh\'s deep line', flip_text_side=True),
+    Jump(length_ft=150, angle=125),
+    SurveyedLine(length_ft=14, angle=325),
     TieOff(),
-    SurveyedLine(length_ft=21, angle=300),
-    SurveyedLine(length_ft=8, angle=345, alt_text=''),
-    SurveyedLine(length_ft=28, angle=340),
+    SurveyedLine(length_ft=13, length_in=6, angle=320),
+    TieOff(),
+    SurveyedLine(length_ft=8, angle=330),
+    TieOff(),
+    SurveyedLine(length_ft=19, length_in=6, angle=315),
+    TieOff(),
+    SurveyedLine(length_ft=34, angle=330),
     Stake(),
-    SurveyedLine(length_ft=30, angle=300),
+    SurveyedLine(length_ft=59, angle=10),
     SaveLandmark(Landmark.NATES_TIEOFF, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png'),
-    SurveyedLine(length_ft=109, angle=60),
+    )
+
+NatesTieoffToRockIsland = (
+    SurveyedLine(length_ft=109, angle=70),
     Stake(),
     SurveyedLine(length_ft=51, angle=55),
     Stake(),
@@ -376,7 +386,10 @@ FourWayToRockIsland = (
     Stake(),
     SurveyedLine(length_ft=52, angle=30),
     Stake(),
-    UnsurveyedLine(length_ft=50, angle=30),
+    SurveyedLine(length_ft=167, angle=40),
+    SurveyedLine(length_ft=10, angle=20),
+    SurveyedLine(length_ft=9, angle=0),
+    SurveyedLine(length_ft=9, angle=340),
     )
 
 FourWayToBypassEndSixtyFoot = (
