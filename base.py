@@ -18,6 +18,7 @@ from matplotlib.transforms import Bbox, TransformedBbox
 DRAW_DISTANCE = False
 __LANDMARK_COORDINATES = dict()
 __LANDMARK_COORDINATES[Landmark.MOORING_BLOCK] = (0, 0)
+__CORNER_COORDINATES = ((0, 0), (0, 0))
 
 class ImageHandler(HandlerBase):
 
@@ -55,8 +56,54 @@ def __radians(degrees):
 def __degrees(radians):
     return (radians + pi / 2) / 2 / pi * 360
 
-def draw(ax, input_total_surveyed, input_corner_coordinates, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
-    ((x_min, y_min), (x_max, y_max)) = input_corner_coordinates
+def __meters(meters):
+    return meters * 3.28084
+
+def compass_rose(ax):
+    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
+    (x, y) = ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max))
+    rose = OffsetImage(plt.imread('icons/compass.png'), zoom=35/ax.figure.dpi)
+    rose.image.axes = ax
+    rose_ab = AnnotationBbox(rose, (x, y), frameon=False)
+    ax.add_artist(rose_ab)
+
+def distance_ruler(ax):
+    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
+    (x, y) = ((0.9 * x_min + 0.1 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
+
+    # feet
+    plt.text(s='0', x=x, y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.plot([x, x + 50], [y, y], color='black', linewidth=2, marker=2)
+    plt.text(s='50', x=(x + 50), y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.plot([x + 50, x + 100], [y, y], color='black', linewidth=2, marker=2)
+    plt.text(s='100', x=(x + 100), y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.plot([x + 100, x + 200], [y, y], color='black', linewidth=2, marker=2)
+    plt.text(s='200', x=(x + 200), y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.plot([x + 200, x + 300], [y, y], color='black', linewidth=2, marker=2)
+    plt.text(s='300', x=(x + 300), y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.text(s='feet', x=(x + 250), y=y + 10, ha='center', fontsize=9, va='bottom')
+
+    # meters
+    plt.text(s='0', x=x, y=y - 10, ha='center', fontsize=9, va='top')
+    plt.plot([x, x + __meters(10)], [y, y], color='black', linewidth=2, marker=3)
+    plt.text(s='10', x=(x + __meters(10)), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.plot([x + __meters(10), x + __meters(20)], [y, y], color='black', linewidth=2, marker=3)
+    plt.text(s='20', x=(x + __meters(20)), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.plot([x + __meters(20), x + __meters(30)], [y, y], color='black', linewidth=2, marker=3)
+    plt.text(s='30', x=(x + __meters(30)), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.plot([x + __meters(30), x + __meters(50)], [y, y], color='black', linewidth=2, marker=3)
+    plt.text(s='50', x=(x + __meters(50)), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.plot([x + __meters(50), x + __meters(100)], [y, y], color='black', linewidth=2, marker=3)
+    plt.text(s='100', x=(x + __meters(100)), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.text(s='meters', x=(x + 250), y=y - 10, ha='center', fontsize=9, va='top')
+
+def copyright(ax):
+    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
+    ax.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
+
+def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
+    global __CORNER_COORDINATES, __LANDMARK_COORDINATES
+    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     curser = __LANDMARK_COORDINATES[input_landmark]
     total_surveyed = input_total_surveyed
     for data in input_data:
@@ -124,7 +171,8 @@ def draw(ax, input_total_surveyed, input_corner_coordinates, input_landmark, inp
         x_max = max(x, x_max)
         y_min = min(y, y_min)
         y_max = max(y, y_max)
-    return (total_surveyed, ((x_min, y_min), (x_max, y_max)))
+    __CORNER_COORDINATES = ((x_min, y_min), (x_max, y_max))
+    return total_surveyed
 
 
 def survey_distance_angle(input_data):
@@ -156,3 +204,5 @@ def straight_distance_angle(landmark0, landmark1):
         angle = atan(y / x) + pi
     return (distance, __degrees(angle))
 
+def corner_coordinates():
+    return __CORNER_COORDINATES

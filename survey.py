@@ -1,10 +1,22 @@
-from base import survey_distance_angle, straight_distance_angle, draw, ImageHandler
-from data import (Landmark,
-    BypassEndToIslander,
+from base import (
+    compass_rose,
+    copyright,
+    corner_coordinates,
+    distance_ruler,
+    draw,
+    ImageHandler,
+    straight_distance_angle,
+    survey_distance_angle,
+    )
+from data import (
+    BobsArrowToEmmaMunsen,
+    BobsArrowToIslander,
+    BypassEndToBobsArrow,
     CarToKibbetts,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
     JJJ,
+    Landmark,
     NatesTieoffToRockIsland,
     PlatformToFourWay,
     PokerRun,
@@ -19,7 +31,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib._png import read_png
 from matplotlib.lines import Line2D
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.patches import Patch
 from matplotlib.transforms import Bbox
 
@@ -30,7 +41,6 @@ fig.set_size_inches(36, 24)
 ax.set_aspect(aspect='equal')
 
 total_surveyed = 0
-corner_coordinates = ((0, 0), (0, 0))
 
 ######
 #
@@ -45,27 +55,31 @@ stretch_sixty_foot = 2 * distance_sixty_foot / (distance_jjj + distance_sixty_fo
 rotation_jjj = (angle_sixty_foot - angle_jjj) / 2
 rotation_sixty_foot = (angle_jjj - angle_sixty_foot) / 2
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.MOORING_BLOCK, PokerRun)
+total_surveyed = draw(ax, total_surveyed, Landmark.MOORING_BLOCK, PokerRun)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.CAR, CarToKibbetts)
+total_surveyed = draw(ax, total_surveyed, Landmark.CAR, CarToKibbetts)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+total_surveyed = draw(ax, total_surveyed, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.UMBRELLA, UmbrellaToRockIsland)
+total_surveyed = draw(ax, total_surveyed, Landmark.UMBRELLA, UmbrellaToRockIsland)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
+total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.PLATFORM_SW, PlatformToFourWay)
+total_surveyed = draw(ax, total_surveyed, Landmark.PLATFORM_SW, PlatformToFourWay)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, FourWayToNatesTieoff)
+total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, FourWayToNatesTieoff)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
+total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
+total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.BYPASS_END_JJJ, BypassEndToIslander)
+total_surveyed = draw(ax, total_surveyed, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
+total_surveyed = draw(ax, total_surveyed, Landmark.BOBS_ARROW, BobsArrowToIslander)
+
+total_surveyed = draw(ax, total_surveyed, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen)
+
+total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
 
 ######
 #
@@ -78,32 +92,36 @@ rotation_sixty_foot = (angle_jjj - angle_sixty_foot) / 2
 stretch_nate = distance_rock / distance_nate
 rotation_nate = angle_nate - angle_rock
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
+total_surveyed = draw(ax, total_surveyed, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
 
-(total_surveyed, corner_coordinates) = draw(ax, total_surveyed, corner_coordinates, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
+total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 
-((x_min, y_min), (x_max, y_max)) = corner_coordinates
+#####
+#
+# Center the map
+#
+#####
+
 plt.axis('off')
 plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
+((x_min, y_min), (x_max, y_max)) = corner_coordinates()
 plt.xlim(x_min - 50, x_max + 50)
 plt.ylim(y_min - 50, y_max + 50)
-ax.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
 
 #####
 #
-# Add compass rose
+# Add a compass rose, distance marker, and copyright statement
 #
 #####
 
-im = OffsetImage(plt.imread('icons/compass.png'), zoom=35/ax.figure.dpi)
-im.image.axes = ax
-im_ab = AnnotationBbox(im, ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max)), frameon=False)
-ax.add_artist(im_ab)
-
+compass_rose(ax)
+distance_ruler(ax)
+copyright(ax)
 
 #####
 #
 # Create the legend
+# TODO(stpyang): put this in a different file
 #
 #####
 
@@ -126,6 +144,7 @@ ROWBOAT = Line2D([0], [0], label='Rowboat')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
+EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
@@ -137,9 +156,10 @@ oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/pn
 rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=(6, 14), image_offset=(4, 8))
 
 ax.legend(
-    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF],
+    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
     handler_map={
         SKELETON: skeleton_handler,
         CAR: car_handler,
@@ -151,6 +171,7 @@ ax.legend(
         OXYGEN: oxygen_handler,
         CONROY: conroy_handler,
         NATES_TIEOFF: nates_tieoff_handler,
+        EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
         },
     fontsize=10,
     labelspacing=1.2,

@@ -1,8 +1,22 @@
 from dataclasses import dataclass
 from enum import Enum
 
+#####
+#
+# Surveyers:
+#   Christian Lundkvist
+#   Stephanie Yang
+#   Lisa Goodlin
+#   Doug Dwyer
+#   Ben Rother
+#   JP Vanier
+#   Scott Fuller
+#   Mike ???
+#
+#####
+
 class Landmark(Enum):
-    ANCHOR = 0
+    DISTANCE_MEASURE = 0
     CAR = 1
     CONROY = 2
     FOUR_WAY = 3
@@ -22,7 +36,9 @@ class Landmark(Enum):
     BYPASS_END_SIXTY_FOOT = 17
     BYPASS_END_JJJ = 18
     ROCK_ISLAND_BOTTLE = 19
-
+    BOBS_ARROW = 20
+    EMMA_MUNSEN = 21
+    ANCHOR = 22
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -424,7 +440,7 @@ FourWayToBypassEndSixtyFoot = (
     SaveLandmark(Landmark.BYPASS_END_SIXTY_FOOT),
     )
 
-BypassEndToIslander = (
+BypassEndToBobsArrow = (
     SurveyedLine(length_ft=60, angle=250),
     TieOff(),
     SurveyedLine(length_ft=94, angle=230),
@@ -432,9 +448,24 @@ BypassEndToIslander = (
     SurveyedLine(length_ft=46, angle=220),
     TieOff(),
     SurveyedLine(length_ft=50, angle=220),
-    UnsurveyedLine(length_ft=50, angle=350),
-    Jump(length_ft=50, angle=170),
     Arrow(distance=0, angle=40),
+    SaveLandmark(Landmark.BOBS_ARROW)
+    )
+
+BobsArrowToEmmaMunsen = (
+    SurveyedLine(length_ft=9, angle=335),
+    TieOff(),
+    SurveyedLine(length_ft=49, angle=355),
+    SurveyedLine(length_ft=22, angle=345),
+    Stake(),
+    SurveyedLine(length_ft=70, angle=10),
+    SurveyedLine(length_ft=65, angle=5),
+    SurveyedLine(length_ft=50, angle=5),
+    SurveyedLine(length_ft=22, angle=355),
+    SaveLandmark(Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png', zoom=10)
+)
+
+BobsArrowToIslander = (
     SurveyedLine(length_ft=25, angle=220),
     TieOff(),
     SurveyedLine(length_ft=104, angle=250),
