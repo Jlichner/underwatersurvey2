@@ -84,7 +84,7 @@ class Jump:
 class SaveLandmark:
     landmark: Landmark = None
     icon_path: str = None
-    markersize: int = 15
+    markersize: int = 14
     zoom: int = 52
 
 @dataclass(frozen=True)
@@ -114,8 +114,9 @@ class Arrow:
     color: str = 'white'
 
 BarToPlatform = (
-    SurveyedLine(length_ft=23, angle=330),
     TieOff(),
+    SurveyedLine(length_ft=23, angle=330),
+    # TieOff(), Line change
     SurveyedLine(length_ft=36, length_in=8, angle=330),
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
@@ -192,17 +193,65 @@ MooringBlock5ToMooringBlock1 = (
 )
 
 CarToKibbetts = (
-    UnsurveyedLine(length_ft=270, angle=50, include_in_total_surveyed=True),
+    SurveyedLine(length_ft=38, length_in=6, angle=56),
     Stake(),
-    SurveyedLine(length_ft=17, angle=340),
-    SaveLandmark(landmark=Landmark.WAGON_WHEELS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
-    Jump(length_ft=17, angle=160),
-    UnsurveyedLine(length_ft=396, angle=50, include_in_total_surveyed=True),
+    SurveyedLine(length_ft=27, angle=56),
+    TieOff(),
+    SurveyedLine(length_ft=34, angle=46),
+    Stake(),
+    SurveyedLine(length_ft=19, length_in=10, angle=46),
+    TieOff(),
+    SurveyedLine(length_ft=13, length_in=2, angle=37),
+    Stake(),
+    SurveyedLine(length_ft=3, angle=58),
+    TieOff(),
+    SurveyedLine(length_ft=10, angle=58),
+    Stake(), # loose
+    SurveyedLine(length_ft=22, angle=58),
+    SurveyedLine(length_ft=20, length_in=7, angle=27),
+    Stake(),
+    SurveyedLine(length_ft=57, length_in=4, angle=48),
+    Stake(),
+    SurveyedLine(length_ft=22, angle=50),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=52),
+    Stake(),
+    SurveyedLine(length_ft=28, angle=50),
+    Stake(),
+    SurveyedLine(length_ft=22, length_in=4, angle=50),
+    Stake(),
+    SurveyedLine(length_ft=28, angle=50),
+    Stake(),
+    SurveyedLine(length_ft=22, angle=42),
+    Stake(),
+    SurveyedLine(length_ft=28, angle=48),
+    Stake(),
+    SurveyedLine(length_ft=21, length_in=10, angle=54),
+    Stake(),
+    SurveyedLine(length_ft=28, angle=54),
+    Stake(),
+    SurveyedLine(length_ft=22, angle=54),
+    Stake(),
+    SurveyedLine(length_ft=28, length_in=6, angle=54),
+    Stake(),
+    SurveyedLine(length_ft=21, length_in=6, angle=54),
+    Stake(),
+    SurveyedLine(length_ft=42, angle=54),
     SaveLandmark(landmark=Landmark.LISAS_GIFT, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
-    UnsurveyedLine(length_ft=50, angle=320, alt_text='', include_in_total_surveyed=True),
-    Jump(length_ft=50, angle=140),
-    UnsurveyedLine(length_ft=268, angle=70, include_in_total_surveyed=True),
-    SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/rowboat.png'),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=322),
+    Stake(),
+    # UnsurveyedLine(length_ft=270, angle=50, include_in_total_surveyed=True),
+    # Stake(),
+    # SurveyedLine(length_ft=17, angle=340),
+    # SaveLandmark(landmark=Landmark.WAGON_WHEELS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
+    # Jump(length_ft=17, angle=160),
+    # UnsurveyedLine(length_ft=396, angle=50, include_in_total_surveyed=True),
+    # SaveLandmark(landmark=Landmark.LISAS_GIFT, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
+    # UnsurveyedLine(length_ft=50, angle=320, alt_text='', include_in_total_surveyed=True),
+    # Jump(length_ft=50, angle=140),
+    # UnsurveyedLine(length_ft=268, angle=70, include_in_total_surveyed=True),
+    # SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/rowboat.png'),
 )
 
 UmbrellaToRockIsland = (
