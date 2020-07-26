@@ -14,11 +14,13 @@ from data import (
     BobsArrowToEmmaMunsen,
     BobsArrowToIslander,
     BypassEndToBobsArrow,
-    CarToKibbetts,
+    CarToLisasGift,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
     JJJ,
     Landmark,
+    LisasGiftNorthwest,
+    LisasGiftNortheast,
     NatesTieoffToRockIsland,
     MooringBlock1ToMooringBlock5,
     MooringBlock2ToMooringBlock1,
@@ -134,7 +136,9 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 #
 #####
 
-draw(ax, Landmark.CAR, CarToKibbetts)
+draw(ax, Landmark.CAR, CarToLisasGift)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftNorthwest)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast)
 
 #####
 #
@@ -180,7 +184,7 @@ UMBRELLA = Line2D([0], [0], label='Umbrella')
 ANCHOR = Line2D([0], [0], label='Anchor')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
-ROWBOAT = Line2D([0], [0], label='Rowboat')
+SHIPWRECK = Line2D([0], [0], label='Shipwreck')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
@@ -194,14 +198,14 @@ anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/pn
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-mooring_block_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-155-square-selected@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
+mooring_block_handler = ImageHandler(image_path='icons/mooringblock.png', image_stretch=(-10, 2), image_offset=(-5, 2))
+shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=(11, 26), image_offset=(6, 12))
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=(6, 14), image_offset=(4, 8))
 
 ax.legend(
-    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, MOORING_BLOCK, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
+    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, MOORING_BLOCK, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, SHIPWRECK, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
     handler_map={
         ANCHOR: anchor_handler,
         CAR: car_handler,
@@ -211,7 +215,7 @@ ax.legend(
         MOORING_BLOCK: mooring_block_handler,
         NATES_TIEOFF: nates_tieoff_handler,
         OXYGEN: oxygen_handler,
-        ROWBOAT: rowboat_handler,
+        SHIPWRECK: shipwreck_handler,
         SKELETON: skeleton_handler,
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
