@@ -4,14 +4,17 @@ from enum import Enum
 #####
 #
 # Surveyers:
-#   Christian Lundkvist
-#   Stephanie Yang
-#   Lisa Goodlin
-#   Doug Dwyer
+#
 #   Ben Rother
+#   Brian Chu
+#   Christian Lundkvist
+#   Doug Dwyer
+#   Jamie Lichner
 #   JP Vanier
+#   Lisa Goodlin
+#   Mike Burr
 #   Scott Fuller
-#   Mike ???
+#   Stephanie Yang
 #
 #####
 
