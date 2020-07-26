@@ -17,8 +17,9 @@ from matplotlib.transforms import Bbox, TransformedBbox
 
 DRAW_DISTANCE = False
 __LANDMARK_COORDINATES = dict()
-__LANDMARK_COORDINATES[Landmark.MOORING_BLOCK] = (0, 0)
+__LANDMARK_COORDINATES[Landmark.BAR] = (0, 0)
 __CORNER_COORDINATES = ((0, 0), (0, 0))
+__TOTAL_SURVEYED = 0
 
 class ImageHandler(HandlerBase):
 
@@ -101,11 +102,10 @@ def copyright(ax):
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     ax.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
 
-def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
-    global __CORNER_COORDINATES, __LANDMARK_COORDINATES
+def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
+    global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     curser = __LANDMARK_COORDINATES[input_landmark]
-    total_surveyed = input_total_surveyed
     for data in input_data:
         clazz = type(data).__name__
         if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine':
@@ -113,7 +113,7 @@ def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, ro
             length = (data.length_ft + data.length_in / 12) * stretch
             angle = data.angle + rotation
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
-            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=2)
+            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=2, zorder=1)
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
             mid_y = (y0 + y1) / 2 - 8 * cos(__radians(angle))
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
@@ -134,7 +134,7 @@ def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, ro
                    text_rotation = (180 - angle) % 180 - 90
                 plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
             if data.include_in_total_surveyed:
-                total_surveyed += length
+                __TOTAL_SURVEYED += length
             curser = (x1, y1)
         elif clazz == 'Arrow':
             (x0, y0) = curser
@@ -145,7 +145,7 @@ def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, ro
             __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
                 (x, y) = curser
-                plt.plot(x, y, color='white', marker='o', markersize=16, zorder=3)
+                plt.plot(x, y, color='white', marker='o', markersize=data.markersize, zorder=3)
                 im = OffsetImage(plt.imread(data.icon_path), zoom=data.zoom/ax.figure.dpi)
                 im.image.axes = ax
                 im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
@@ -172,7 +172,6 @@ def draw(ax, input_total_surveyed, input_landmark, input_data, stretch = 1.0, ro
         y_min = min(y, y_min)
         y_max = max(y, y_max)
     __CORNER_COORDINATES = ((x_min, y_min), (x_max, y_max))
-    return total_surveyed
 
 
 def survey_distance_angle(input_data):
@@ -206,3 +205,6 @@ def straight_distance_angle(landmark0, landmark1):
 
 def corner_coordinates():
     return __CORNER_COORDINATES
+
+def total_surveyed():
+    return __TOTAL_SURVEYED

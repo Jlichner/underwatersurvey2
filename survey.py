@@ -7,8 +7,10 @@ from base import (
     ImageHandler,
     straight_distance_angle,
     survey_distance_angle,
+    total_surveyed
     )
 from data import (
+    BarToPlatform,
     BobsArrowToEmmaMunsen,
     BobsArrowToIslander,
     BypassEndToBobsArrow,
@@ -18,11 +20,15 @@ from data import (
     JJJ,
     Landmark,
     NatesTieoffToRockIsland,
-    PlatformToFourWay,
-    PokerRun,
+    MooringBlock1ToMooringBlock5,
+    MooringBlock2ToMooringBlock1,
+    MooringBlock2ToSkeleton,
+    MooringBlock5ToMooringBlock1,
+    AngleIronToFourWay,
     RockIslandBottleClockwise,
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
+    SkeletonToMooringBlock2,
     UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
 )
@@ -40,11 +46,41 @@ fig, ax = plt.subplots()
 fig.set_size_inches(36, 24)
 ax.set_aspect(aspect='equal')
 
-total_surveyed = 0
+######
+#
+# Draw the recreational area, forcing both the right loop and the left loop to close up
+#
+#####
+
+draw(ax, Landmark.BAR, BarToPlatform)
+
+(distance_s2, angle_s2) = survey_distance_angle(SkeletonToMooringBlock2)
+(distance_2s, angle_2s) = survey_distance_angle(MooringBlock2ToSkeleton)
+stretch_s2 = 2 * distance_2s / (distance_2s + distance_s2)
+stretch_2s = 2 * distance_s2 / (distance_2s + distance_s2)
+rotation_s2 = (angle_s2 - angle_2s - 180) / 2
+rotation_2s = (angle_2s + 180 - angle_s2) / 2
+
+draw(ax, Landmark.SKELETON, SkeletonToMooringBlock2, stretch=stretch_s2, rotation=rotation_s2)
+
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToSkeleton, stretch=stretch_2s, rotation=rotation_2s)
+
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1)
+
+(distance_15, angle_15) = survey_distance_angle(MooringBlock1ToMooringBlock5)
+(distance_51, angle_51) = survey_distance_angle(MooringBlock5ToMooringBlock1)
+stretch_15 = 2 * distance_51 / (distance_51 + distance_15)
+stretch_51 = 2 * distance_15 / (distance_51 + distance_15)
+rotation_15 = (angle_15 + 180 - angle_51) / 2
+rotation_51 = (angle_51 - angle_15 - 180) / 2
+
+draw(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5, stretch=stretch_15, rotation=rotation_15)
+
+draw(ax, Landmark.MOORING_BLOCK_5, MooringBlock5ToMooringBlock1, stretch=stretch_51, rotation=rotation_51)
 
 ######
 #
-# Draw some of the map, forcing the bypass and the jjj line to intersect
+# Draw upstream of the recreation area
 #
 ######
 
@@ -55,31 +91,27 @@ stretch_sixty_foot = 2 * distance_sixty_foot / (distance_jjj + distance_sixty_fo
 rotation_jjj = (angle_sixty_foot - angle_jjj) / 2
 rotation_sixty_foot = (angle_jjj - angle_sixty_foot) / 2
 
-total_surveyed = draw(ax, total_surveyed, Landmark.MOORING_BLOCK, PokerRun)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.CAR, CarToKibbetts)
+draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.UMBRELLA, UmbrellaToRockIsland)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToFourWay)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
+draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.PLATFORM_SW, PlatformToFourWay)
+draw(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, FourWayToNatesTieoff)
+draw(ax, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
+draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.BOBS_ARROW, BobsArrowToIslander)
-
-total_surveyed = draw(ax, total_surveyed, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen)
-
-total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
 
 ######
 #
@@ -92,9 +124,17 @@ total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_BOTTLE, RockIslan
 stretch_nate = distance_rock / distance_nate
 rotation_nate = angle_nate - angle_rock
 
-total_surveyed = draw(ax, total_surveyed, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
+draw(ax, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
 
-total_surveyed = draw(ax, total_surveyed, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
+draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
+
+#####
+#
+# Draw downstream ofthe recreational area
+#
+#####
+
+draw(ax, Landmark.CAR, CarToKibbetts)
 
 #####
 #
@@ -145,6 +185,7 @@ OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 CONROY = Line2D([0], [0], label='Conroy')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
+MOORING_BLOCK = Line2D([0], [0], label='Mooring block')
 
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
@@ -153,30 +194,32 @@ anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/pn
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
+mooring_block_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-155-square-selected@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 rowboat_handler = ImageHandler(image_path='icons/rowboat.png', image_stretch=(11, 26), image_offset=(6, 12))
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=(6, 14), image_offset=(4, 8))
 
 ax.legend(
-    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
+    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, MOORING_BLOCK, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, ROWBOAT, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
     handler_map={
-        SKELETON: skeleton_handler,
-        CAR: car_handler,
-        UMBRELLA: umbrella_handler,
         ANCHOR: anchor_handler,
-        WHEEL: wheel_handler,
-        GIFT: gift_handler,
-        ROWBOAT: rowboat_handler,
-        OXYGEN: oxygen_handler,
+        CAR: car_handler,
         CONROY: conroy_handler,
-        NATES_TIEOFF: nates_tieoff_handler,
         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
+        GIFT: gift_handler,
+        MOORING_BLOCK: mooring_block_handler,
+        NATES_TIEOFF: nates_tieoff_handler,
+        OXYGEN: oxygen_handler,
+        ROWBOAT: rowboat_handler,
+        SKELETON: skeleton_handler,
+        UMBRELLA: umbrella_handler,
+        WHEEL: wheel_handler,
         },
     fontsize=10,
     labelspacing=1.2,
     loc='lower right')
 
-print('{} total line surveyed'.format(total_surveyed))
+print('{} total line surveyed'.format(total_surveyed()))
 
 plt.savefig('survey.pdf')
