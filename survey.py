@@ -4,6 +4,7 @@ from base import (
     corner_coordinates,
     distance_ruler,
     draw,
+    get_landmark_coordinates,
     ImageHandler,
     straight_distance_angle,
     survey_distance_angle,

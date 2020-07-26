@@ -208,3 +208,6 @@ def corner_coordinates():
 
 def total_surveyed():
     return __TOTAL_SURVEYED
+
+def get_landmark_coordinates():
+    return __LANDMARK_COORDINATES
