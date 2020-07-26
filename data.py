@@ -89,8 +89,9 @@ class Jump:
 class SaveLandmark:
     landmark: Landmark = None
     icon_path: str = None
-    markersize: int = 14
+    markersize: int = 12
     zoom: int = 52
+    zorder: int = 3
 
 @dataclass(frozen=True)
 class Stake:
@@ -127,9 +128,9 @@ BarToPlatform = (
     # TieOff(), JP's tent
     SurveyedLine(length_ft=4, length_in=6, angle=330),
     SurveyedLine(length_ft=4, length_in=6, angle=320),
-    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    SaveLandmark(Landmark.SKELETON, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'),
+    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     )
 
 SkeletonToMooringBlock2 = (
@@ -147,9 +148,9 @@ SkeletonToMooringBlock2 = (
     SurveyedLine(length_ft=19, length_in=7, angle=300),
     TieOff(),
     SurveyedLine(length_ft=54, length_in=6, angle=300),
-    SaveLandmark(landmark=Landmark.UMBRELLA, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png'),
+    SaveLandmark(landmark=Landmark.UMBRELLA, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', markersize=5),
     SurveyedLine(length_ft=4, length_in=8, angle=240),
-    Stake(),
+    # Stake(),
     SurveyedLine(length_ft=51, length_in=10, angle=240),
     Stake(),
     SurveyedLine(length_ft=50, angle=235),
@@ -159,19 +160,18 @@ SkeletonToMooringBlock2 = (
     SurveyedLine(length_ft=47, length_in=10, angle=175),
     Stake(),
     SurveyedLine(length_ft=15, length_in=2, angle=175),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     )
 
 MooringBlock2ToSkeleton = (
     Jump(length_ft=21, length_in=7, angle=145),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     Jump(length_ft=22, length_in=1, angle=155),
-    SaveLandmark(Landmark.SKELETON, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'),
     )
 
 MooringBlock2ToMooringBlock1 = (
     Jump(length_ft=25, length_in=9, angle=230),
-    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     )
 
 MooringBlock1ToMooringBlock5 = (
@@ -179,7 +179,7 @@ MooringBlock1ToMooringBlock5 = (
     TieOff(),
     SurveyedLine(length_ft=14, length_in=11, angle=222),
     Jump(length_ft=6, length_in=4, angle=200),
-    SaveLandmark(landmark=Landmark.CONROY, icon_path='icons/conroy.png', zoom=12),
+    SaveLandmark(landmark=Landmark.CONROY, icon_path='icons/conroy.png', markersize=5),
     Jump(length_ft=6, length_in=4, angle=200),
     SurveyedLine(length_ft=49, length_in=2, angle=160),
     TieOff(),
@@ -188,12 +188,12 @@ MooringBlock1ToMooringBlock5 = (
     TieOff(),
     SurveyedLine(length_ft=12, length_in=1, angle=75),
     SurveyedLine(length_ft=6, length_in=6, angle=100),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
 )
 
 MooringBlock5ToMooringBlock1 = (
     Jump(length_ft=25, length_in=10, angle=325),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', markersize=7, zoom=5),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', markersize=0, zoom=13),
     Jump(length_ft=21, length_in=2, angle=320),
 )
 
@@ -254,8 +254,8 @@ LisasGiftNorthwest = (
     SurveyedLine(length_ft=43, length_in=7, angle=325),
     Stake(),
     SurveyedLine(length_ft=42, length_in=6, angle=330),
-    Stake(),
-    SaveLandmark(landmark=Landmark.WRECK, icon_path='icons/shipwreck.png'), # 21 feet long
+    # Stake(),
+    SaveLandmark(landmark=Landmark.WRECK, icon_path='icons/shipwreck.png', markersize=0), # 21 feet long
 )
 
 LisasGiftNortheast = (
@@ -272,9 +272,10 @@ LisasGiftNortheast = (
     SurveyedLine(length_ft=34, length_in=6, angle=76),
     Stake(),
     Jump(length_ft=18, length_in=10, angle=140), # gap
-    SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/shipwreck.png'),
+    SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/shipwreck.png', markersize=0),
     Jump(length_ft=6, length_in=10, angle=140),
     Jump(length_ft=6, length_in=10, angle=140),
+    TieOff(),
     SurveyedLine(length_ft=60, length_in=2, angle=60),
     Stake(),
     UnsurveyedLine(length_ft=50, angle=60),
@@ -286,7 +287,7 @@ LisasGiftNortheast = (
     TieOff(),
     SurveyedLine(length_ft=54, length_in=8, angle=314),
     Jump(length_ft=8, angle=350),
-    SaveLandmark(landmark=Landmark.WRECK, icon_path='icons/shipwreck.png'),
+    SaveLandmark(landmark=Landmark.WRECK, icon_path='icons/shipwreck.png', markersize=0),
     Jump(length_ft=8, angle=170),
     SurveyedLine(length_ft=40, length_in=7, angle=262),
     TieOff(),
@@ -375,7 +376,7 @@ UmbrellaToRockIsland = (
 
 UmbrellaToOxygenTanks = (
     SurveyedLine(length_ft=3, angle=340, alt_text=''),
-    Stake(zorder=2),
+    # Stake(),
     SurveyedLine(length_ft=49, angle=340),
     Stake(),
     SurveyedLine(length_ft=49, angle=335),
@@ -602,7 +603,7 @@ BobsArrowToEmmaMunsen = (
     SurveyedLine(length_ft=65, angle=5),
     SurveyedLine(length_ft=50, angle=5),
     SurveyedLine(length_ft=22, angle=355),
-    SaveLandmark(Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png', zoom=10)
+    SaveLandmark(Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png')
 )
 
 BobsArrowToIslander = (

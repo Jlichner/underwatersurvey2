@@ -3,6 +3,8 @@ from data import Landmark, SurveyedLine, UnsurveyedLine, Arrow, Jump, RemovedLin
 from math import atan, cos, pi, sin, sqrt
 
 import matplotlib.pyplot as plt
+
+from matplotlib.patches import Polygon
 from matplotlib.collections import LineCollection
 from matplotlib.image import BboxImage
 from matplotlib.legend_handler import HandlerBase
@@ -23,7 +25,7 @@ __TOTAL_SURVEYED = 0
 
 class ImageHandler(HandlerBase):
 
-    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(0, 0), image_offset=(0, 0)):
+    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(-2, 10), image_offset=(0, 5)):
         super(ImageHandler, self).__init__(xpad, ypad, update_func)
         self.image_data = plt.imread(image_path)
         self.image_stretch = image_stretch
@@ -60,15 +62,19 @@ def __degrees(radians):
 def __meters(meters):
     return meters * 3.28084
 
-def compass_rose(ax):
+def draw_compass_rose():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    (x, y) = ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max))
-    rose = OffsetImage(plt.imread('icons/compass.png'), zoom=35/ax.figure.dpi)
-    rose.image.axes = ax
-    rose_ab = AnnotationBbox(rose, (x, y), frameon=False)
-    ax.add_artist(rose_ab)
+    (center_x, center_y) = ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max))
+    length = 100
+    (north_x, north_y) = (center_x, center_y + length)
+    (east_x, east_y) = (center_x + length, center_y)
+    (south_x, south_y) = (center_x, center_y - length)
+    (west_x, west_y) = (center_x - length, center_y)
+    plt.plot([south_x, north_x], [south_y, north_y], color='black', linewidth='3', marker='^', markersize=10)
+    plt.plot([west_x, east_x], [west_y, east_y], color='black', linewidth='2', marker=None)
+    plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize='20')
 
-def distance_ruler(ax):
+def draw_scale():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     (x, y) = ((0.9 * x_min + 0.1 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
 
@@ -98,9 +104,9 @@ def distance_ruler(ax):
     plt.text(s='100', x=(x + __meters(100)), y=y - 10, ha='center', fontsize=9, va='top')
     plt.text(s='meters', x=(x + 250), y=y - 10, ha='center', fontsize=9, va='top')
 
-def copyright(ax):
+def add_copyright():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    ax.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
+    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
 
 def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
@@ -145,7 +151,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
                 (x, y) = curser
-                plt.plot(x, y, color='white', marker='o', markersize=data.markersize, zorder=3)
+                plt.plot(x, y, color='white', marker='s', markersize=data.markersize, zorder=data.zorder)
                 im = OffsetImage(plt.imread(data.icon_path), zoom=data.zoom/ax.figure.dpi)
                 im.image.axes = ax
                 im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
@@ -211,3 +217,42 @@ def total_surveyed():
 
 def get_landmark_coordinates():
     return __LANDMARK_COORDINATES
+
+def draw_platforms():
+    length1= 15 + 9 / 12
+    width1 = 11 + 2 / 12
+    distance = 8 + 4 / 12
+    length2 = 11 + 3 / 12
+    width2 = 15 + 11 / 12
+    angle = 330
+
+
+    (x, y) = __LANDMARK_COORDINATES[Landmark.SKELETON]
+    x -= 5 # fudge
+    y -= 4 # fudge
+    corners1 = [(x, y)]
+    (x, y) = (x + length1 * cos(__radians(angle)),  y + length1 * sin(__radians(angle)))
+    corners1 += [(x, y)]
+    (x, y) = (x + width1 * cos(__radians(angle - 90)),  y + width1 * sin(__radians(angle - 90)))
+    corners1 += [(x, y)]
+    (x, y) = (x + length1 * cos(__radians(angle - 180)),  y + length1 * sin(__radians(angle - 180)))
+    corners1 += [(x, y)]
+    platform1 = Polygon(xy=corners1, closed=True, color='black')
+
+    (x, y) = __LANDMARK_COORDINATES[Landmark.SKELETON]
+    (x, y) = (x + length1 * cos(__radians(angle)),  y + length1 * sin(__radians(angle)))
+    (x, y) = (x + distance * cos(__radians(angle)),  y + distance * sin(__radians(angle)))
+    x -= 4 # fudge
+    y -= 4 # fudge
+
+    corners2 = [(x, y)]
+    (x, y) = (x + length2 * cos(__radians(angle)),  y + length2 * sin(__radians(angle)))
+    corners2 += [(x, y)]
+    (x, y) = (x + width2 * cos(__radians(angle - 90)),  y + width2 * sin(__radians(angle - 90)))
+    corners2 += [(x, y)]
+    (x, y) = (x + length2 * cos(__radians(angle - 180)),  y + length2 * sin(__radians(angle - 180)))
+    corners2 += [(x, y)]
+    platform2 = Polygon(xy=corners2, closed=True, color='black')
+
+    plt.gca().add_line(platform1)
+    plt.gca().add_line(platform2)

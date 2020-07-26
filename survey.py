@@ -1,9 +1,10 @@
 from base import (
-    compass_rose,
-    copyright,
+    add_copyright,
     corner_coordinates,
-    distance_ruler,
     draw,
+    draw_compass_rose,
+    draw_platforms,
+    draw_scale,
     get_landmark_coordinates,
     ImageHandler,
     straight_distance_angle,
@@ -159,9 +160,10 @@ plt.ylim(y_min - 50, y_max + 50)
 #
 #####
 
-compass_rose(ax)
-distance_ruler(ax)
-copyright(ax)
+draw_compass_rose()
+draw_scale()
+draw_platforms()
+add_copyright()
 
 #####
 #
@@ -192,18 +194,18 @@ NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 MOORING_BLOCK = Line2D([0], [0], label='Mooring block')
 
-skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-mooring_block_handler = ImageHandler(image_path='icons/mooringblock.png', image_stretch=(-10, 2), image_offset=(-5, 2))
-shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=(11, 26), image_offset=(6, 12))
-conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=(0, 16), image_offset=(0, 8))
-nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=(-2, 10), image_offset=(0, 5))
-emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=(6, 14), image_offset=(4, 8))
+skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png')
+car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png')
+umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png')
+anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png')
+wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png')
+gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png')
+oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png')
+mooring_block_handler = ImageHandler(image_path='icons/mooringblock.png', image_stretch=(-10, 2), image_offset=(-5, 1))
+shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png')
+conroy_handler = ImageHandler(image_path='icons/conroy.png')
+nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png')
+emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png')
 
 ax.legend(
     handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, MOORING_BLOCK, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, SHIPWRECK, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
