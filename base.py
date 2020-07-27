@@ -273,7 +273,7 @@ def draw_platforms():
     plt.gca().add_line(platform2)
 
 def draw_boat_ramp():
-    length = 150
+    length = 100
     width = 35 + 10 / 12
     angle = 325
     (x, y) = __LANDMARK_COORDINATES[Landmark.BOAT_RAMP_2]
