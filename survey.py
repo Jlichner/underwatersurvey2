@@ -207,6 +207,5 @@ ax.legend(
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-print('{}'.format(straight_distance_angle(Landmark.WRECK_1, Landmark.WRECK_2)))
-
+# plt.savefig('survey.png', transparent=True)
 plt.savefig('survey.pdf')

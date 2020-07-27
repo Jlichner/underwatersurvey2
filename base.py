@@ -22,6 +22,8 @@ __LANDMARK_COORDINATES = dict()
 __LANDMARK_COORDINATES[Landmark.BAR] = (0, 0)
 __CORNER_COORDINATES = ((0, 0), (0, 0))
 __TOTAL_SURVEYED = 0
+# __MAGNETIC_DECLINATION = 12.58
+__MAGNETIC_DECLINATION = 0
 
 class ImageHandler(HandlerBase):
 
@@ -66,12 +68,15 @@ def draw_compass_rose():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     (center_x, center_y) = ((0.9 * x_min + 0.1 * x_max), (0.1 * y_min + 0.9 * y_max))
     length = 100
+    # magnetic_north_x = center_x + length * cos(__radians(-__MAGNETIC_DECLINATION))
+    # magnetic_north_y = center_y + length * sin(__radians(-__MAGNETIC_DECLINATION))
     (north_x, north_y) = (center_x, center_y + length)
     (east_x, east_y) = (center_x + length, center_y)
     (south_x, south_y) = (center_x, center_y - length)
     (west_x, west_y) = (center_x - length, center_y)
     plt.plot([south_x, north_x], [south_y, north_y], color='black', linewidth='3', marker='^', markersize=10)
     plt.plot([west_x, east_x], [west_y, east_y], color='black', linewidth='2', marker=None)
+    # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
     plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize='20')
 
 def draw_scale():
@@ -117,7 +122,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
         if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine' or clazz == 'RemovedUnsurveyedLine':
             (x0, y0) = curser
             length = (data.length_ft + data.length_in / 12) * stretch
-            angle = data.angle + rotation
+            angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=2, zorder=1)
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
@@ -144,7 +149,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             curser = (x1, y1)
         elif clazz == 'Arrow':
             (x0, y0) = curser
-            angle = data.angle + rotation
+            angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))
             plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=7, zorder=3)
         elif clazz == 'SaveLandmark':
@@ -159,7 +164,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
         elif clazz == 'Jump':
             (x0, y0) = curser
             length = float(data.length_ft + data.length_in / 12) * stretch
-            angle = data.angle + rotation
+            angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             curser = (x1, y1)
         elif clazz == 'Stake' or clazz == 'RemovedStake':
