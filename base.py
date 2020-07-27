@@ -25,6 +25,13 @@ __TOTAL_SURVEYED = 0
 # __MAGNETIC_DECLINATION = 12.58
 __MAGNETIC_DECLINATION = 0
 
+
+#####
+#
+# HELPER CLASS FOR THE LEGEND
+#
+#####
+
 class ImageHandler(HandlerBase):
 
     def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(-2, 10), image_offset=(0, 5)):
@@ -186,16 +193,23 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
 
 
 def draw_circuit(ax, input_landmark, input_data_1, input_data_2):
-    (distance_1, angle_1) = survey_distance_angle(input_data_1)
-    (distance_2, angle_2) = survey_distance_angle(input_data_2)
+    (distance_1, angle_1) = __survey_distance_angle(input_data_1)
+    (distance_2, angle_2) = __survey_distance_angle(input_data_2)
     stretch_1 = 2 * distance_2 / (distance_1 + distance_2)
     stretch_2 = 2 * distance_1 / (distance_1 + distance_2)
     rotation_1 = (angle_1 - angle_2) / 2
     rotation_2 = (angle_2 - angle_1) / 2
-    draw(ax, input_landmark, input_data_1, stretch=stretch_1, rotation=rotation_1)
-    draw(ax, input_landmark, input_data_2, stretch=stretch_2, rotation=rotation_2)
+    draw(ax=ax, input_landmark=input_landmark, input_data=input_data_1, stretch=stretch_1, rotation=rotation_1)
+    draw(ax=ax, input_landmark=input_landmark, input_data=input_data_2, stretch=stretch_2, rotation=rotation_2)
 
-def survey_distance_angle(input_data):
+def draw_between_landmarks(ax, landmark_0, landmark_1, input_data):
+    (distance_1, angle_1) = __landmark_distance_angle(landmark_0, landmark_1)
+    (distance_2, angle_2) = __survey_distance_angle(input_data)
+    stretch = distance_1 / distance_2
+    rotation = angle_2 - angle_1
+    draw(ax=ax, input_landmark=landmark_0, input_data=input_data, stretch=stretch, rotation=rotation)
+
+def __survey_distance_angle(input_data):
     curser = (0, 0)
     for data in input_data:
         clazz = type(data).__name__
@@ -212,9 +226,9 @@ def survey_distance_angle(input_data):
         angle = atan(y / x) + pi
     return (distance, __degrees(angle))
 
-def straight_distance_angle(landmark0, landmark1):
-    (x0, y0) = __LANDMARK_COORDINATES[landmark0]
-    (x1, y1) = __LANDMARK_COORDINATES[landmark1]
+def __landmark_distance_angle(landmark_0, landmark_1):
+    (x0, y0) = __LANDMARK_COORDINATES[landmark_0]
+    (x1, y1) = __LANDMARK_COORDINATES[landmark_1]
     x = (x1 - x0)
     y = (y1 - y0)
     distance = sqrt(x * x + y * y)

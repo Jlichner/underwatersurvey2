@@ -271,7 +271,7 @@ LisasGiftToWreck1 = (
 )
 
 Wreck1ToWreck2 = (
-    UnsurveyedLine(length_ft=344, angle=66),
+    UnsurveyedLine(length_ft=344, angle=66, include_in_total_surveyed=False),
 )
 
 LisasGiftNortheast = (

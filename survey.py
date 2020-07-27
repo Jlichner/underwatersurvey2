@@ -2,18 +2,18 @@ from base import (
     add_copyright,
     corner_coordinates,
     draw,
+    draw_between_landmarks,
+    draw_boat_ramp,
     draw_circuit,
     draw_compass_rose,
     draw_platforms,
     draw_scale,
-    draw_boat_ramp,
     get_landmark_coordinates,
     ImageHandler,
-    straight_distance_angle,
-    survey_distance_angle,
-    total_surveyed
+    total_surveyed,
     )
 from data import (
+    AngleIronToFourWay,
     BarToPlatform,
     BobsArrowToEmmaMunsen,
     BobsArrowToIslander,
@@ -23,18 +23,17 @@ from data import (
     FourWayToNatesTieoff,
     JJJ,
     Landmark,
-    LisasGiftToWreck1,
     LisasGiftNortheast,
-    NatesTieoffToRockIsland,
-    MooringBlock2ToMooringBlock1,
+    LisasGiftToWreck1,
     MooringBlock1ToMooringBlock5ViaMooringBlocks,
     MooringBlock1ToMooringBlock5ViaPokerRun,
-    AngleIronToFourWay,
+    MooringBlock2ToMooringBlock1,
+    NatesTieoffToRockIsland,
     RockIslandBottleClockwise,
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
-    SkeletonToMooringBlock2ViaPokerRun,
     SkeletonToMooringBlock2ViaMooringBlocks,
+    SkeletonToMooringBlock2ViaPokerRun,
     UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
     Wreck1ToWreck2,
@@ -42,10 +41,7 @@ from data import (
 
 import matplotlib
 import matplotlib.pyplot as plt
-from matplotlib._png import read_png
 from matplotlib.lines import Line2D
-from matplotlib.patches import Patch
-from matplotlib.transforms import Bbox
 
 matplotlib.rcParams['figure.dpi'] = 300
 
@@ -99,12 +95,7 @@ draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
 #
 ######
 
-(distance_rock, angle_rock) = straight_distance_angle(Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T)
-(distance_nate, angle_nate) = survey_distance_angle(NatesTieoffToRockIsland)
-stretch_nate = distance_rock / distance_nate
-rotation_nate = angle_nate - angle_rock
-
-draw(ax, Landmark.NATES_TIEOFF, NatesTieoffToRockIsland, stretch=stretch_nate, rotation=rotation_nate)
+draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland)
 
 draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 
@@ -151,7 +142,6 @@ add_copyright()
 #####
 
 ARROW = Line2D([0], [0], label='Arrow', color='black', linewidth=0, marker='^', markersize=7, markerfacecolor='white')
-# PLATFORM = Patch(label='Platform', facecolor='darkgoldenrod')
 TIE_OFF = Line2D([0], [0], label='Tie off', color='blue', linewidth=0, marker='h', markersize=5)
 STAKE = Line2D([0], [0], label='Stake', color='brown', linewidth=0, marker='s', markersize=5)
 SURVEYED_LINE = Line2D([0], [0], label='Surveyed line', color='black', linestyle='solid', linewidth=2)
