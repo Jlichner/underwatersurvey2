@@ -1,4 +1,4 @@
-from data import Landmark, SurveyedLine, UnsurveyedLine, Arrow, Jump, RemovedLine, SaveLandmark
+from data import Landmark, SurveyedLine, UnsurveyedLine, Arrow, Jump, RemovedLine, RemovedStake, SaveLandmark
 
 from math import atan, cos, pi, sin, sqrt
 
@@ -114,7 +114,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
     curser = __LANDMARK_COORDINATES[input_landmark]
     for data in input_data:
         clazz = type(data).__name__
-        if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine':
+        if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine' or clazz == 'RemovedUnsurveyedLine':
             (x0, y0) = curser
             length = (data.length_ft + data.length_in / 12) * stretch
             angle = data.angle + rotation
@@ -162,7 +162,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             angle = data.angle + rotation
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             curser = (x1, y1)
-        elif clazz == 'Stake':
+        elif clazz == 'Stake' or clazz == 'RemovedStake':
             (x, y) = curser
             plt.plot(x, y, color=data.color, marker=data.marker, markersize=data.markersize, zorder=data.zorder)
             if data.text is not None:
@@ -171,7 +171,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             (x, y) = curser
             plt.plot(x, y, color=data.color, marker=data.marker, markersize=6, zorder=data.zorder)
         else:
-            raise Exception('{} is not a recognized data class'.format('clazz'))
+            raise Exception('{} is not a recognized data class'.format(clazz))
         (x, y) = curser
         x_min = min(x, x_min)
         x_max = max(x, x_max)
@@ -179,6 +179,16 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
         y_max = max(y, y_max)
     __CORNER_COORDINATES = ((x_min, y_min), (x_max, y_max))
 
+
+def draw_circuit(ax, input_landmark, input_data_1, input_data_2):
+    (distance_1, angle_1) = survey_distance_angle(input_data_1)
+    (distance_2, angle_2) = survey_distance_angle(input_data_2)
+    stretch_1 = 2 * distance_2 / (distance_1 + distance_2)
+    stretch_2 = 2 * distance_1 / (distance_1 + distance_2)
+    rotation_1 = (angle_1 - angle_2) / 2
+    rotation_2 = (angle_2 - angle_1) / 2
+    draw(ax, input_landmark, input_data_1, stretch=stretch_1, rotation=rotation_1)
+    draw(ax, input_landmark, input_data_2, stretch=stretch_2, rotation=rotation_2)
 
 def survey_distance_angle(input_data):
     curser = (0, 0)
@@ -256,3 +266,17 @@ def draw_platforms():
 
     plt.gca().add_line(platform1)
     plt.gca().add_line(platform2)
+
+def draw_boat_ramp():
+    length = 150
+    width = 35 + 10 / 12
+    angle = 325
+    (x, y) = __LANDMARK_COORDINATES[Landmark.BOAT_RAMP_2]
+    corners = [__LANDMARK_COORDINATES[Landmark.BOAT_RAMP_1], __LANDMARK_COORDINATES[Landmark.BOAT_RAMP_2]]
+    (x, y) = (x + length * cos(__radians(angle - 180)),  y + length * sin(__radians(angle - 180)))
+    corners += [(x, y)]
+    (x, y) = (x + width * cos(__radians(angle - 90)),  y + width * sin(__radians(angle - 90)))
+    corners += [(x, y)]
+    boat_ramp = Polygon(xy=corners, closed=True, color='lightgray')
+
+    plt.gca().add_line(boat_ramp)

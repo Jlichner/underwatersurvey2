@@ -2,9 +2,11 @@ from base import (
     add_copyright,
     corner_coordinates,
     draw,
+    draw_circuit,
     draw_compass_rose,
     draw_platforms,
     draw_scale,
+    draw_boat_ramp,
     get_landmark_coordinates,
     ImageHandler,
     straight_distance_angle,
@@ -21,20 +23,21 @@ from data import (
     FourWayToNatesTieoff,
     JJJ,
     Landmark,
-    LisasGiftNorthwest,
+    LisasGiftToWreck1,
     LisasGiftNortheast,
     NatesTieoffToRockIsland,
-    MooringBlock1ToMooringBlock5,
     MooringBlock2ToMooringBlock1,
-    MooringBlock2ToSkeleton,
-    MooringBlock5ToMooringBlock1,
+    MooringBlock1ToMooringBlock5ViaMooringBlocks,
+    MooringBlock1ToMooringBlock5ViaPokerRun,
     AngleIronToFourWay,
     RockIslandBottleClockwise,
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
-    SkeletonToMooringBlock2,
+    SkeletonToMooringBlock2ViaPokerRun,
+    SkeletonToMooringBlock2ViaMooringBlocks,
     UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
+    Wreck1ToWreck2,
 )
 
 import matplotlib
@@ -58,42 +61,17 @@ ax.set_aspect(aspect='equal')
 
 draw(ax, Landmark.BAR, BarToPlatform)
 
-(distance_s2, angle_s2) = survey_distance_angle(SkeletonToMooringBlock2)
-(distance_2s, angle_2s) = survey_distance_angle(MooringBlock2ToSkeleton)
-stretch_s2 = 2 * distance_2s / (distance_2s + distance_s2)
-stretch_2s = 2 * distance_s2 / (distance_2s + distance_s2)
-rotation_s2 = (angle_s2 - angle_2s - 180) / 2
-rotation_2s = (angle_2s + 180 - angle_s2) / 2
-
-draw(ax, Landmark.SKELETON, SkeletonToMooringBlock2, stretch=stretch_s2, rotation=rotation_s2)
-
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToSkeleton, stretch=stretch_2s, rotation=rotation_2s)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks)
 
 draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1)
 
-(distance_15, angle_15) = survey_distance_angle(MooringBlock1ToMooringBlock5)
-(distance_51, angle_51) = survey_distance_angle(MooringBlock5ToMooringBlock1)
-stretch_15 = 2 * distance_51 / (distance_51 + distance_15)
-stretch_51 = 2 * distance_15 / (distance_51 + distance_15)
-rotation_15 = (angle_15 + 180 - angle_51) / 2
-rotation_51 = (angle_51 - angle_15 - 180) / 2
-
-draw(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5, stretch=stretch_15, rotation=rotation_15)
-
-draw(ax, Landmark.MOORING_BLOCK_5, MooringBlock5ToMooringBlock1, stretch=stretch_51, rotation=rotation_51)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks)
 
 ######
 #
 # Draw upstream of the recreation area
 #
 ######
-
-(distance_jjj, angle_jjj) = survey_distance_angle(FourWayToBypassEndSixtyFoot)
-(distance_sixty_foot, angle_sixty_foot) = survey_distance_angle(JJJ)
-stretch_jjj = 2 * distance_jjj / (distance_jjj + distance_sixty_foot)
-stretch_sixty_foot = 2 * distance_sixty_foot / (distance_jjj + distance_sixty_foot)
-rotation_jjj = (angle_sixty_foot - angle_jjj) / 2
-rotation_sixty_foot = (angle_jjj - angle_sixty_foot) / 2
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
@@ -105,9 +83,7 @@ draw(ax, Landmark.ANGLE_IRON, AngleIronToFourWay)
 
 draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff)
 
-draw(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, stretch=stretch_sixty_foot, rotation=rotation_sixty_foot)
-
-draw(ax, Landmark.FOUR_WAY, JJJ, stretch=stretch_jjj, rotation=rotation_jjj)
+draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ)
 
 draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow)
 
@@ -139,7 +115,8 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 #####
 
 draw(ax, Landmark.CAR, CarToLisasGift)
-draw(ax, Landmark.LISAS_GIFT, LisasGiftNorthwest)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToWreck1)
+draw(ax, Landmark.WRECK_1, Wreck1ToWreck2)
 draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast)
 
 #####
@@ -163,6 +140,7 @@ plt.ylim(y_min - 50, y_max + 50)
 draw_compass_rose()
 draw_scale()
 draw_platforms()
+draw_boat_ramp()
 add_copyright()
 
 #####
@@ -228,5 +206,7 @@ ax.legend(
     loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed()))
+
+print('{}'.format(straight_distance_angle(Landmark.WRECK_1, Landmark.WRECK_2)))
 
 plt.savefig('survey.pdf')
