@@ -213,7 +213,7 @@ def __survey_distance_angle(input_data):
     curser = (0, 0)
     for data in input_data:
         clazz = type(data).__name__
-        if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'Jump':
+        if clazz in ('SurveyedLine', 'UnsurveyedLine', 'RemovedLine', 'Jump'):
             (x0, y0) = curser
             length = data.length_ft + data.length_in / 12
             (x1, y1) = (x0 + length * cos(__radians(data.angle)), y0 + length * sin(__radians(data.angle)))

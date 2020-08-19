@@ -54,6 +54,8 @@ class Landmark(Enum):
     BOAT_RAMP_2=33
     WRECK_2 = 34
     WRECK_3 = 35
+    THREE_ROCKS = 36
+    OXYGEN_TANKS_STAKE = 37
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -390,7 +392,7 @@ UmbrellaToRockIsland = (
     SaveLandmark(Landmark.ROCK_ISLAND_BOTTLE)
     )
 
-UmbrellaToOxygenTanks = (
+UmbrellaToThreeRocks = (
     SurveyedLine(length_ft=3, angle=340, alt_text=''),
     # Stake(),
     SurveyedLine(length_ft=49, angle=340),
@@ -405,6 +407,10 @@ UmbrellaToOxygenTanks = (
     Stake(),
     SurveyedLine(length_ft=40, angle=280),
     TieOff(), # ROCK1
+    SaveLandmark(Landmark.THREE_ROCKS),
+)
+
+ThreeRocksToOxygenTankStakeOld = (
     SurveyedLine(length_ft=34, angle=35, flip_text_side=True),
     TieOff(), # ROCK2
     SurveyedLine(length_ft=32, angle=40),
@@ -417,6 +423,14 @@ UmbrellaToOxygenTanks = (
     Stake(),
     SurveyedLine(length_ft=48, angle=240),
     Stake(),
+    SaveLandmark(Landmark.OXYGEN_TANKS_STAKE),
+    )
+
+ThreeRocksToOxygenTankStakeNew = (
+    UnsurveyedLine(length_ft=121, angle=273),
+    )
+
+OxygenTanksStakeToOxygenTanks = (
     SurveyedLine(length_ft=24, angle=280),
     SaveLandmark(Landmark.OXYGEN_TANKS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
 )
