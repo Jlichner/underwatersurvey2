@@ -29,15 +29,12 @@ from data import (
     MooringBlock1ToMooringBlock5ViaPokerRun,
     MooringBlock2ToMooringBlock1,
     NatesTieoffToRockIsland,
-    OxygenTanksStakeToOxygenTanks,
     RockIslandBottleClockwise,
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
     SkeletonToMooringBlock2ViaMooringBlocks,
     SkeletonToMooringBlock2ViaPokerRun,
-    ThreeRocksToOxygenTankStakeNew,
-    ThreeRocksToOxygenTankStakeOld,
-    UmbrellaToThreeRocks,
+    UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
     Wreck1ToWreck2,
 )
@@ -72,11 +69,7 @@ draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerR
 #
 ######
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToThreeRocks)
-
-draw_circuit(ax, Landmark.THREE_ROCKS, ThreeRocksToOxygenTankStakeOld, ThreeRocksToOxygenTankStakeNew)
-
-draw(ax, Landmark.OXYGEN_TANKS_STAKE, OxygenTanksStakeToOxygenTanks)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland)
 

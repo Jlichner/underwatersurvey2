@@ -54,8 +54,6 @@ class Landmark(Enum):
     BOAT_RAMP_2=33
     WRECK_2 = 34
     WRECK_3 = 35
-    THREE_ROCKS = 36
-    OXYGEN_TANKS_STAKE = 37
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -392,46 +390,28 @@ UmbrellaToRockIsland = (
     SaveLandmark(Landmark.ROCK_ISLAND_BOTTLE)
     )
 
-UmbrellaToThreeRocks = (
-    SurveyedLine(length_ft=3, angle=340, alt_text=''),
+UmbrellaToOxygenTanks = (
+    SurveyedLine(length_ft=3, angle=335, alt_text=''),
     # Stake(),
-    SurveyedLine(length_ft=49, angle=340),
+    SurveyedLine(length_ft=49, length_in=6, angle=335),
+    Stake(),
+    SurveyedLine(length_ft=49, length_in=4, angle=330),
     Stake(),
     SurveyedLine(length_ft=49, angle=335),
     Stake(),
-    SurveyedLine(length_ft=49, angle=320),
-    Stake(),
-    SurveyedLine(length_ft=13, angle=340),
+    SurveyedLine(length_ft=19, length_in=10, angle=320),
     TieOff(), # BARREL
-    SurveyedLine(length_ft=28, angle=300),
+    SurveyedLine(length_ft=29, angle=310),
     Stake(),
-    SurveyedLine(length_ft=40, angle=280),
-    TieOff(), # ROCK1
-    SaveLandmark(Landmark.THREE_ROCKS),
-)
-
-ThreeRocksToOxygenTankStakeOld = (
-    SurveyedLine(length_ft=34, angle=35, flip_text_side=True),
-    TieOff(), # ROCK2
-    SurveyedLine(length_ft=32, angle=40),
-    TieOff(), # ROCK3
-    SurveyedLine(length_ft=46, angle=280),
+    SurveyedLine(length_ft=42, length_in=1, angle=300),
     Stake(),
-    SurveyedLine(length_ft=35, angle=280),
+    SurveyedLine(length_ft=41, angle=290),
     Stake(),
-    SurveyedLine(length_ft=48, angle=235),
+    SurveyedLine(length_ft=32, length_in=1, angle=280),
     Stake(),
-    SurveyedLine(length_ft=48, angle=240),
+    SurveyedLine(length_ft=32, length_in=6, angle=280),
     Stake(),
-    SaveLandmark(Landmark.OXYGEN_TANKS_STAKE),
-    )
-
-ThreeRocksToOxygenTankStakeNew = (
-    UnsurveyedLine(length_ft=121, angle=273),
-    )
-
-OxygenTanksStakeToOxygenTanks = (
-    SurveyedLine(length_ft=24, angle=280),
+    SurveyedLine(length_ft=27, angle=280),
     SaveLandmark(Landmark.OXYGEN_TANKS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
 )
 
@@ -511,8 +491,6 @@ JJJ = (
     TieOff(),
     SurveyedLine(length_ft=20, angle=230),
     Arrow(angle=50, distance=0, color='red'),
-    UnsurveyedLine(length_ft=50, angle=300),
-    Jump(length_ft=50, angle=120),
     SurveyedLine(length_ft=15, length_in=6, angle=210),
     TieOff(),
     SurveyedLine(length_ft=35, length_in=6, angle=230),
@@ -594,9 +572,6 @@ FourWayToBypassEndSixtyFoot = (
     SurveyedLine(length_ft=50, angle=245),
     TieOff(),
     SurveyedLine(length_ft=34, angle=255),
-    UnsurveyedLine(length_ft=50, angle=300), # crossover
-    Jump(length_ft=100, angle=120),
-    UnsurveyedLine(length_ft=50, angle=300),
     SurveyedLine(length_ft=33, angle=255),
     TieOff(),
     SurveyedLine(length_ft=50, angle=230),
