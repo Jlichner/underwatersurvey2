@@ -34,7 +34,7 @@ __MAGNETIC_DECLINATION = 0
 
 class ImageHandler(HandlerBase):
 
-    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(-2, 10), image_offset=(0, 5)):
+    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(-2, 5), image_offset=(0, 5)):
         super(ImageHandler, self).__init__(xpad, ypad, update_func)
         self.image_data = plt.imread(image_path)
         self.image_stretch = image_stretch
@@ -81,44 +81,44 @@ def draw_compass_rose():
     (east_x, east_y) = (center_x + length, center_y)
     (south_x, south_y) = (center_x, center_y - length)
     (west_x, west_y) = (center_x - length, center_y)
-    plt.plot([south_x, north_x], [south_y, north_y], color='black', linewidth='3', marker='^', markersize=10)
-    plt.plot([west_x, east_x], [west_y, east_y], color='black', linewidth='2', marker=None)
+    plt.plot([south_x, north_x], [south_y, north_y], color='black', linewidth=2, marker='^', markersize=5)
+    plt.plot([west_x, east_x], [west_y, east_y], color='black', linewidth=1, marker=None)
     # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
-    plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize='20')
+    plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize=8)
 
 def draw_scale():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     (x, y) = ((0.9 * x_min + 0.1 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
 
     # feet
-    plt.text(s='0', x=x, y=y + 10, ha='center', fontsize=9, va='bottom')
-    plt.plot([x, x + 50], [y, y], color='black', linewidth=2, marker=2)
-    plt.text(s='50', x=(x + 50), y=y + 10, ha='center', fontsize=9, va='bottom')
-    plt.plot([x + 50, x + 100], [y, y], color='black', linewidth=2, marker=2)
-    plt.text(s='100', x=(x + 100), y=y + 10, ha='center', fontsize=9, va='bottom')
-    plt.plot([x + 100, x + 200], [y, y], color='black', linewidth=2, marker=2)
-    plt.text(s='200', x=(x + 200), y=y + 10, ha='center', fontsize=9, va='bottom')
-    plt.plot([x + 200, x + 300], [y, y], color='black', linewidth=2, marker=2)
-    plt.text(s='300', x=(x + 300), y=y + 10, ha='center', fontsize=9, va='bottom')
-    plt.text(s='feet', x=(x + 250), y=y + 10, ha='center', fontsize=9, va='bottom')
+    plt.text(s='0', x=x, y=y + 20, ha='center', fontsize=5, va='bottom')
+    plt.plot([x, x + 50], [y, y], color='black', linewidth=1, marker=2)
+    plt.text(s='50', x=(x + 50), y=y + 20, ha='center', fontsize=5, va='bottom')
+    plt.plot([x + 50, x + 100], [y, y], color='black', linewidth=1, marker=2)
+    plt.text(s='100', x=(x + 100), y=y + 20, ha='center', fontsize=5, va='bottom')
+    plt.plot([x + 100, x + 200], [y, y], color='black', linewidth=1, marker=2)
+    plt.text(s='200', x=(x + 200), y=y + 20, ha='center', fontsize=5, va='bottom')
+    plt.plot([x + 200, x + 300], [y, y], color='black', linewidth=1, marker=2)
+    plt.text(s='300', x=(x + 300), y=y + 20, ha='center', fontsize=5, va='bottom')
+    plt.text(s='feet', x=(x + 250), y=y + 20, ha='center', fontsize=5, va='bottom')
 
     # meters
-    plt.text(s='0', x=x, y=y - 10, ha='center', fontsize=9, va='top')
-    plt.plot([x, x + __meters(10)], [y, y], color='black', linewidth=2, marker=3)
-    plt.text(s='10', x=(x + __meters(10)), y=y - 10, ha='center', fontsize=9, va='top')
-    plt.plot([x + __meters(10), x + __meters(20)], [y, y], color='black', linewidth=2, marker=3)
-    plt.text(s='20', x=(x + __meters(20)), y=y - 10, ha='center', fontsize=9, va='top')
-    plt.plot([x + __meters(20), x + __meters(30)], [y, y], color='black', linewidth=2, marker=3)
-    plt.text(s='30', x=(x + __meters(30)), y=y - 10, ha='center', fontsize=9, va='top')
-    plt.plot([x + __meters(30), x + __meters(50)], [y, y], color='black', linewidth=2, marker=3)
-    plt.text(s='50', x=(x + __meters(50)), y=y - 10, ha='center', fontsize=9, va='top')
-    plt.plot([x + __meters(50), x + __meters(100)], [y, y], color='black', linewidth=2, marker=3)
-    plt.text(s='100', x=(x + __meters(100)), y=y - 10, ha='center', fontsize=9, va='top')
-    plt.text(s='meters', x=(x + 250), y=y - 10, ha='center', fontsize=9, va='top')
+    plt.text(s='0', x=x, y=y - 20, ha='center', fontsize=5, va='top')
+    plt.plot([x, x + __meters(10)], [y, y], color='black', linewidth=1, marker=3)
+    plt.text(s='10', x=(x + __meters(10)), y=y - 20, ha='center', fontsize=5, va='top')
+    plt.plot([x + __meters(10), x + __meters(20)], [y, y], color='black', linewidth=1, marker=3)
+    plt.text(s='20', x=(x + __meters(20)), y=y - 20, ha='center', fontsize=5, va='top')
+    plt.plot([x + __meters(20), x + __meters(30)], [y, y], color='black', linewidth=1, marker=3)
+    plt.text(s='30', x=(x + __meters(30)), y=y - 20, ha='center', fontsize=5, va='top')
+    plt.plot([x + __meters(30), x + __meters(50)], [y, y], color='black', linewidth=1, marker=3)
+    plt.text(s='50', x=(x + __meters(50)), y=y - 20, ha='center', fontsize=5, va='top')
+    plt.plot([x + __meters(50), x + __meters(100)], [y, y], color='black', linewidth=1, marker=3)
+    plt.text(s='100', x=(x + __meters(100)), y=y - 20, ha='center', fontsize=5, va='top')
+    plt.text(s='meters', x=(x + 250), y=y - 20, ha='center', fontsize=5, va='top')
 
 def add_copyright():
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=24, horizontalalignment='right')
+    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=12, horizontalalignment='right')
 
 def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
@@ -131,7 +131,7 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             length = (data.length_ft + data.length_in / 12) * stretch
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
-            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=2, zorder=1)
+            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=1, zorder=1)
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
             mid_y = (y0 + y1) / 2 - 8 * cos(__radians(angle))
             mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
@@ -144,13 +144,13 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
                 if data.length_in:
                     text = '{} {}\"'.format(text, data.length_in)
                 text_rotation = (45 - angle) % 90 - 45
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=5, va='center')
             else:
                 text = data.alt_text
                 text_rotation = data.text_rotation
                 if text_rotation is None:
                    text_rotation = (180 - angle) % 180 - 90
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=9, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=5, va='center')
             if data.include_in_total_surveyed:
                 __TOTAL_SURVEYED += length
             curser = (x1, y1)
@@ -158,13 +158,12 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             (x0, y0) = curser
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))
-            plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=7, zorder=3)
+            plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=2, zorder=3)
         elif clazz == 'SaveLandmark':
             __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
                 (x, y) = curser
-                plt.plot(x, y, color='white', marker='s', markersize=data.markersize, zorder=data.zorder)
-                im = OffsetImage(plt.imread(data.icon_path), zoom=data.zoom/ax.figure.dpi)
+                im = OffsetImage(plt.imread(data.icon_path), zoom=25/ax.figure.dpi)
                 im.image.axes = ax
                 im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
                 ax.add_artist(im_ab)
@@ -176,12 +175,12 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0):
             curser = (x1, y1)
         elif clazz == 'Stake' or clazz == 'RemovedStake':
             (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=data.markersize, zorder=data.zorder)
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=3, zorder=data.zorder)
             if data.text is not None:
                 plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
         elif clazz == 'TieOff':
             (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=6, zorder=data.zorder)
+            plt.plot(x, y, color=data.color, marker=data.marker, markersize=3, zorder=data.zorder)
         else:
             raise Exception('{} is not a recognized data class'.format(clazz))
         (x, y) = curser

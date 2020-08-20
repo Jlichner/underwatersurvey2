@@ -46,7 +46,7 @@ from matplotlib.lines import Line2D
 matplotlib.rcParams['figure.dpi'] = 300
 
 fig, ax = plt.subplots()
-fig.set_size_inches(36, 24)
+fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
 ######
@@ -117,7 +117,7 @@ draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast)
 #####
 
 plt.axis('off')
-plt.title('Bonnie Castle Scuba Park\n', fontsize=36)
+plt.title('Bonnie Castle Scuba Park\n', fontsize=18)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
 plt.xlim(x_min - 50, x_max + 50)
 plt.ylim(y_min - 50, y_max + 50)
@@ -191,11 +191,11 @@ ax.legend(
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
         },
-    fontsize=10,
+    fontsize=6,
     labelspacing=1.2,
     loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-# plt.savefig('survey.png', transparent=True)
-plt.savefig('survey.pdf')
+plt.savefig('survey.png', transparent=True)
+# plt.savefig('survey.pdf')
