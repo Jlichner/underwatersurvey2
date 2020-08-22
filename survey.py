@@ -63,13 +63,16 @@ draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1)
 
 draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks)
 
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+
+draw(ax, Landmark.CAR, CarToLisasGift)
+
 ######
 #
 # Draw upstream of the recreation area
 #
 ######
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland)
 
@@ -105,7 +108,6 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 #
 #####
 
-draw(ax, Landmark.CAR, CarToLisasGift)
 draw(ax, Landmark.LISAS_GIFT, LisasGiftToWreck1)
 draw(ax, Landmark.WRECK_1, Wreck1ToWreck2)
 draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast)
@@ -149,34 +151,56 @@ UNSURVEYED_LINE = Line2D([0], [0], label='Unsurveyed line', color='black', lines
 REMOVED_LINE = Line2D([0], [0], label='Removed line', color='lightgrey', linestyle='solid')
 MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='red', linestyle='solid')
 
-SKELETON = Line2D([0], [0], label='Skeleton')
-CAR = Line2D([0], [0], label='Car')
-UMBRELLA = Line2D([0], [0], label='Umbrella')
 ANCHOR = Line2D([0], [0], label='Anchor')
-WHEEL = Line2D([0], [0], label='Wagon wheels')
-GIFT = Line2D([0], [0], label='Lisa\'s Gift')
-SHIPWRECK = Line2D([0], [0], label='Shipwreck')
-OXYGEN = Line2D([0], [0], label='Oxygen bottles')
+CAR = Line2D([0], [0], label='Car')
 CONROY = Line2D([0], [0], label='Conroy')
-NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
+GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 MOORING_BLOCK = Line2D([0], [0], label='Mooring block')
+NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
+OXYGEN = Line2D([0], [0], label='Oxygen bottles')
+SHIPWRECK = Line2D([0], [0], label='Shipwreck')
+SKELETON = Line2D([0], [0], label='Skeleton')
+TRACTOR_TIRE = Line2D([0], [0], label='Big tire')
+UMBRELLA = Line2D([0], [0], label='Umbrella')
+WHEEL = Line2D([0], [0], label='Wagon wheels')
 
-skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png')
-car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png')
-umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png')
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png')
-wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png')
-gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png')
-oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png')
-mooring_block_handler = ImageHandler(image_path='icons/mooringblock.png', image_stretch=(-10, 2), image_offset=(-5, 1))
-shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png')
+car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png')
 conroy_handler = ImageHandler(image_path='icons/conroy.png')
-nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png')
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png')
+gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png')
+mooring_block_handler = ImageHandler(image_path='icons/mooringblock.png', image_stretch=(-10, 2), image_offset=(-5, 1))
+nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png')
+oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png')
+shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png')
+skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png')
+tractor_tire_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png')
+umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png')
+wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png')
 
 ax.legend(
-    handles=[SURVEYED_LINE, UNSURVEYED_LINE, MARINA_LINE, STAKE, TIE_OFF, MOORING_BLOCK, ARROW, SKELETON, CAR, UMBRELLA, ANCHOR, WHEEL, GIFT, SHIPWRECK, OXYGEN, CONROY, NATES_TIEOFF, EMMA_MUNSEN_TUGBOAT],
+    handles=[
+        ANCHOR,
+        ARROW,
+        CAR,
+        CONROY,
+        EMMA_MUNSEN_TUGBOAT,
+        GIFT,
+        MARINA_LINE,
+        MOORING_BLOCK,
+        NATES_TIEOFF,
+        OXYGEN,
+        SHIPWRECK,
+        SKELETON,
+        STAKE,
+        SURVEYED_LINE,
+        TIE_OFF,
+        TRACTOR_TIRE,
+        UMBRELLA,
+        UNSURVEYED_LINE,
+        WHEEL,
+        ],
     handler_map={
         ANCHOR: anchor_handler,
         CAR: car_handler,
@@ -188,6 +212,7 @@ ax.legend(
         OXYGEN: oxygen_handler,
         SHIPWRECK: shipwreck_handler,
         SKELETON: skeleton_handler,
+        TRACTOR_TIRE: tractor_tire_handler,
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
         },
@@ -197,5 +222,5 @@ ax.legend(
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-plt.savefig('survey.png', transparent=True)
-# plt.savefig('survey.pdf')
+# plt.savefig('survey.png', transparent=True)
+plt.savefig('survey.pdf')

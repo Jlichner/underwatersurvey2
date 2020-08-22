@@ -54,6 +54,7 @@ class Landmark(Enum):
     BOAT_RAMP_2=33
     WRECK_2 = 34
     WRECK_3 = 35
+    TRACTOR_TIRE = 36
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -99,7 +100,9 @@ class Jump:
 class SaveLandmark:
     landmark: Landmark = None
     icon_path: str = None
+    markersize: int = 4
     zorder: int = 3
+    zoom: int = 25
 
 @dataclass(frozen=True)
 class Stake:
@@ -133,11 +136,10 @@ BarToPlatform = (
     SurveyedLine(length_ft=36, length_in=8, angle=330),
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
-    SurveyedLine(length_ft=4, length_in=6, angle=330),
-    SurveyedLine(length_ft=4, length_in=6, angle=320),
-    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png'),
+    SurveyedLine(length_in=9, angle=325),
+    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png'),
+    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     )
 
 SkeletonToMooringBlock2ViaPokerRun = (
@@ -169,18 +171,18 @@ SkeletonToMooringBlock2ViaPokerRun = (
     SurveyedLine(length_ft=47, length_in=10, angle=175),
     Stake(),
     SurveyedLine(length_ft=15, length_in=2, angle=175),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png'),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     )
 
 SkeletonToMooringBlock2ViaMooringBlocks = (
     Jump(length_ft=22, length_in=1, angle=335),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png'),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     Jump(length_ft=21, length_in=7, angle=325),
     )
 
 MooringBlock2ToMooringBlock1 = (
     Jump(length_ft=25, length_in=9, angle=230),
-    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png'),
+    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     )
 
 MooringBlock1ToMooringBlock5ViaPokerRun = (
@@ -197,12 +199,12 @@ MooringBlock1ToMooringBlock5ViaPokerRun = (
     TieOff(),
     SurveyedLine(length_ft=12, length_in=1, angle=75),
     SurveyedLine(length_ft=6, length_in=6, angle=100),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png'),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
 )
 
 MooringBlock1ToMooringBlock5ViaMooringBlocks = (
     Jump(length_ft=21, length_in=2, angle=140),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png'),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
     Jump(length_ft=25, length_in=10, angle=145),
 )
 
@@ -605,44 +607,43 @@ BobsArrowToEmmaMunsen = (
 )
 
 BobsArrowToIslander = (
-    UnsurveyedLine(length_ft=25, angle=220),
+    SurveyedLine(length_ft=25, angle=220),
     TieOff(),
-    UnsurveyedLine(length_ft=104, angle=250),
+    SurveyedLine(length_ft=104, angle=250),
     TieOff(),
-    UnsurveyedLine(length_ft=12, angle=270),
+    SurveyedLine(length_ft=16, length_in=5, angle=270),
     TieOff(),
-    UnsurveyedLine(length_ft=25, angle=250),
-    UnsurveyedLine(length_ft=25, angle=245),
-    UnsurveyedLine(length_ft=24, angle=240),
-    UnsurveyedLine(length_ft=22, angle=235),
-    UnsurveyedLine(length_ft=21, angle=230),
+    SurveyedLine(length_ft=23, angle=270),
+    SurveyedLine(length_ft=23, angle=250),
+    SurveyedLine(length_ft=35, angle=235),
+    SurveyedLine(length_ft=35, angle=225),
     TieOff(),
-    UnsurveyedLine(length_ft=15, angle=185),
+    SurveyedLine(length_ft=14, angle=195),
     TieOff(),
-    UnsurveyedLine(length_ft=55, angle=205),
+    SurveyedLine(length_ft=54, angle=210),
     TieOff(),
-    UnsurveyedLine(length_ft=61, angle=205),
+    SurveyedLine(length_ft=60, angle=210),
     TieOff(),
-    UnsurveyedLine(length_ft=54, angle=200),
+    SurveyedLine(length_ft=58, angle=200),
     TieOff(),
-    UnsurveyedLine(length_ft=54, length_in=4, angle=322),
-    TieOff(),
-    UnsurveyedLine(length_ft=47, length_in=6, angle=302),
-    TieOff(), # LOG PILE BEGIN
-    Jump(length_ft=8, length_in=5, angle=280),
-    UnsurveyedLine(length_ft=6, angle=262),
-    UnsurveyedLine(length_ft=10, length_in=3, angle=216),
-    TieOff(), # END LOGS
-    UnsurveyedLine(length_ft=105, length_in=2, angle=220),
-    TieOff(),
-    UnsurveyedLine(length_ft=39, angle=200),
-    UnsurveyedLine(length_ft=42, angle=205),
-    TieOff(),
-    UnsurveyedLine(length_ft=55, length_in=2, angle=240),
-    TieOff(),
-    UnsurveyedLine(length_ft=10, length_in=5, angle=260),
-    TieOff(),
-    UnsurveyedLine(length_ft=50, angle=260),
+    SurveyedLine(length_ft=54, angle=150),
+    SaveLandmark(Landmark.TRACTOR_TIRE, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png'),
+    UnsurveyedLine(length_ft=47, length_in=6, angle=120),
+    # TieOff(), # LOG PILE BEGIN
+    # Jump(length_ft=8, length_in=5, angle=280),
+    # UnsurveyedLine(length_ft=6, angle=262),
+    # UnsurveyedLine(length_ft=10, length_in=3, angle=216),
+    # TieOff(), # END LOGS
+    # UnsurveyedLine(length_ft=105, length_in=2, angle=220),
+    # TieOff(),
+    # UnsurveyedLine(length_ft=39, angle=200),
+    # UnsurveyedLine(length_ft=42, angle=205),
+    # TieOff(),
+    # UnsurveyedLine(length_ft=55, length_in=2, angle=240),
+    # TieOff(),
+    # UnsurveyedLine(length_ft=10, length_in=5, angle=260),
+    # TieOff(),
+    # UnsurveyedLine(length_ft=50, angle=260),
 )
     
 
