@@ -49,23 +49,30 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
+FONTSIZE=8
+LANDMARK_ZOOM=40
+LANDMARK_MARKERSIZE=8
+LEGEND_IMAGE_STRETCH=(-14, 7)
+LEGEND_IMAGE_OFFSET=(-8, 5)
+TIEOFF_SIZE=3
+
 ######
 #
 # Draw the recreational area, forcing both the right loop and the left loop to close up
 #
 #####
 
-draw(ax, Landmark.BAR, BarToPlatform)
+draw(ax, Landmark.BAR, BarToPlatform, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1)
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.CAR, CarToLisasGift)
+draw(ax, Landmark.CAR, CarToLisasGift, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 ######
 #
@@ -74,23 +81,23 @@ draw(ax, Landmark.CAR, CarToLisasGift)
 ######
 
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland)
+draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToFourWay)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToFourWay, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff)
+draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ)
+draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow)
+draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 ######
 #
@@ -98,9 +105,9 @@ draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise)
 #
 ######
 
-draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland)
+draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
+draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -108,9 +115,11 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise)
 #
 #####
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftToWreck1)
-draw(ax, Landmark.WRECK_1, Wreck1ToWreck2)
-draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToWreck1, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+
+draw(ax, Landmark.WRECK_1, Wreck1ToWreck2, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+
+draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -130,11 +139,11 @@ plt.ylim(y_min - 50, y_max + 50)
 #
 #####
 
-draw_compass_rose()
-draw_scale()
+# draw_compass_rose()
+draw_scale(x_min, y_max, text_distance=12, fontsize=2 * FONTSIZE / 3)
 draw_platforms()
 draw_boat_ramp()
-add_copyright()
+add_copyright(fontsize=FONTSIZE)
 
 #####
 #
@@ -216,11 +225,11 @@ ax.legend(
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
         },
-    fontsize=6,
+    fontsize=FONTSIZE,
     labelspacing=1.2,
     loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-# plt.savefig('survey.png', transparent=True)
-plt.savefig('survey.pdf')
+plt.savefig('the_survey.png', transparent=True)
+# plt.savefig('the_survey.pdf')

@@ -77,7 +77,6 @@ class SurveyedLine(AbstractLine):
 class UnsurveyedLine(AbstractLine):
     color: str = 'black'
     linestyle: str = 'dotted'
-    include_in_total_surveyed = False
 
 @dataclass(frozen=True)
 class RemovedLine(AbstractLine):
@@ -85,10 +84,9 @@ class RemovedLine(AbstractLine):
     linestyle: str = 'solid'
 
 @dataclass(frozen=True)
-class RemovedUnsurveyedLine(AbstractLine):
-    color: str = 'lightgrey'
-    linestyle: str = 'dotted'
-    include_in_total_surveyed = False
+class MarinaLine(AbstractLine):
+    color: str = 'red' 
+    linestyle: str = 'solid'
 
 @dataclass(frozen=True)
 class Jump:
@@ -100,9 +98,8 @@ class Jump:
 class SaveLandmark:
     landmark: Landmark = None
     icon_path: str = None
-    markersize: int = 4
     zorder: int = 3
-    zoom: int = 25
+    transparent_icon: bool = False
 
 @dataclass(frozen=True)
 class Stake:
@@ -122,6 +119,7 @@ class TieOff:
     color: str = 'blue' 
     marker: str = 'h'
     zorder: int = 3
+    force_draw: bool = False
 
 @dataclass(frozen=True)
 class Arrow:
@@ -130,16 +128,16 @@ class Arrow:
     color: str = 'white'
 
 BarToPlatform = (
-    TieOff(),
+    TieOff(force_draw=True),
     SurveyedLine(length_ft=23, angle=330),
     # TieOff(), Line change
     SurveyedLine(length_ft=36, length_in=8, angle=330),
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
     SurveyedLine(length_in=9, angle=325),
-    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(Landmark.MOORING_BLOCK_20FT, icon_path='icons/mooringblock.png', transparent_icon=True),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 SkeletonToMooringBlock2ViaPokerRun = (
@@ -147,14 +145,16 @@ SkeletonToMooringBlock2ViaPokerRun = (
     SurveyedLine(length_ft=40, angle=55),
     TieOff(),
     SurveyedLine(length_ft=72, angle=50),
-    TieOff(),
+    TieOff(force_draw=True),
     SaveLandmark(Landmark.BOAT_RAMP_1),
-    SurveyedLine(length_ft=35, length_in=10, angle=60, color='red'),
+    MarinaLine(length_ft=35, length_in=10, angle=60),
     SaveLandmark(Landmark.BOAT_RAMP_2),
-    TieOff(),
+    TieOff(force_draw=True),
     SurveyedLine(length_ft=20, length_in=8, angle=50),
     Jump(length_ft=8, angle=315),
     SaveLandmark(landmark=Landmark.CAR, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
+    Jump(length_ft=100, angle=90),  # NOTE(stpyang): This is a hack to extend the small maps
+    Jump(length_ft=100, angle=270), # NOTE(stpyang): This is a hack to extend the small maps
     Jump(length_ft=8, angle=315),
     SurveyedLine(length_ft=19, length_in=7, angle=300),
     TieOff(),
@@ -171,18 +171,18 @@ SkeletonToMooringBlock2ViaPokerRun = (
     SurveyedLine(length_ft=47, length_in=10, angle=175),
     Stake(),
     SurveyedLine(length_ft=15, length_in=2, angle=175),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_2, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 SkeletonToMooringBlock2ViaMooringBlocks = (
     Jump(length_ft=22, length_in=1, angle=335),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', transparent_icon=True),
     Jump(length_ft=21, length_in=7, angle=325),
     )
 
 MooringBlock2ToMooringBlock1 = (
     Jump(length_ft=25, length_in=9, angle=230),
-    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 MooringBlock1ToMooringBlock5ViaPokerRun = (
@@ -191,6 +191,8 @@ MooringBlock1ToMooringBlock5ViaPokerRun = (
     SurveyedLine(length_ft=14, length_in=11, angle=222),
     Jump(length_ft=6, length_in=4, angle=200),
     SaveLandmark(landmark=Landmark.CONROY, icon_path='icons/conroy.png'),
+    Jump(length_ft=100, angle=270),  # NOTE(stpyang): This is a hack to extend the small maps
+    Jump(length_ft=100, angle=90),   # NOTE(stpyang): This is a hack to extend the small maps
     Jump(length_ft=6, length_in=4, angle=200),
     SurveyedLine(length_ft=49, length_in=2, angle=160),
     TieOff(),
@@ -199,12 +201,12 @@ MooringBlock1ToMooringBlock5ViaPokerRun = (
     TieOff(),
     SurveyedLine(length_ft=12, length_in=1, angle=75),
     SurveyedLine(length_ft=6, length_in=6, angle=100),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_5, icon_path='icons/mooringblock.png', transparent_icon=True),
 )
 
 MooringBlock1ToMooringBlock5ViaMooringBlocks = (
     Jump(length_ft=21, length_in=2, angle=140),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', markersize=0, zoom=8),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', transparent_icon=True),
     Jump(length_ft=25, length_in=10, angle=145),
 )
 
@@ -257,6 +259,12 @@ CarToLisasGift = (
     Stake(),
     SurveyedLine(length_ft=42, angle=54),
     SaveLandmark(landmark=Landmark.LISAS_GIFT, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
+    Jump(length_ft=100, angle=90),  # NOTE(stpyang): This is a hack to extend the small maps
+    Jump(length_ft=100, angle=270),   # NOTE(stpyang): This is a hack to extend the small maps
+)
+
+CarToLisasGiftTruncated = (
+    UnsurveyedLine(length_ft=50, angle=56),
 )
 
 LisasGiftToWreck1 = (
@@ -312,7 +320,6 @@ LisasGiftNortheast = (
     RemovedLine(length_ft=60, angle=20),
     RemovedLine(length_ft=57, length_in=8, angle=44),
     Stake(),
-    RemovedUnsurveyedLine(length_ft=50, angle=24),
     )
 
 UmbrellaToRockIsland = (
@@ -412,6 +419,10 @@ UmbrellaToOxygenTanks = (
     Stake(),
     SurveyedLine(length_ft=27, angle=280),
     SaveLandmark(Landmark.OXYGEN_TANKS, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
+)
+
+UmbrellaToOxygenTanksTruncated = (
+    UnsurveyedLine(length_ft=25, angle=335),
 )
 
 RockIslandBottleClockwise = (

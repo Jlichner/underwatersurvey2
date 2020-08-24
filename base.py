@@ -1,4 +1,4 @@
-from data import Landmark, SurveyedLine, UnsurveyedLine, Arrow, Jump, RemovedLine, RemovedStake, SaveLandmark
+from data import Arrow, MarinaLine, Landmark, SurveyedLine, UnsurveyedLine, Jump, RemovedLine, RemovedStake, SaveLandmark
 
 from math import atan, cos, pi, sin, sqrt
 
@@ -71,12 +71,8 @@ def __degrees(radians):
 def __meters(meters):
     return meters * 3.28084
 
-def draw_compass_rose(recreational=False):
+def draw_compass_rose(length=100):
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    length = 100
-
-    if recreational:
-        length = 30
 
     (center_x, center_y) = (x_min + length, y_max - length)
 
@@ -91,55 +87,42 @@ def draw_compass_rose(recreational=False):
     # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
     plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize=8)
 
-def draw_scale(recreational=False):
-    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    (x, y) = ((0.8 * x_min + 0.2 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
-
-    text_distance = 20
-    fontsize = 5
-
-    if recreational:
-        text_distance = 6
-        fontsize = 8
-        (x, y) = (x_min + 100, y_max - 30)
+def draw_scale(x, y, fontsize=5, text_distance=20, feet=(0, 50, 100, 200, 300), meters=(0, 10, 20, 30, 50, 100)):
+    # ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
+    # (x, y) = ((0.8 * x_min + 0.2 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
 
     # feet
-    plt.text(s='0', x=x, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.plot([x, x + 50], [y, y], color='black', linewidth=1, marker=2)
-    plt.text(s='50', x=(x + 50), y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.plot([x + 50, x + 100], [y, y], color='black', linewidth=1, marker=2)
-    plt.text(s='100', x=(x + 100), y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.plot([x + 100, x + 200], [y, y], color='black', linewidth=1, marker=2)
-    plt.text(s='200', x=(x + 200), y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.plot([x + 200, x + 300], [y, y], color='black', linewidth=1, marker=2)
-    plt.text(s='300', x=(x + 300), y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.text(s='feet', x=(x + 250), y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+    for f in feet:
+        plt.plot([x, x + f], [y, y], color='black', linewidth=1, marker=2)
+        plt.text(s='{}'.format(f), x=x + f, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+    plt.text(s='ft', x=x + (feet[-1] + feet[-2]) / 2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
 
     # meters
-    plt.text(s='0', x=x, y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.plot([x, x + __meters(10)], [y, y], color='black', linewidth=1, marker=3)
-    plt.text(s='10', x=(x + __meters(10)), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.plot([x + __meters(10), x + __meters(20)], [y, y], color='black', linewidth=1, marker=3)
-    plt.text(s='20', x=(x + __meters(20)), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.plot([x + __meters(20), x + __meters(30)], [y, y], color='black', linewidth=1, marker=3)
-    plt.text(s='30', x=(x + __meters(30)), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.plot([x + __meters(30), x + __meters(50)], [y, y], color='black', linewidth=1, marker=3)
-    plt.text(s='50', x=(x + __meters(50)), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.plot([x + __meters(50), x + __meters(100)], [y, y], color='black', linewidth=1, marker=3)
-    plt.text(s='100', x=(x + __meters(100)), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.text(s='meters', x=(x + 250), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
+    for m in meters:
+        plt.plot([x, x + __meters(m)], [y, y], color='black', linewidth=1, marker=3)
+        plt.text(s='{}'.format(m), x=x + __meters(m), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
+    plt.text(s='m', x=x + (__meters(meters[-1]) + __meters(meters[-2])) / 2, y=y - text_distance, ha='center', fontsize=fontsize, va='top')
 
-def add_copyright():
+def add_copyright(fontsize):
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=12, horizontalalignment='right')
+    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=fontsize, horizontalalignment='right')
 
-def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0, recreational=False):
+def draw(ax,
+        input_landmark,
+        input_data,
+        stretch = 1.0,
+        rotation = 0.0,
+        draw_tieoffs=False,
+        tieoff_size=3,
+        landmark_markersize=4,
+        landmark_zoom=25,
+        ):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
     curser = __LANDMARK_COORDINATES[input_landmark]
     for data in input_data:
         clazz = type(data).__name__
-        if clazz == 'SurveyedLine' or clazz == 'UnsurveyedLine' or clazz == 'RemovedLine' or clazz == 'RemovedUnsurveyedLine':
+        if clazz in ('SurveyedLine', 'UnsurveyedLine', 'RemovedLine', 'MarinaLine'):
             (x0, y0) = curser
             length = (data.length_ft + data.length_in / 12) * stretch
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
@@ -164,30 +147,22 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0, recreati
                 if text_rotation is None:
                    text_rotation = (180 - angle) % 180 - 90
                 plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=5, va='center')
-            if data.include_in_total_surveyed:
-                __TOTAL_SURVEYED += length
+            __TOTAL_SURVEYED += length
             curser = (x1, y1)
         elif clazz == 'Arrow':
             (x0, y0) = curser
-            markersize = 2
-            if recreational:
-                markersize = 4
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
-            (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))
-            plt.plot(x, y, color='#5dbcd2', marker='s', markersize=markersize, zorder=3)
-            plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=markersize, zorder=3)
+            (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))            # plt.plot(x, y, color='#5dbcd2', marker='s', markersize=tieoff_size, zorder=3)
+            plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=tieoff_size, zorder=3)
         elif clazz == 'SaveLandmark':
             __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
                 (x, y) = curser
-                im = OffsetImage(plt.imread(data.icon_path), zoom=data.zoom/ax.figure.dpi)
-                markersize = data.markersize
-                if recreational:
-                    im = OffsetImage(plt.imread(data.icon_path), zoom=2.5 * data.zoom/ax.figure.dpi)
-                    markersize = 4 * data.markersize
+                im = OffsetImage(plt.imread(data.icon_path), zoom=landmark_zoom/ax.figure.dpi)
                 im.image.axes = ax
                 im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
-                plt.plot(x, y, color='#aadaff', marker='s', markersize=markersize, zorder=data.zorder)
+                if not data.transparent_icon:
+                    plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
                 ax.add_artist(im_ab)
         elif clazz == 'Jump':
             (x0, y0) = curser
@@ -195,17 +170,16 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0, recreati
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             curser = (x1, y1)
-        elif clazz == 'Stake' or clazz == 'RemovedStake':
-            (x, y) = curser
-            markersize = 2
-            if recreational:
-                markersize = 4
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=markersize, zorder=data.zorder)
-            if data.text is not None:
-                plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
+        elif (clazz == 'Stake' or clazz == 'RemovedStake'):
+            if draw_tieoffs:
+                (x, y) = curser
+                plt.plot(x, y, color=data.color, marker=data.marker, markersize=tieoff_size, zorder=data.zorder)
+                if data.text is not None:
+                    plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
         elif clazz == 'TieOff':
-            (x, y) = curser
-            plt.plot(x, y, color=data.color, marker=data.marker, markersize=3, zorder=data.zorder)
+            if draw_tieoffs or data.force_draw:
+                (x, y) = curser
+                plt.plot(x, y, color=data.color, marker=data.marker, markersize=tieoff_size, zorder=data.zorder)
         else:
             raise Exception('{} is not a recognized data class'.format(clazz))
         (x, y) = curser
@@ -216,28 +190,28 @@ def draw(ax, input_landmark, input_data, stretch = 1.0, rotation = 0.0, recreati
     __CORNER_COORDINATES = ((x_min, y_min), (x_max, y_max))
 
 
-def draw_circuit(ax, input_landmark, input_data_1, input_data_2, recreational=False):
+def draw_circuit(ax, input_landmark,  input_data_1, input_data_2, **kwargs):
     (distance_1, angle_1) = __survey_distance_angle(input_data_1)
     (distance_2, angle_2) = __survey_distance_angle(input_data_2)
     stretch_1 = 2 * distance_2 / (distance_1 + distance_2)
     stretch_2 = 2 * distance_1 / (distance_1 + distance_2)
     rotation_1 = (angle_1 - angle_2) / 2
     rotation_2 = (angle_2 - angle_1) / 2
-    draw(ax=ax, input_landmark=input_landmark, input_data=input_data_1, stretch=stretch_1, rotation=rotation_1, recreational=recreational)
-    draw(ax=ax, input_landmark=input_landmark, input_data=input_data_2, stretch=stretch_2, rotation=rotation_2, recreational=recreational)
+    draw(ax, input_landmark, input_data_1, stretch=stretch_1, rotation=rotation_1, **kwargs)
+    draw(ax, input_landmark, input_data_2, stretch=stretch_2, rotation=rotation_2, **kwargs)
 
-def draw_between_landmarks(ax, landmark_0, landmark_1, input_data, recreational=False):
+def draw_between_landmarks(ax, landmark_0, landmark_1, input_data, **kwargs):
     (distance_1, angle_1) = __landmark_distance_angle(landmark_0, landmark_1)
     (distance_2, angle_2) = __survey_distance_angle(input_data)
     stretch = distance_1 / distance_2
     rotation = angle_2 - angle_1
-    draw(ax=ax, input_landmark=landmark_0, input_data=input_data, stretch=stretch, rotation=rotation, recreational=recreational)
+    draw(ax=ax, input_landmark=landmark_0, input_data=input_data, stretch=stretch, rotation=rotation, **kwargs)
 
 def __survey_distance_angle(input_data):
     curser = (0, 0)
     for data in input_data:
         clazz = type(data).__name__
-        if clazz in ('SurveyedLine', 'UnsurveyedLine', 'RemovedLine', 'Jump'):
+        if clazz in ('SurveyedLine', 'UnsurveyedLine', 'RemovedLine', 'MarinaLine', 'Jump'):
             (x0, y0) = curser
             length = data.length_ft + data.length_in / 12
             (x1, y1) = (x0 + length * cos(__radians(data.angle)), y0 + length * sin(__radians(data.angle)))
@@ -325,3 +299,9 @@ def draw_boat_ramp():
     boat_ramp = Polygon(xy=corners, closed=True, color='#e5e3df', zorder=0)
 
     plt.gca().add_line(boat_ramp)
+
+def draw_skeleton(ax, x, y, landmark_zoom=25):
+    im = OffsetImage(plt.imread('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'), zoom=landmark_zoom/ax.figure.dpi)
+    im.image.axes = ax
+    im_ab = AnnotationBbox(im, (x - 2, y + 2), frameon=False)
+    ax.add_artist(im_ab)
