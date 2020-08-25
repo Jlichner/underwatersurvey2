@@ -128,7 +128,7 @@ draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, landmark_zo
 #####
 
 plt.axis('off')
-plt.title('Bonnie Castle Scuba Park\n', fontsize=18)
+plt.title('BONNIE CASTlE SCUBA PARK', fontsize=18)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
 plt.xlim(x_min - 50, x_max + 50)
 plt.ylim(y_min - 50, y_max + 50)
@@ -143,7 +143,7 @@ plt.ylim(y_min - 50, y_max + 50)
 draw_scale(x_min, y_max, text_distance=12, fontsize=2 * FONTSIZE / 3)
 draw_platforms()
 draw_boat_ramp()
-add_copyright(fontsize=FONTSIZE)
+# add_copyright(fontsize=0.78 * FONTSIZE)
 
 #####
 #
@@ -188,46 +188,46 @@ tractor_tire_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-
 umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png')
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png')
 
-ax.legend(
-    handles=[
-        ANCHOR,
-        ARROW,
-        CAR,
-        CONROY,
-        EMMA_MUNSEN_TUGBOAT,
-        GIFT,
-        MARINA_LINE,
-        MOORING_BLOCK,
-        NATES_TIEOFF,
-        OXYGEN,
-        SHIPWRECK,
-        SKELETON,
-        STAKE,
-        SURVEYED_LINE,
-        TIE_OFF,
-        TRACTOR_TIRE,
-        UMBRELLA,
-        UNSURVEYED_LINE,
-        WHEEL,
-        ],
-    handler_map={
-        ANCHOR: anchor_handler,
-        CAR: car_handler,
-        CONROY: conroy_handler,
-        EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
-        GIFT: gift_handler,
-        MOORING_BLOCK: mooring_block_handler,
-        NATES_TIEOFF: nates_tieoff_handler,
-        OXYGEN: oxygen_handler,
-        SHIPWRECK: shipwreck_handler,
-        SKELETON: skeleton_handler,
-        TRACTOR_TIRE: tractor_tire_handler,
-        UMBRELLA: umbrella_handler,
-        WHEEL: wheel_handler,
-        },
-    fontsize=FONTSIZE,
-    labelspacing=1.2,
-    loc='lower right')
+# ax.legend(
+#     handles=[
+#         ANCHOR,
+#         ARROW,
+#         CAR,
+#         CONROY,
+#         EMMA_MUNSEN_TUGBOAT,
+#         GIFT,
+#         MARINA_LINE,
+#         MOORING_BLOCK,
+#         NATES_TIEOFF,
+#         OXYGEN,
+#         SHIPWRECK,
+#         SKELETON,
+#         STAKE,
+#         SURVEYED_LINE,
+#         TIE_OFF,
+#         TRACTOR_TIRE,
+#         UMBRELLA,
+#         UNSURVEYED_LINE,
+#         WHEEL,
+#         ],
+#     handler_map={
+#         ANCHOR: anchor_handler,
+#         CAR: car_handler,
+#         CONROY: conroy_handler,
+#         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
+#         GIFT: gift_handler,
+#         MOORING_BLOCK: mooring_block_handler,
+#         NATES_TIEOFF: nates_tieoff_handler,
+#         OXYGEN: oxygen_handler,
+#         SHIPWRECK: shipwreck_handler,
+#         SKELETON: skeleton_handler,
+#         TRACTOR_TIRE: tractor_tire_handler,
+#         UMBRELLA: umbrella_handler,
+#         WHEEL: wheel_handler,
+#         },
+#     fontsize=FONTSIZE,
+#     labelspacing=1.2,
+#     loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed()))
 

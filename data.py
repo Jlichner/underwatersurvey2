@@ -153,8 +153,6 @@ SkeletonToMooringBlock2ViaPokerRun = (
     SurveyedLine(length_ft=20, length_in=8, angle=50),
     Jump(length_ft=8, angle=315),
     SaveLandmark(landmark=Landmark.CAR, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
-    Jump(length_ft=100, angle=90),  # NOTE(stpyang): This is a hack to extend the small maps
-    Jump(length_ft=100, angle=270), # NOTE(stpyang): This is a hack to extend the small maps
     Jump(length_ft=8, angle=315),
     SurveyedLine(length_ft=19, length_in=7, angle=300),
     TieOff(),
@@ -191,8 +189,6 @@ MooringBlock1ToMooringBlock5ViaPokerRun = (
     SurveyedLine(length_ft=14, length_in=11, angle=222),
     Jump(length_ft=6, length_in=4, angle=200),
     SaveLandmark(landmark=Landmark.CONROY, icon_path='icons/conroy.png'),
-    Jump(length_ft=100, angle=270),  # NOTE(stpyang): This is a hack to extend the small maps
-    Jump(length_ft=100, angle=90),   # NOTE(stpyang): This is a hack to extend the small maps
     Jump(length_ft=6, length_in=4, angle=200),
     SurveyedLine(length_ft=49, length_in=2, angle=160),
     TieOff(),
@@ -259,8 +255,6 @@ CarToLisasGift = (
     Stake(),
     SurveyedLine(length_ft=42, angle=54),
     SaveLandmark(landmark=Landmark.LISAS_GIFT, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
-    Jump(length_ft=100, angle=90),  # NOTE(stpyang): This is a hack to extend the small maps
-    Jump(length_ft=100, angle=270),   # NOTE(stpyang): This is a hack to extend the small maps
 )
 
 CarToLisasGiftTruncated = (

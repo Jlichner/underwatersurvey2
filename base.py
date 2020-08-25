@@ -87,32 +87,53 @@ def draw_compass_rose(length=100):
     # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
     plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize=8)
 
-def draw_scale(x, y, fontsize=5, text_distance=20, feet=(0, 50, 100, 200, 300), meters=(0, 10, 20, 30, 50, 100)):
-    # ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    # (x, y) = ((0.8 * x_min + 0.2 * x_max) - __meters(100) / 2, (0.2 * y_min + 0.8 * y_max))
+def draw_scale(x, y, depth, distance, fontsize, text_distance, feet, meters):
 
     # feet
-    for f in feet:
-        plt.plot([x, x + f], [y, y], color='black', linewidth=1, marker=2)
-        plt.text(s='{}'.format(f), x=x + f, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-    plt.text(s='ft', x=x + (feet[-1] + feet[-2]) / 2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+    color='white'
+    for i in range(0, len(feet) - 1):
+        x1 = x + feet[i]
+        x2 = x + feet[i + 1]
+        plt.text(s='{}'.format(feet[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        if i == len(feet) - 2:
+            plt.text(s='      {} feet'.format(feet[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
+        block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
+        plt.gca().add_line(block)
+        if color == 'white':
+            color = 'black'
+        elif color == 'black':
+            color = 'white'
 
     # meters
-    for m in meters:
-        plt.plot([x, x + __meters(m)], [y, y], color='black', linewidth=1, marker=3)
-        plt.text(s='{}'.format(m), x=x + __meters(m), y=y - text_distance, ha='center', fontsize=fontsize, va='top')
-    plt.text(s='m', x=x + (__meters(meters[-1]) + __meters(meters[-2])) / 2, y=y - text_distance, ha='center', fontsize=fontsize, va='top')
+    # feet
+    color='white'
+    y = y + distance
+    for i in range(0, len(meters) - 1):
+        x1 = x + __meters(meters[i])
+        x2 = x + __meters(meters[i + 1])
+        plt.text(s='{}'.format(meters[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        if i == len(meters) - 2:
+            plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
+        block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
+        plt.gca().add_line(block)
+        if color == 'white':
+            color = 'black'
+        elif color == 'black':
+            color = 'white'
 
 def add_copyright(fontsize):
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    plt.text(x_max, y_min - 100, 'Copyright 2020 NEUE.  All Rights Reserved.', fontsize=fontsize, horizontalalignment='right')
+    plt.text(x_min, y_min, '© 2020 NORTHEAST UNDERWATER EXPLORERS ALL RIGHTS RESERVED', fontsize=fontsize, horizontalalignment='left')
 
 def draw(ax,
         input_landmark,
         input_data,
         stretch = 1.0,
         rotation = 0.0,
-        draw_tieoffs=False,
+        draw_mooringblocks=True,
+        draw_tieoffs=True,
         tieoff_size=3,
         landmark_markersize=4,
         landmark_zoom=25,
@@ -157,13 +178,14 @@ def draw(ax,
         elif clazz == 'SaveLandmark':
             __LANDMARK_COORDINATES[data.landmark] = curser
             if data.icon_path:
-                (x, y) = curser
-                im = OffsetImage(plt.imread(data.icon_path), zoom=landmark_zoom/ax.figure.dpi)
-                im.image.axes = ax
-                im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
-                if not data.transparent_icon:
-                    plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
-                ax.add_artist(im_ab)
+                if data.icon_path !='icons/mooringblock.png' or draw_mooringblocks:
+                    (x, y) = curser
+                    im = OffsetImage(plt.imread(data.icon_path), zoom=landmark_zoom/ax.figure.dpi)
+                    im.image.axes = ax
+                    im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
+                    if not data.transparent_icon:
+                        plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
+                    ax.add_artist(im_ab)
         elif clazz == 'Jump':
             (x0, y0) = curser
             length = float(data.length_ft + data.length_in / 12) * stretch

@@ -37,7 +37,7 @@ ax.set_aspect(aspect='equal')
 FONTSIZE=20
 LANDMARK_ZOOM=80
 LANDMARK_MARKERSIZE=16
-LEGEND_IMAGE_STRETCH=(-15, 10)
+LEGEND_IMAGE_STRETCH=(-15, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
 TIEOFF_SIZE=6
 
@@ -46,13 +46,6 @@ TIEOFF_SIZE=6
 # Draw the recreational area, forcing both the right loop and the left loop to close up
 #
 #####
-
-FONTSIZE=10
-LANDMARK_ZOOM=80
-LANDMARK_MARKERSIZE=16
-LEGEND_IMAGE_STRETCH=(-15, 10)
-LEGEND_IMAGE_OFFSET=(-8, 5)
-TIEOFF_SIZE=6
 
 draw(ax, Landmark.BAR, BarToPlatform, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
@@ -82,9 +75,14 @@ draw_skeleton(ax, x + 5, y + 11, landmark_zoom=2 * LANDMARK_ZOOM / 3)
 #
 #####
 
-plt.axis('off')
-plt.title('Bonnie Castle Scuba Park\n', fontsize=2 * FONTSIZE)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
+x_min = x_min - 200
+x_max = x_max + 200
+y_min = y_min - 75
+
+plt.axis('off')
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.0* FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max)/2, y=(-0.055 * y_min + 1.055 * y_max), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.94 * FONTSIZE, fontweight='bold', ha='center')
 plt.xlim(x_min - 50, x_max + 50)
 plt.ylim(y_min - 50, y_max + 50)
 
@@ -94,10 +92,10 @@ plt.ylim(y_min - 50, y_max + 50)
 #
 #####
 
-draw_scale(x_min, y_max, text_distance=4, fontsize=FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 25, 50, 100))
+draw_scale(x_min, y_min - 34, distance=45, depth=10, text_distance=10, fontsize=FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 20, 40, 60, 80))
 draw_platforms()
 draw_boat_ramp()
-add_copyright(fontsize=FONTSIZE)
+# add_copyright(fontsize=0.78 * FONTSIZE)
 
 #####
 #
@@ -150,7 +148,7 @@ ax.legend(
         WHEEL: wheel_handler,
         },
     fontsize=FONTSIZE,
-    labelspacing=1.0,
+    labelspacing=0.8,
     loc='lower right')
 
 plt.savefig('rec_survey_big.png', transparent=True)
