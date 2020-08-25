@@ -13,6 +13,7 @@ from base import (
     ImageHandler,
     )
 from data import (
+    AngleIronToIslanderGapTruncated,
     BarToPlatform,
     CarToLisasGiftTruncated,
     Landmark,
@@ -34,10 +35,10 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=20
+FONTSIZE=24
 LANDMARK_ZOOM=80
 LANDMARK_MARKERSIZE=16
-LEGEND_IMAGE_STRETCH=(-15, 11)
+LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
 TIEOFF_SIZE=6
 
@@ -47,18 +48,19 @@ TIEOFF_SIZE=6
 #
 #####
 
-draw(ax, Landmark.BAR, BarToPlatform, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BAR, BarToPlatform, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanksTruncated, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanksTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.CAR, CarToLisasGiftTruncated, draw_mooringblocks=True, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.CAR, CarToLisasGiftTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGapTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -76,14 +78,17 @@ draw_skeleton(ax, x + 3, y + 9, landmark_zoom=LANDMARK_ZOOM)
 #####
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-x_min = x_min - 100
-x_max = x_max + 100
+y_min = y_min - 50
+y_max = y_max + 50
+x_avg = (x_min + x_max) / 2
+x_min = x_avg - 3 * (y_max - y_min) / 4
+x_max = x_avg + 3 * (y_max - y_min) / 4
 
 plt.axis('off')
-plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.0 * FONTSIZE, fontweight='bold')
-plt.text(x=(x_min + x_max)/2, y=(-0.14 * y_min + 1.14 * y_max), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.94 * FONTSIZE, fontweight='bold', ha='center')
-plt.xlim(x_min - 50, x_max + 50)
-plt.ylim(y_min - 50, y_max + 50)
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.5 * FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max)/2, y=y_max, s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=1.1* FONTSIZE, fontweight='bold', ha='center', va='top')
+plt.xlim(x_min, x_max)
+plt.ylim(y_min, y_max)
 
 #####
 #
@@ -91,7 +96,7 @@ plt.ylim(y_min - 50, y_max + 50)
 #
 #####
 
-draw_scale(x_min, y_min - 42, distance=25, depth=5, text_distance=6, fontsize=FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
+draw_scale(x_min, y_min, distance=25, depth=5, text_distance=6, fontsize=0.8 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -130,8 +135,8 @@ ax.legend(
         CONROY: conroy_handler,
         SKELETON: skeleton_handler,
         },
-    fontsize=FONTSIZE,
-    labelspacing=0.8,
+    fontsize=0.9 * FONTSIZE,
+    labelspacing=0.6,
     loc='lower right')
 
 plt.savefig('rec_survey_1.png', transparent=True)

@@ -13,9 +13,11 @@ from base import (
     ImageHandler,
     )
 from data import (
+    AngleIronToIslanderGap,
     BarToPlatform,
     CarToLisasGift,
     Landmark,
+    LisasGiftToKibbetts,
     MooringBlock1ToMooringBlock5ViaMooringBlocks,
     MooringBlock1ToMooringBlock5ViaPokerRun,
     MooringBlock2ToMooringBlock1,
@@ -34,10 +36,10 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=20
+FONTSIZE=24
 LANDMARK_ZOOM=80
 LANDMARK_MARKERSIZE=16
-LEGEND_IMAGE_STRETCH=(-15, 11)
+LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
 TIEOFF_SIZE=6
 
@@ -59,6 +61,9 @@ draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, landmark_zoom=LANDMARK_ZOOM, 
 
 draw(ax, Landmark.CAR, CarToLisasGift, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -76,15 +81,17 @@ draw_skeleton(ax, x + 5, y + 11, landmark_zoom=2 * LANDMARK_ZOOM / 3)
 #####
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-x_min = x_min - 200
-x_max = x_max + 200
-y_min = y_min - 75
+y_max = y_max + 85
+y_min = y_min - 150
+x_avg = (x_min + x_max) / 2
+x_min = x_avg - 3 * (y_max - y_min) / 4
+x_max = x_avg + 3 * (y_max - y_min) / 4
 
 plt.axis('off')
-plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.0* FONTSIZE, fontweight='bold')
-plt.text(x=(x_min + x_max)/2, y=(-0.055 * y_min + 1.055 * y_max), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.94 * FONTSIZE, fontweight='bold', ha='center')
-plt.xlim(x_min - 50, x_max + 50)
-plt.ylim(y_min - 50, y_max + 50)
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.5 * FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max)/2, y=y_max, s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=1.1 * FONTSIZE, fontweight='bold', ha='center', va='top')
+plt.xlim(x_min, x_max)
+plt.ylim(y_min, y_max)
 
 #####
 #
@@ -92,7 +99,7 @@ plt.ylim(y_min - 50, y_max + 50)
 #
 #####
 
-draw_scale(x_min, y_min - 34, distance=45, depth=10, text_distance=10, fontsize=FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 20, 40, 60, 80))
+draw_scale(x_min, y_min, distance=45, depth=10, text_distance=10, fontsize=0.8 * FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 25, 50, 75, 100))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -112,6 +119,7 @@ CONROY = Line2D([0], [0], label='Conroy')
 SKELETON = Line2D([0], [0], label='Skeleton')
 
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
+KIBBETTS = Line2D([0], [0], label='Kibbett\'s')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
@@ -121,6 +129,7 @@ conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEN
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+kibbetts_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
@@ -134,6 +143,7 @@ ax.legend(
         SKELETON,
 
         GIFT,
+        KIBBETTS,
         OXYGEN,
         WHEEL,
     ],
@@ -144,11 +154,12 @@ ax.legend(
         SKELETON: skeleton_handler,
 
         GIFT: gift_handler,
+        KIBBETTS: kibbetts_handler,
         OXYGEN: oxygen_handler,
         WHEEL: wheel_handler,
         },
-    fontsize=FONTSIZE,
-    labelspacing=0.8,
+    fontsize=0.9 * FONTSIZE,
+    labelspacing=0.6,
     loc='lower right')
 
 plt.savefig('rec_survey_big.png', transparent=True)

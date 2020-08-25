@@ -13,7 +13,7 @@ from base import (
     total_surveyed,
     )
 from data import (
-    AngleIronToFourWay,
+    AngleIronToIslanderGap,
     BarToPlatform,
     BobsArrowToEmmaMunsen,
     BobsArrowToIslander,
@@ -21,10 +21,12 @@ from data import (
     CarToLisasGift,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
+    IslanderGapToFourWay,
     JJJ,
+    KibbettsToWreck2,
     Landmark,
     LisasGiftNortheast,
-    LisasGiftToWreck1,
+    LisasGiftToKibbetts,
     MooringBlock1ToMooringBlock5ViaMooringBlocks,
     MooringBlock1ToMooringBlock5ViaPokerRun,
     MooringBlock2ToMooringBlock1,
@@ -36,7 +38,6 @@ from data import (
     SkeletonToMooringBlock2ViaPokerRun,
     UmbrellaToOxygenTanks,
     UmbrellaToRockIsland,
-    Wreck1ToWreck2,
 )
 
 import matplotlib
@@ -49,7 +50,7 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=8
+FONTSIZE=24
 LANDMARK_ZOOM=40
 LANDMARK_MARKERSIZE=8
 LEGEND_IMAGE_STRETCH=(-14, 7)
@@ -81,23 +82,25 @@ draw(ax, Landmark.CAR, CarToLisasGift, draw_tieoffs=True, landmark_zoom=LANDMARK
 ######
 
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToFourWay, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ISLANDER_GAP, IslanderGapToFourWay, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 ######
 #
@@ -105,9 +108,9 @@ draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=Tr
 #
 ######
 
-draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -115,11 +118,11 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, landma
 #
 #####
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftToWreck1, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.WRECK_1, Wreck1ToWreck2, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.KIBBETTS, KibbettsToWreck2, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
 
 #####
 #
@@ -127,11 +130,18 @@ draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, landmark_zo
 #
 #####
 
-plt.axis('off')
-plt.title('BONNIE CASTlE SCUBA PARK', fontsize=18)
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-plt.xlim(x_min - 50, x_max + 50)
-plt.ylim(y_min - 50, y_max + 50)
+y_max = y_max + 100
+y_min = y_min - 250
+x_avg = (x_min + x_max) / 2
+x_min = x_avg - 3 * (y_max - y_min) / 4
+x_max = x_avg + 3 * (y_max - y_min) / 4
+
+plt.axis('off')
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.5 * FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max)/2, y=y_max, s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=1.1 * FONTSIZE, fontweight='bold', ha='center', va='top')
+plt.xlim(x_min, x_max)
+plt.ylim(y_min, y_max)
 
 #####
 #
@@ -140,7 +150,7 @@ plt.ylim(y_min - 50, y_max + 50)
 #####
 
 # draw_compass_rose()
-draw_scale(x_min, y_max, text_distance=12, fontsize=2 * FONTSIZE / 3)
+draw_scale(x_min, y_min, distance=100, depth=30, text_distance=30, fontsize=0.8 * FONTSIZE, feet=(0, 250, 500, 750, 1000), meters=(0, 100, 200, 300))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -225,8 +235,8 @@ wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png
 #         UMBRELLA: umbrella_handler,
 #         WHEEL: wheel_handler,
 #         },
-#     fontsize=FONTSIZE,
-#     labelspacing=1.2,
+    # fontsize=0.9 * FONTSIZE,
+    # labelspacing=0.6,
 #     loc='lower right')
 
 print('{} total line surveyed'.format(total_surveyed()))

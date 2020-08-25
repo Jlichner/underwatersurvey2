@@ -134,6 +134,7 @@ def draw(ax,
         rotation = 0.0,
         draw_mooringblocks=True,
         draw_tieoffs=True,
+        fontsize=None,
         tieoff_size=3,
         landmark_markersize=4,
         landmark_zoom=25,
@@ -161,13 +162,13 @@ def draw(ax,
                 if data.length_in:
                     text = '{} {}\"'.format(text, data.length_in)
                 text_rotation = (45 - angle) % 90 - 45
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=5, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=fontsize, va='center')
             else:
                 text = data.alt_text
                 text_rotation = data.text_rotation
                 if text_rotation is None:
                    text_rotation = (180 - angle) % 180 - 90
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=5, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=fontsize, va='center')
             __TOTAL_SURVEYED += length
             curser = (x1, y1)
         elif clazz == 'Arrow':

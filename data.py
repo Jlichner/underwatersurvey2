@@ -55,6 +55,7 @@ class Landmark(Enum):
     WRECK_2 = 34
     WRECK_3 = 35
     TRACTOR_TIRE = 36
+    ISLANDER_GAP =37
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -76,7 +77,7 @@ class SurveyedLine(AbstractLine):
 @dataclass(frozen=True)
 class UnsurveyedLine(AbstractLine):
     color: str = 'black'
-    linestyle: str = 'dotted'
+    linestyle: str = 'dashed'
 
 @dataclass(frozen=True)
 class RemovedLine(AbstractLine):
@@ -258,20 +259,20 @@ CarToLisasGift = (
 )
 
 CarToLisasGiftTruncated = (
-    UnsurveyedLine(length_ft=50, angle=56),
+    UnsurveyedLine(length_ft=100, angle=56, alt_text='To Lisa\'s Gift'),
 )
 
-LisasGiftToWreck1 = (
+LisasGiftToKibbetts = (
     SurveyedLine(length_ft=50, angle=322),
     Stake(),
     SurveyedLine(length_ft=43, length_in=7, angle=325),
     Stake(),
     SurveyedLine(length_ft=42, length_in=6, angle=330),
     # Stake(),
-    SaveLandmark(landmark=Landmark.WRECK_1, icon_path='icons/shipwreck.png'), # 21 feet long
+    SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/shipwreck.png'), # 21 feet long
 )
 
-Wreck1ToWreck2 = (
+KibbettsToWreck2 = (
     UnsurveyedLine(length_ft=344, angle=66, include_in_total_surveyed=False),
 )
 
@@ -289,7 +290,7 @@ LisasGiftNortheast = (
     SurveyedLine(length_ft=34, length_in=6, angle=76),
     Stake(),
     Jump(length_ft=18, length_in=10, angle=140), # gap
-    SaveLandmark(landmark=Landmark.KIBBETTS, icon_path='icons/shipwreck.png'),
+    SaveLandmark(landmark=Landmark.WRECK_1, icon_path='icons/shipwreck.png'),
     Jump(length_ft=6, length_in=10, angle=140),
     Jump(length_ft=6, length_in=10, angle=140),
     TieOff(),
@@ -416,7 +417,7 @@ UmbrellaToOxygenTanks = (
 )
 
 UmbrellaToOxygenTanksTruncated = (
-    UnsurveyedLine(length_ft=25, angle=335),
+    UnsurveyedLine(length_ft=50, angle=335, alt_text='To Oxygen Tanks'),
 )
 
 RockIslandBottleClockwise = (
@@ -453,7 +454,7 @@ RockIslandBottleCounterClockwise = (
     UnsurveyedLine(length_ft=50, angle=45, alt_text=''),
     )
 
-AngleIronToFourWay = (
+AngleIronToIslanderGap = (
     SurveyedLine(length_ft=78, angle=222),
     TieOff(),
     SurveyedLine(length_ft=15, angle=260),
@@ -472,6 +473,14 @@ AngleIronToFourWay = (
     SurveyedLine(length_ft=38, angle=245),
     TieOff(),
     SurveyedLine(length_ft=9, angle=250, alt_text=''),
+    SaveLandmark(Landmark.ISLANDER_GAP),
+    )
+
+AngleIronToIslanderGapTruncated = (
+    UnsurveyedLine(length_ft=30, angle=222),
+    )
+
+IslanderGapToFourWay = (
     SurveyedLine(length_ft=63, angle=315),
     TieOff(),
     SurveyedLine(length_ft=42, angle=315, flip_text_side=True),
