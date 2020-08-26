@@ -38,10 +38,19 @@ ax.set_aspect(aspect='equal')
 
 FONTSIZE=24
 LANDMARK_ZOOM=80
-LANDMARK_MARKERSIZE=16
 LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
-TIEOFF_SIZE=6
+
+draw_kwargs = {
+    'depth_distance': 10,
+    'depth_fontsize': 10,
+    'draw_mooringblocks': False,
+    'draw_tieoffs': False,
+    'landmark_markersize': 16,
+    'landmark_zoom': LANDMARK_ZOOM,
+    'text_fontsize': 15,
+    'tieoff_size': 6,
+}
 
 ######
 #
@@ -49,21 +58,21 @@ TIEOFF_SIZE=6
 #
 #####
 
-draw(ax, Landmark.BAR, BarToPlatform, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BAR, BarToPlatform, **draw_kwargs)
 
-draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 
-draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, **draw_kwargs)
 
-draw(ax, Landmark.CAR, CarToLisasGift, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.CAR, CarToLisasGift, **draw_kwargs)
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, draw_mooringblocks=False, draw_tieoffs=False, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, **draw_kwargs)
 
 #####
 #
@@ -81,7 +90,7 @@ draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, draw_mooringblocks=False, 
 #####
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-y_max = y_max + 85
+y_max = y_max + 100
 y_min = y_min - 150
 x_avg = (x_min + x_max) / 2
 x_min = x_avg - 3 * (y_max - y_min) / 4
@@ -99,7 +108,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, distance=45, depth=10, text_distance=10, fontsize=0.8 * FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 25, 50, 75, 100))
+draw_scale(x_min, y_min, distance=70, depth=14, text_distance=12, fontsize=0.8 * FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 25, 50, 75, 100))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -138,5 +147,4 @@ ax.legend(
     labelspacing=0.6,
     loc='lower right')
 
-plt.savefig('rec_survey_2.png', transparent=True)
-# plt.savefig('rec_survey_2.pdf')
+plt.savefig('maps/rec_survey_2.png', transparent=True)

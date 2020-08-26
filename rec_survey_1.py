@@ -37,10 +37,19 @@ ax.set_aspect(aspect='equal')
 
 FONTSIZE=24
 LANDMARK_ZOOM=80
-LANDMARK_MARKERSIZE=16
 LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
-TIEOFF_SIZE=6
+
+draw_kwargs = {
+    'depth_distance': 10,
+    'depth_fontsize': 10,
+    'draw_mooringblocks': True,
+    'draw_tieoffs': False,
+    'landmark_markersize': 16,
+    'landmark_zoom': LANDMARK_ZOOM,
+    'text_fontsize': 15,
+    'tieoff_size': 6,
+}
 
 ######
 #
@@ -48,19 +57,19 @@ TIEOFF_SIZE=6
 #
 #####
 
-draw(ax, Landmark.BAR, BarToPlatform, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BAR, BarToPlatform, **draw_kwargs)
 
-draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 
-draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanksTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanksTruncated, **draw_kwargs)
 
-draw(ax, Landmark.CAR, CarToLisasGiftTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.CAR, CarToLisasGiftTruncated, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGapTruncated, draw_mooringblocks=True, draw_tieoffs=False, fontsize=15, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGapTruncated, **draw_kwargs)
 
 #####
 #
@@ -96,7 +105,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, distance=25, depth=5, text_distance=6, fontsize=0.8 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
+draw_scale(x_min, y_min, distance=24, depth=5, text_distance=5, fontsize=0.8 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -114,11 +123,13 @@ ANCHOR = Line2D([0], [0], label='Anchor')
 CAR = Line2D([0], [0], label='Car')
 CONROY = Line2D([0], [0], label='Conroy')
 SKELETON = Line2D([0], [0], label='Skeleton')
+UMBRELLA = Line2D([0], [0], label='Umbrella')
 
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 ax.legend(
     handles=[
@@ -128,16 +139,17 @@ ax.legend(
         CAR,
         CONROY,
         SKELETON,
+        UMBRELLA,
     ],
     handler_map={
         ANCHOR: anchor_handler,
         CAR: car_handler,
         CONROY: conroy_handler,
         SKELETON: skeleton_handler,
+        UMBRELLA: umbrella_handler,
         },
     fontsize=0.9 * FONTSIZE,
     labelspacing=0.6,
     loc='lower right')
 
-plt.savefig('rec_survey_1.png', transparent=True)
-# plt.savefig('rec_survey_1.pdf')
+plt.savefig('maps/rec_survey_1.png', transparent=True)

@@ -52,10 +52,20 @@ ax.set_aspect(aspect='equal')
 
 FONTSIZE=24
 LANDMARK_ZOOM=40
-LANDMARK_MARKERSIZE=8
 LEGEND_IMAGE_STRETCH=(-14, 7)
 LEGEND_IMAGE_OFFSET=(-8, 5)
-TIEOFF_SIZE=3
+
+draw_kwargs = {
+    'depth_distance': 10,
+    'depth_fontsize': 10,
+    'draw_mooringblocks': True,
+    'draw_tieoffs': True,
+    'landmark_markersize': 8,
+    'landmark_zoom': LANDMARK_ZOOM,
+    'text_fontsize': 8,
+    'tieoff_size': 3,
+}
+
 
 ######
 #
@@ -63,17 +73,17 @@ TIEOFF_SIZE=3
 #
 #####
 
-draw(ax, Landmark.BAR, BarToPlatform, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BAR, BarToPlatform, **draw_kwargs)
 
-draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 
-draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, **draw_kwargs)
 
-draw(ax, Landmark.CAR, CarToLisasGift, draw_tieoffs=True, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.CAR, CarToLisasGift, **draw_kwargs)
 
 ######
 #
@@ -82,25 +92,25 @@ draw(ax, Landmark.CAR, CarToLisasGift, draw_tieoffs=True, landmark_zoom=LANDMARK
 ######
 
 
-draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, **draw_kwargs)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, **draw_kwargs)
 
-draw(ax, Landmark.ISLANDER_GAP, IslanderGapToFourWay, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ISLANDER_GAP, IslanderGapToFourWay, **draw_kwargs)
 
-draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, **draw_kwargs)
 
-draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, **draw_kwargs)
 
-draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, **draw_kwargs)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, **draw_kwargs)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, **draw_kwargs)
 
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, **draw_kwargs)
 
 ######
 #
@@ -108,9 +118,9 @@ draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, draw_tieoffs=Tr
 #
 ######
 
-draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw_between_landmarks(ax, Landmark.NATES_TIEOFF, Landmark.ROCK_ISLAND_T, NatesTieoffToRockIsland, **draw_kwargs)
 
-draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, **draw_kwargs)
 
 #####
 #
@@ -118,11 +128,11 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, draw_tieoffs=True, fontsi
 #
 #####
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, **draw_kwargs)
 
-draw(ax, Landmark.KIBBETTS, KibbettsToWreck2, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.KIBBETTS, KibbettsToWreck2, **draw_kwargs)
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, fontsize=5, landmark_zoom=LANDMARK_ZOOM, landmark_markersize=LANDMARK_MARKERSIZE, tieoff_size=TIEOFF_SIZE)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, **draw_kwargs)
 
 #####
 #
@@ -131,8 +141,8 @@ draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, draw_tieoffs=True, fontsize=5,
 #####
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-y_max = y_max + 100
-y_min = y_min - 250
+y_max = y_max + 200
+y_min = y_min - 350
 x_avg = (x_min + x_max) / 2
 x_min = x_avg - 3 * (y_max - y_min) / 4
 x_max = x_avg + 3 * (y_max - y_min) / 4
@@ -150,7 +160,7 @@ plt.ylim(y_min, y_max)
 #####
 
 # draw_compass_rose()
-draw_scale(x_min, y_min, distance=100, depth=30, text_distance=30, fontsize=0.8 * FONTSIZE, feet=(0, 250, 500, 750, 1000), meters=(0, 100, 200, 300))
+draw_scale(x_min, y_min, distance=150, depth=30, text_distance=30, fontsize=0.8 * FONTSIZE, feet=(0, 250, 500, 750, 1000), meters=(0, 100, 200, 300))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -241,5 +251,4 @@ wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-plt.savefig('the_survey.png', transparent=True)
-# plt.savefig('the_survey.pdf')
+plt.savefig('maps/the_survey.png', transparent=True)

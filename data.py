@@ -101,6 +101,8 @@ class SaveLandmark:
     icon_path: str = None
     zorder: int = 3
     transparent_icon: bool = False
+    depth: int = None
+    depth_angle: int = None
 
 @dataclass(frozen=True)
 class Stake:

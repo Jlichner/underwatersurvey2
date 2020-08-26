@@ -134,10 +134,12 @@ def draw(ax,
         rotation = 0.0,
         draw_mooringblocks=True,
         draw_tieoffs=True,
-        fontsize=None,
-        tieoff_size=3,
-        landmark_markersize=4,
-        landmark_zoom=25,
+        depth_distance=None,
+        depth_fontsize=None,
+        text_fontsize=None,
+        tieoff_size=None,
+        landmark_markersize=None,
+        landmark_zoom=None,
         ):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
@@ -162,13 +164,13 @@ def draw(ax,
                 if data.length_in:
                     text = '{} {}\"'.format(text, data.length_in)
                 text_rotation = (45 - angle) % 90 - 45
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=fontsize, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=text_fontsize, va='center')
             else:
                 text = data.alt_text
                 text_rotation = data.text_rotation
                 if text_rotation is None:
                    text_rotation = (180 - angle) % 180 - 90
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=fontsize, va='center')
+                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=text_fontsize, va='center')
             __TOTAL_SURVEYED += length
             curser = (x1, y1)
         elif clazz == 'Arrow':
@@ -178,15 +180,19 @@ def draw(ax,
             plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=tieoff_size, zorder=3)
         elif clazz == 'SaveLandmark':
             __LANDMARK_COORDINATES[data.landmark] = curser
+            (x, y) = curser
             if data.icon_path:
                 if data.icon_path !='icons/mooringblock.png' or draw_mooringblocks:
-                    (x, y) = curser
                     im = OffsetImage(plt.imread(data.icon_path), zoom=landmark_zoom/ax.figure.dpi)
                     im.image.axes = ax
                     im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
                     if not data.transparent_icon:
                         plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
                     ax.add_artist(im_ab)
+            if data.depth and data.depth_angle:
+                x = x + depth_distance * cos(__radians(data.depth_angle))
+                y = y + depth_distance * sin(__radians(data.depth_angle))
+                plt.text(s='{}'.format(data.depth), x=x, y=y, fontsize=depth_fontsize, ha='center', va='center')
         elif clazz == 'Jump':
             (x0, y0) = curser
             length = float(data.length_ft + data.length_in / 12) * stretch
