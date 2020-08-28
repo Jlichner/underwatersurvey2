@@ -35,19 +35,20 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=24
+FONTSIZE=75
 LANDMARK_ZOOM=80
-LEGEND_IMAGE_STRETCH=(-17, 11)
-LEGEND_IMAGE_OFFSET=(-8, 5)
+LEGEND_IMAGE_STRETCH=(-17, 7.5)
+LEGEND_IMAGE_OFFSET=(-8, 4)
 
 draw_kwargs = {
     'depth_distance': 10,
     'depth_fontsize': 10,
     'draw_mooringblocks': True,
     'draw_tieoffs': False,
+    'include_text': True,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
-    'text_fontsize': 15,
+    'text_fontsize': 13,
     'tieoff_size': 6,
 }
 
@@ -87,15 +88,16 @@ draw_skeleton(ax, x + 3, y + 9, landmark_zoom=LANDMARK_ZOOM)
 #####
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
-y_min = y_min - 50
-y_max = y_max + 50
+y_min = y_min - 40
+y_max = y_max + 30
 x_avg = (x_min + x_max) / 2
-x_min = x_avg - 3 * (y_max - y_min) / 4
-x_max = x_avg + 3 * (y_max - y_min) / 4
+x_min = x_avg - 5 * (y_max - y_min) / 6
+x_max = x_avg + 5 * (y_max - y_min) / 6
 
 plt.axis('off')
-plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.5 * FONTSIZE, fontweight='bold')
-plt.text(x=(x_min + x_max)/2, y=y_max, s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=1.1* FONTSIZE, fontweight='bold', ha='center', va='top')
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica Neue', fontsize=FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max) / 2, y=(0.99 * y_max + 0.01 * y_min), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.318 * FONTSIZE, ha='center', va='top')
+plt.text(x=(-0.06 * x_max + 1.06 * x_min), y=(- 0.05 * y_max + 1.05 * y_min), s='© 2020 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 
@@ -105,7 +107,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, distance=24, depth=5, text_distance=5, fontsize=0.8 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
+draw_scale(x_min, y_min, y_max, fontsize=0.21 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -131,7 +133,10 @@ conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEN
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
-ax.legend(
+legend = ax.legend(
+    edgecolor='black',
+    fontsize=0.25 * FONTSIZE,
+    framealpha=0.0,
     handles=[
         MARINA_LINE,
 
@@ -148,8 +153,8 @@ ax.legend(
         SKELETON: skeleton_handler,
         UMBRELLA: umbrella_handler,
         },
-    fontsize=0.9 * FONTSIZE,
     labelspacing=0.6,
-    loc='lower right')
+    loc='lower right',
+)
 
 plt.savefig('maps/rec_survey_1.png', transparent=True)

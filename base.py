@@ -17,7 +17,6 @@ from matplotlib.transforms import Bbox, TransformedBbox
 #
 #####
 
-DRAW_DISTANCE = False
 __LANDMARK_COORDINATES = dict()
 __LANDMARK_COORDINATES[Landmark.BAR] = (0, 0)
 __CORNER_COORDINATES = ((0, 0), (0, 0))
@@ -34,7 +33,7 @@ __MAGNETIC_DECLINATION = 0
 
 class ImageHandler(HandlerBase):
 
-    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(-2, 6), image_offset=(0, 3)):
+    def __init__(self, xpad=0., ypad=0., update_func=None, image_path=None, image_stretch=(0, 0), image_offset=(0, 0)):
         super(ImageHandler, self).__init__(xpad, ypad, update_func)
         self.image_data = plt.imread(image_path)
         self.image_stretch = image_stretch
@@ -87,17 +86,23 @@ def draw_compass_rose(length=100):
     # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
     plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize=8)
 
-def draw_scale(x, y, depth, distance, fontsize, text_distance, feet, meters):
+def draw_scale(x, y_min, y_max, fontsize, feet, meters):
+
+    y_diff = y_max - y_min
+
+    depth = .001 * fontsize * y_diff
+    distance = .004 * fontsize * y_diff
+    text_distance = .0011 * fontsize * y_diff
 
     # feet
     color='white'
     for i in range(0, len(feet) - 1):
         x1 = x + feet[i]
         x2 = x + feet[i + 1]
-        plt.text(s='{}'.format(feet[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        plt.text(s='{}'.format(feet[i]), x=x1, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')            
         if i == len(feet) - 2:
-            plt.text(s='      {} feet'.format(feet[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
+            plt.text(s='       {} feet'.format(feet[i + 1]), x=x2, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y_min), (x2, y_min), (x2, y_min + depth), (x1, y_min + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
         plt.gca().add_line(block)
         if color == 'white':
@@ -108,14 +113,14 @@ def draw_scale(x, y, depth, distance, fontsize, text_distance, feet, meters):
     # meters
     # feet
     color='white'
-    y = y + distance
+    y_min = y_min + distance
     for i in range(0, len(meters) - 1):
         x1 = x + __meters(meters[i])
         x2 = x + __meters(meters[i + 1])
-        plt.text(s='{}'.format(meters[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        plt.text(s='{}'.format(meters[i]), x=x1, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')            
         if i == len(meters) - 2:
-            plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
-        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
+            plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y_min), (x2, y_min), (x2, y_min + depth), (x1, y_min + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
         plt.gca().add_line(block)
         if color == 'white':
@@ -140,6 +145,7 @@ def draw(ax,
         tieoff_size=None,
         landmark_markersize=None,
         landmark_zoom=None,
+        include_text=None,
         ):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
@@ -152,31 +158,23 @@ def draw(ax,
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=1, zorder=1)
-            mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
-            mid_y = (y0 + y1) / 2 - 8 * cos(__radians(angle))
-            mid_x = (x0 + x1) / 2 + 8 * sin(__radians(angle))
-            mid_y = (y0 + y1) / 2 - 8 * cos(__radians(angle))
+            mid_x = (x0 + x1) / 2 + 6 * sin(__radians(angle))
+            mid_y = (y0 + y1) / 2 - 6 * cos(__radians(angle))
+            mid_x = (x0 + x1) / 2 + 6 * sin(__radians(angle))
+            mid_y = (y0 + y1) / 2 - 6 * cos(__radians(angle))
             if (data.flip_text_side):
-                mid_x = (x0 + x1) / 2 - 8 * sin(__radians(angle))
-                mid_y = (y0 + y1) / 2 + 8 * cos(__radians(angle))                
-            if data.alt_text is None and DRAW_DISTANCE:
-                text = '{}\''.format(data.length_ft)
-                if data.length_in:
-                    text = '{} {}\"'.format(text, data.length_in)
-                text_rotation = (45 - angle) % 90 - 45
-                plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=text_fontsize, va='center')
-            else:
+                mid_x = (x0 + x1) / 2 - 6 * sin(__radians(angle))
+                mid_y = (y0 + y1) / 2 + 6 * cos(__radians(angle))                
+            if data.alt_text and include_text:
                 text = data.alt_text
-                text_rotation = data.text_rotation
-                if text_rotation is None:
-                   text_rotation = (180 - angle) % 180 - 90
+                text_rotation = (180 - angle) % 180 - 90
                 plt.text(s=text, x=mid_x, y=mid_y, ha='center', rotation=text_rotation, fontsize=text_fontsize, va='center')
             __TOTAL_SURVEYED += length
             curser = (x1, y1)
         elif clazz == 'Arrow':
             (x0, y0) = curser
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
-            (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))            # plt.plot(x, y, color='#5dbcd2', marker='s', markersize=tieoff_size, zorder=3)
+            (x1, y1) = (x0 + data.distance * cos(__radians(angle)), y0 + data.distance * sin(__radians(angle)))
             plt.plot(x1, y1, color='black', marker=(3, 0, -angle), markerfacecolor=data.color, markersize=tieoff_size, zorder=3)
         elif clazz == 'SaveLandmark':
             __LANDMARK_COORDINATES[data.landmark] = curser
@@ -187,7 +185,8 @@ def draw(ax,
                     im.image.axes = ax
                     im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
                     if not data.transparent_icon:
-                        plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
+                        # plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
+                        plt.plot(x, y, color='white', marker='s', markersize=landmark_markersize, zorder=data.zorder)
                     ax.add_artist(im_ab)
             if data.depth and data.depth_angle:
                 x = x + depth_distance * cos(__radians(data.depth_angle))
@@ -204,7 +203,7 @@ def draw(ax,
                 (x, y) = curser
                 plt.plot(x, y, color=data.color, marker=data.marker, markersize=tieoff_size, zorder=data.zorder)
                 if data.text is not None:
-                    plt.text(s=data.text, x=x, y=y, ha='center', va='center', rotation=data.text_rotation)
+                    plt.text(s=data.text, x=x, y=y, ha='center', va='center')
         elif clazz == 'TieOff':
             if draw_tieoffs or data.force_draw:
                 (x, y) = curser

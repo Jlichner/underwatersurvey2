@@ -36,7 +36,7 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=24
+FONTSIZE=37.5
 LANDMARK_ZOOM=80
 LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
@@ -46,6 +46,7 @@ draw_kwargs = {
     'depth_fontsize': 10,
     'draw_mooringblocks': True,
     'draw_tieoffs': True,
+    'include_text': False,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
     'text_fontsize': 15,
@@ -93,12 +94,13 @@ draw_skeleton(ax, x + 5, y + 11, landmark_zoom=2 * LANDMARK_ZOOM / 3)
 y_max = y_max + 100
 y_min = y_min - 150
 x_avg = (x_min + x_max) / 2
-x_min = x_avg - 3 * (y_max - y_min) / 4
-x_max = x_avg + 3 * (y_max - y_min) / 4
+x_min = x_avg - 5 * (y_max - y_min) / 6
+x_max = x_avg + 5 * (y_max - y_min) / 6
 
 plt.axis('off')
-plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica', fontsize=3.5 * FONTSIZE, fontweight='bold')
-plt.text(x=(x_min + x_max)/2, y=y_max, s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=1.1 * FONTSIZE, fontweight='bold', ha='center', va='top')
+plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica Neue', fontsize=FONTSIZE, fontweight='bold')
+plt.text(x=(x_min + x_max) / 2, y=(0.99 * y_max + 0.01 * y_min), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.318 * FONTSIZE, ha='center', va='top')
+plt.text(x=(-0.06 * x_max + 1.06 * x_min), y=(- 0.05 * y_max + 1.05 * y_min), s='© 2020 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 
@@ -108,7 +110,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, distance=70, depth=14, text_distance=12, fontsize=0.8 * FONTSIZE, feet=(0, 100, 200, 300), meters=(0, 25, 50, 75, 100))
+draw_scale(x_min, y_min, y_max, fontsize=0.21 * FONTSIZE, feet=(0, 100, 200, 300, 400), meters=(0, 25, 50, 75, 100))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -145,6 +147,8 @@ oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/pn
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 ax.legend(
+    framealpha=0.0,
+    fontsize=0.25 * FONTSIZE,
     handles=[
         MARINA_LINE,
 
@@ -171,7 +175,6 @@ ax.legend(
         OXYGEN: oxygen_handler,
         WHEEL: wheel_handler,
         },
-    fontsize=0.9 * FONTSIZE,
     labelspacing=0.6,
     loc='lower right')
 

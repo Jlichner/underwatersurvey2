@@ -56,6 +56,7 @@ class Landmark(Enum):
     WRECK_3 = 35
     TRACTOR_TIRE = 36
     ISLANDER_GAP =37
+    CRIBBING=38
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -66,7 +67,6 @@ class AbstractLine:
     angle: int = 0.0
     flip_text_side: bool = False
     alt_text: str = None
-    text_rotation: int = None
     include_in_total_surveyed: bool = True
 
 @dataclass(frozen=True)
@@ -110,7 +110,6 @@ class Stake:
     marker: str = 's'
     zorder: int = 2
     text: str = None
-    text_rotation: int = 0
 
 @dataclass(frozen=True)
 class RemovedStake(Stake):
@@ -178,6 +177,9 @@ SkeletonToMooringBlock2ViaPokerRun = (
 SkeletonToMooringBlock2ViaMooringBlocks = (
     Jump(length_ft=22, length_in=1, angle=335),
     SaveLandmark(landmark=Landmark.MOORING_BLOCK_4, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SurveyedLine(length_ft=100, angle=55, alt_text='100\' navigation line', flip_text_side=True),
+    TieOff(force_draw=True),
+    Jump(length_ft=100, angle=235),
     Jump(length_ft=21, length_in=7, angle=325),
     )
 
@@ -261,7 +263,7 @@ CarToLisasGift = (
 )
 
 CarToLisasGiftTruncated = (
-    UnsurveyedLine(length_ft=100, angle=56, alt_text='To Lisa\'s Gift'),
+    UnsurveyedLine(length_ft=100, angle=56, alt_text='To Lisa\'s Gift', flip_text_side=True),
 )
 
 LisasGiftToKibbetts = (
@@ -419,7 +421,7 @@ UmbrellaToOxygenTanks = (
 )
 
 UmbrellaToOxygenTanksTruncated = (
-    UnsurveyedLine(length_ft=50, angle=335, alt_text='To Oxygen Tanks'),
+    UnsurveyedLine(length_ft=75, angle=335, alt_text='To Oxygen Tanks'),
 )
 
 RockIslandBottleClockwise = (
@@ -475,6 +477,7 @@ AngleIronToIslanderGap = (
     SurveyedLine(length_ft=38, angle=245),
     TieOff(),
     SurveyedLine(length_ft=9, angle=250, alt_text=''),
+    TieOff(force_draw=True),
     SaveLandmark(Landmark.ISLANDER_GAP),
     )
 
@@ -644,22 +647,8 @@ BobsArrowToIslander = (
     TieOff(),
     SurveyedLine(length_ft=54, angle=150),
     SaveLandmark(Landmark.TRACTOR_TIRE, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png'),
-    UnsurveyedLine(length_ft=47, length_in=6, angle=120),
-    # TieOff(), # LOG PILE BEGIN
-    # Jump(length_ft=8, length_in=5, angle=280),
-    # UnsurveyedLine(length_ft=6, angle=262),
-    # UnsurveyedLine(length_ft=10, length_in=3, angle=216),
-    # TieOff(), # END LOGS
-    # UnsurveyedLine(length_ft=105, length_in=2, angle=220),
-    # TieOff(),
-    # UnsurveyedLine(length_ft=39, angle=200),
-    # UnsurveyedLine(length_ft=42, angle=205),
-    # TieOff(),
-    # UnsurveyedLine(length_ft=55, length_in=2, angle=240),
-    # TieOff(),
-    # UnsurveyedLine(length_ft=10, length_in=5, angle=260),
-    # TieOff(),
-    # UnsurveyedLine(length_ft=50, angle=260),
+    SurveyedLine(length_ft=48, angle=132),
+    SaveLandmark(Landmark.CRIBBING, icon_path='icons/cribbing.png'),
 )
     
 
