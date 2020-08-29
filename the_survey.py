@@ -13,7 +13,7 @@ from base import (
     total_surveyed,
     )
 from data import (
-    AngleIronToIslanderGap,
+    AngleIronToMary,
     BarToPlatform,
     BobsArrowToEmmaMunsen,
     BobsArrowToIslander,
@@ -21,7 +21,7 @@ from data import (
     CarToLisasGift,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
-    IslanderGapToFourWay,
+    MaryToFourWay,
     JJJ,
     KibbettsToWreck2,
     Landmark,
@@ -50,18 +50,19 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=37.5
+FONTSIZE=30
 LANDMARK_ZOOM=40
 LEGEND_IMAGE_STRETCH=(-2, 7)
 LEGEND_IMAGE_OFFSET=(-1, 3)
 
 draw_kwargs = {
-    'depth_distance': 10,
-    'depth_fontsize': 10,
-    'draw_mooringblocks': False,
+    'depth_distance': 1.10 * FONTSIZE,
+    'depth_fontsize': 0.30 * FONTSIZE,
     'draw_tieoffs': True,
+    'include_depth': True,
+    'include_mooringblocks': False,
     'include_text': False,
-    'landmark_markersize': 8,
+    'landmark_markersize': 4,
     'landmark_zoom': LANDMARK_ZOOM,
     'text_fontsize': 8,
     'tieoff_size': 3,
@@ -97,9 +98,9 @@ draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, **draw_kwargs)
 
 draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, **draw_kwargs)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToMary, **draw_kwargs)
 
-draw(ax, Landmark.ISLANDER_GAP, IslanderGapToFourWay, **draw_kwargs)
+draw(ax, Landmark.MARY, MaryToFourWay, **draw_kwargs)
 
 draw(ax, Landmark.FOUR_WAY, FourWayToNatesTieoff, **draw_kwargs)
 
@@ -162,7 +163,7 @@ plt.ylim(y_min, y_max)
 #####
 
 # draw_compass_rose()
-draw_scale(x_min, y_min, y_max, fontsize=0.21 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
+draw_scale(x_min, y_min, y_max, fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -188,6 +189,7 @@ CONROY = Line2D([0], [0], label='Conroy')
 CRIBBING = Line2D([0], [0], label='Cribbing')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
+MARY = Line2D([0], [0], label='Virgin Mary Statue')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 SHIPWRECK = Line2D([0], [0], label='Shipwreck')
@@ -202,6 +204,7 @@ conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEN
 cribbing_handler = ImageHandler(image_path='icons/cribbing.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -212,8 +215,14 @@ wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png
 
 ax.legend(
     framealpha=0.0,
-    fontsize=0.25 * FONTSIZE,
+    fontsize=0.30 * FONTSIZE,
     handles=[
+        SURVEYED_LINE,
+        MARINA_LINE,
+        # UNSURVEYED_LINE,
+        STAKE,
+        TIE_OFF,
+
         ANCHOR,
         ARROW,
         CAR,
@@ -221,17 +230,13 @@ ax.legend(
         CRIBBING,
         EMMA_MUNSEN_TUGBOAT,
         GIFT,
-        MARINA_LINE,
+        MARY,
         NATES_TIEOFF,
         OXYGEN,
         SHIPWRECK,
         SKELETON,
-        STAKE,
-        SURVEYED_LINE,
-        TIE_OFF,
         TRACTOR_TIRE,
         UMBRELLA,
-        UNSURVEYED_LINE,
         WHEEL,
         ],
     handler_map={
@@ -241,6 +246,7 @@ ax.legend(
         CRIBBING: cribbing_handler,
         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
         GIFT: gift_handler,
+        MARY: mary_handler,
         NATES_TIEOFF: nates_tieoff_handler,
         OXYGEN: oxygen_handler,
         SHIPWRECK: shipwreck_handler,

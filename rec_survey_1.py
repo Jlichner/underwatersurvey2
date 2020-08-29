@@ -13,7 +13,7 @@ from base import (
     ImageHandler,
     )
 from data import (
-    AngleIronToIslanderGapTruncated,
+    AngleIronToMaryTruncated,
     BarToPlatform,
     CarToLisasGiftTruncated,
     Landmark,
@@ -35,16 +35,17 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=75
+FONTSIZE=60
 LANDMARK_ZOOM=80
 LEGEND_IMAGE_STRETCH=(-17, 7.5)
 LEGEND_IMAGE_OFFSET=(-8, 4)
 
 draw_kwargs = {
-    'depth_distance': 10,
-    'depth_fontsize': 10,
-    'draw_mooringblocks': True,
+    'depth_distance': 0.27 * FONTSIZE,
+    'depth_fontsize': 0.25 * FONTSIZE,
     'draw_tieoffs': False,
+    'include_depth': True,
+    'include_mooringblocks': True,
     'include_text': True,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
@@ -70,7 +71,7 @@ draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanksTruncated, **draw_kwargs)
 
 draw(ax, Landmark.CAR, CarToLisasGiftTruncated, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGapTruncated, **draw_kwargs)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToMaryTruncated, **draw_kwargs)
 
 #####
 #
@@ -107,7 +108,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, y_max, fontsize=0.21 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
+draw_scale(x_min, y_min, y_max, fontsize=0.25 * FONTSIZE, feet=(0, 50, 100, 150), meters=(0, 10, 20, 30, 40, 50))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -135,7 +136,7 @@ umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/
 
 legend = ax.legend(
     edgecolor='black',
-    fontsize=0.25 * FONTSIZE,
+    fontsize=0.30 * FONTSIZE,
     framealpha=0.0,
     handles=[
         MARINA_LINE,

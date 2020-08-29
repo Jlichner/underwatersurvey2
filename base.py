@@ -137,15 +137,16 @@ def draw(ax,
         input_data,
         stretch = 1.0,
         rotation = 0.0,
-        draw_mooringblocks=True,
         draw_tieoffs=True,
         depth_distance=None,
         depth_fontsize=None,
-        text_fontsize=None,
-        tieoff_size=None,
+        include_depth=None,
+        include_mooringblocks=True,
+        include_text=None,
         landmark_markersize=None,
         landmark_zoom=None,
-        include_text=None,
+        text_fontsize=None,
+        tieoff_size=None,
         ):
     global __CORNER_COORDINATES, __LANDMARK_COORDINATES, __TOTAL_SURVEYED
     ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
@@ -180,7 +181,7 @@ def draw(ax,
             __LANDMARK_COORDINATES[data.landmark] = curser
             (x, y) = curser
             if data.icon_path:
-                if data.icon_path !='icons/mooringblock.png' or draw_mooringblocks:
+                if data.icon_path !='icons/mooringblock.png' or include_mooringblocks:
                     im = OffsetImage(plt.imread(data.icon_path), zoom=landmark_zoom/ax.figure.dpi)
                     im.image.axes = ax
                     im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
@@ -188,10 +189,10 @@ def draw(ax,
                         # plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
                         plt.plot(x, y, color='white', marker='s', markersize=landmark_markersize, zorder=data.zorder)
                     ax.add_artist(im_ab)
-            if data.depth and data.depth_angle:
-                x = x + depth_distance * cos(__radians(data.depth_angle))
-                y = y + depth_distance * sin(__radians(data.depth_angle))
-                plt.text(s='{}'.format(data.depth), x=x, y=y, fontsize=depth_fontsize, ha='center', va='center')
+            if include_depth and data.depth is not None and data.depth_angle is not None:
+                x = x + depth_distance * data.depth_distance_zoom * cos(__radians(data.depth_angle))
+                y = y + depth_distance * data.depth_distance_zoom * sin(__radians(data.depth_angle))
+                plt.text(s='{}\''.format(data.depth), x=x, y=y, fontsize=depth_fontsize, ha='center', va='center')
         elif clazz == 'Jump':
             (x0, y0) = curser
             length = float(data.length_ft + data.length_in / 12) * stretch

@@ -13,7 +13,7 @@ from base import (
     ImageHandler,
     )
 from data import (
-    AngleIronToIslanderGap,
+    AngleIronToMary,
     BarToPlatform,
     CarToLisasGift,
     Landmark,
@@ -36,16 +36,17 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
-FONTSIZE=37.5
+FONTSIZE=30
 LANDMARK_ZOOM=80
 LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
 
 draw_kwargs = {
-    'depth_distance': 10,
-    'depth_fontsize': 10,
-    'draw_mooringblocks': True,
+    'depth_distance': 1.22 * FONTSIZE,
+    'depth_fontsize': 0.30 * FONTSIZE,
     'draw_tieoffs': True,
+    'include_depth': True,
+    'include_mooringblocks': True,
     'include_text': False,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
@@ -73,7 +74,7 @@ draw(ax, Landmark.CAR, CarToLisasGift, **draw_kwargs)
 
 draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, **draw_kwargs)
 
-draw(ax, Landmark.ANGLE_IRON, AngleIronToIslanderGap, **draw_kwargs)
+draw(ax, Landmark.ANGLE_IRON, AngleIronToMary, **draw_kwargs)
 
 #####
 #
@@ -110,7 +111,7 @@ plt.ylim(y_min, y_max)
 #
 #####
 
-draw_scale(x_min, y_min, y_max, fontsize=0.21 * FONTSIZE, feet=(0, 100, 200, 300, 400), meters=(0, 25, 50, 75, 100))
+draw_scale(x_min, y_min, y_max, fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400), meters=(0, 25, 50, 75, 100))
 draw_platforms()
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
@@ -133,6 +134,7 @@ UMBRELLA = Line2D([0], [0], label='Umbrella')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 KIBBETTS = Line2D([0], [0], label='Kibbett\'s')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
+MARY = Line2D([0], [0], label='Virgin Mary Statue')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -143,12 +145,13 @@ umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/
 
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 kibbetts_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 ax.legend(
     framealpha=0.0,
-    fontsize=0.25 * FONTSIZE,
+    fontsize=0.30 * FONTSIZE,
     handles=[
         MARINA_LINE,
 
@@ -160,6 +163,7 @@ ax.legend(
 
         GIFT,
         KIBBETTS,
+        MARY,
         OXYGEN,
         WHEEL,
     ],
@@ -172,6 +176,7 @@ ax.legend(
 
         GIFT: gift_handler,
         KIBBETTS: kibbetts_handler,
+        MARY: mary_handler,
         OXYGEN: oxygen_handler,
         WHEEL: wheel_handler,
         },
