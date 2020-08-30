@@ -138,9 +138,9 @@ BarToPlatform = (
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
     SurveyedLine(length_in=9, angle=325),
-    SaveLandmark(Landmark.MOORING_BLOCK_20FT, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(Landmark.MOORING_BLOCK_20FT, depth_angle=200, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 SkeletonToMooringBlock2ViaPokerRun = (
@@ -155,7 +155,7 @@ SkeletonToMooringBlock2ViaPokerRun = (
     TieOff(force_draw=True),
     SurveyedLine(length_ft=20, length_in=8, angle=50),
     Jump(length_ft=8, angle=315),
-    SaveLandmark(landmark=Landmark.CAR, depth_angle=123, depth=63, depth_distance_zoom=1.2, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
+    SaveLandmark(landmark=Landmark.CAR, depth_angle=123, depth=62, depth_distance_zoom=1.2, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
     Jump(length_ft=8, angle=315),
     SurveyedLine(length_ft=19, length_in=7, angle=300),
     TieOff(),
@@ -237,7 +237,7 @@ CarToLisasGift = (
     SurveyedLine(length_ft=50, angle=52),
     Stake(),
     SurveyedLine(length_ft=27, angle=332),
-    SaveLandmark(landmark=Landmark.WAGON_WHEELS, depth=0, depth_angle=140, depth_distance_zoom=1.1, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
+    SaveLandmark(landmark=Landmark.WAGON_WHEELS, depth=56, depth_angle=140, depth_distance_zoom=1.1, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png'),
     Jump(length_ft=27, angle=152),
     SurveyedLine(length_ft=28, angle=50),
     Stake(),
@@ -260,7 +260,7 @@ CarToLisasGift = (
     SurveyedLine(length_ft=21, length_in=6, angle=54),
     Stake(),
     SurveyedLine(length_ft=42, angle=54),
-    SaveLandmark(landmark=Landmark.LISAS_GIFT, depth=0, depth_angle=140, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
+    SaveLandmark(landmark=Landmark.LISAS_GIFT, depth=56, depth_angle=140, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
 )
 
 CarToLisasGiftTruncated = (
@@ -274,7 +274,7 @@ LisasGiftToKibbetts = (
     Stake(),
     SurveyedLine(length_ft=42, length_in=6, angle=330),
     # Stake(),
-    SaveLandmark(landmark=Landmark.KIBBETTS, depth=0, depth_angle=270, icon_path='icons/shipwreck.png'), # 21 feet long
+    SaveLandmark(landmark=Landmark.KIBBETTS, depth=58, depth_angle=270, icon_path='icons/shipwreck.png'), # 21 feet long
 )
 
 KibbettsToWreck2 = (
@@ -323,7 +323,7 @@ LisasGiftNortheast = (
     )
 
 UmbrellaToRockIsland = (
-    SurveyedLine(length_ft=18, angle=20),
+    Jump(length_ft=18, angle=20),
     Stake(),
     SurveyedLine(length_ft=21, angle=10),
     Stake(),

@@ -112,7 +112,7 @@ plt.ylim(y_min, y_max)
 #####
 
 draw_scale(x_min, y_min, y_max, fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400), meters=(0, 25, 50, 75, 100))
-draw_platforms()
+draw_platforms(fontsize=None)
 draw_boat_ramp()
 # add_copyright(fontsize=0.78 * FONTSIZE)
 

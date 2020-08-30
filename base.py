@@ -274,7 +274,7 @@ def total_surveyed():
 def get_landmark_coordinates():
     return __LANDMARK_COORDINATES
 
-def draw_platforms():
+def draw_platforms(fontsize):
     length1= 15 + 9 / 12
     width1 = 11 + 2 / 12
     distance = 8 + 4 / 12
@@ -308,11 +308,16 @@ def draw_platforms():
     corners2 += [(x, y)]
     (x, y) = (x + length2 * cos(__radians(angle - 180)),  y + length2 * sin(__radians(angle - 180)))
     corners2 += [(x, y)]
+    (x, y) = (x + length2 * cos(__radians(angle - 270)),  y + length2 * sin(__radians(angle - 270)))
     platform2 = Polygon(xy=corners2, closed=True, color='black')
 
     plt.gca().add_line(platform1)
     plt.gca().add_line(platform2)
 
+    if fontsize:
+        (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
+        plt.text(x=x_mid, y=y_mid, s='30\'', color='white', fontsize=fontsize, alpha=3, ha='center', va='center')
+ 
 def draw_boat_ramp():
     length = 60
     width = (35 + 10 / 12) / 3
