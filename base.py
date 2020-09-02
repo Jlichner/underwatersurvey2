@@ -316,7 +316,7 @@ def draw_platforms(fontsize):
 
     if fontsize:
         (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
-        plt.text(x=x_mid, y=y_mid, s='30\'', color='white', fontsize=fontsize, alpha=3, ha='center', va='center')
+        plt.text(x=x_mid, y=y_mid, s='30\'  ', color='white', fontsize=fontsize, rotation=-angle, alpha=3, ha='center', va='center')
  
 def draw_boat_ramp():
     length = 60
@@ -334,8 +334,13 @@ def draw_boat_ramp():
 
     plt.gca().add_line(boat_ramp)
 
-def draw_skeleton(ax, x, y, landmark_zoom=25):
+def draw_skeleton(ax, x, y, depth_fontsize=None, depth=None, depth_angle=None, depth_distance=None, landmark_zoom=25):
     im = OffsetImage(plt.imread('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'), zoom=landmark_zoom/ax.figure.dpi)
     im.image.axes = ax
     im_ab = AnnotationBbox(im, (x - 2, y + 2), frameon=False)
     ax.add_artist(im_ab)
+
+    if depth is not None and depth_angle is not None and depth_distance is not None:
+        x = x + depth_distance * cos(__radians(depth_angle))
+        y = y + depth_distance * sin(__radians(depth_angle))
+        plt.text(s='{}\''.format(depth), x=x, y=y, fontsize=depth_fontsize, ha='center', va='center')

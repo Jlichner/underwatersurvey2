@@ -132,9 +132,9 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, **draw_kwargs)
 
 draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, **draw_kwargs)
 
-draw(ax, Landmark.KIBBETTS, KibbettsToWreck2, **draw_kwargs)
-
 draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, **draw_kwargs)
+
+draw_between_landmarks(ax, Landmark.KIBBETTS, Landmark.WRECK_2, KibbettsToWreck2, **draw_kwargs)
 
 #####
 #

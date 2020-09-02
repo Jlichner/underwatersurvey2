@@ -80,7 +80,7 @@ draw(ax, Landmark.ANGLE_IRON, AngleIronToMaryTruncated, **draw_kwargs)
 #####
 
 (x, y) = get_landmark_coordinates()[Landmark.SKELETON]
-draw_skeleton(ax, x + 3, y + 9, landmark_zoom=LANDMARK_ZOOM)
+draw_skeleton(ax, x + 3, y + 9, depth=64, depth_angle=70, depth_distance=0.21 * FONTSIZE, depth_fontsize=0.25 * FONTSIZE, landmark_zoom=LANDMARK_ZOOM)
 
 #####
 #

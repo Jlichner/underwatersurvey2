@@ -140,7 +140,8 @@ BarToPlatform = (
     SurveyedLine(length_in=9, angle=325),
     SaveLandmark(Landmark.MOORING_BLOCK_20FT, depth_angle=200, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    SaveLandmark(Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
+    # SaveLandmark(Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 SkeletonToMooringBlock2ViaPokerRun = (
@@ -260,7 +261,7 @@ CarToLisasGift = (
     SurveyedLine(length_ft=21, length_in=6, angle=54),
     Stake(),
     SurveyedLine(length_ft=42, angle=54),
-    SaveLandmark(landmark=Landmark.LISAS_GIFT, depth=56, depth_angle=140, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
+    SaveLandmark(landmark=Landmark.LISAS_GIFT, depth=56, depth_angle=120, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png'),
 )
 
 CarToLisasGiftTruncated = (
@@ -278,7 +279,14 @@ LisasGiftToKibbetts = (
 )
 
 KibbettsToWreck2 = (
-    UnsurveyedLine(length_ft=344, angle=66, include_in_total_surveyed=False),
+    # UnsurveyedLine(length_ft=344, angle=66, include_in_total_surveyed=False),
+    Jump(length_ft=14, length_in=10, angle=61),
+    Stake(),
+    SurveyedLine(length_ft=91, angle=61),
+    SurveyedLine(length_ft=97, angle=61),
+    SurveyedLine(length_ft=51, length_in=6, angle=61),
+    TieOff(),
+    SurveyedLine(length_ft=82, length_in=6, angle=61),
 )
 
 LisasGiftNortheast = (
@@ -294,10 +302,9 @@ LisasGiftNortheast = (
     Stake(),
     SurveyedLine(length_ft=34, length_in=6, angle=76),
     Stake(),
-    Jump(length_ft=18, length_in=10, angle=140), # gap
+    Jump(length_ft=18, length_in=10, angle=68), # gap
     SaveLandmark(landmark=Landmark.WRECK_1, icon_path='icons/shipwreck.png'),
-    Jump(length_ft=6, length_in=10, angle=140),
-    Jump(length_ft=6, length_in=10, angle=140),
+    Jump(length_ft=6, length_in=10, angle=68),
     TieOff(),
     SurveyedLine(length_ft=60, length_in=2, angle=60),
     Stake(),
@@ -310,16 +317,7 @@ LisasGiftNortheast = (
     TieOff(),
     SurveyedLine(length_ft=54, length_in=8, angle=314),
     Jump(length_ft=8, angle=350),
-    SaveLandmark(landmark=Landmark.WRECK_2, icon_path='icons/shipwreck.png'),
-    # Jump(length_ft=8, angle=170),
-    RemovedLine(length_ft=40, length_in=7, angle=262),
-    # TieOff(),
-    RemovedLine(length_ft=61, angle=256),
-    RemovedLine(length_ft=35, length_in=6, angle=326),
-    RemovedLine(length_ft=12, angle=342),
-    RemovedLine(length_ft=60, angle=20),
-    RemovedLine(length_ft=57, length_in=8, angle=44),
-    Stake(),
+    SaveLandmark(landmark=Landmark.WRECK_2, depth=49, icon_path='icons/shipwreck.png'),
     )
 
 UmbrellaToRockIsland = (
@@ -479,7 +477,7 @@ AngleIronToMary = (
     TieOff(),
     SurveyedLine(length_ft=9, angle=250, alt_text=''),
     TieOff(force_draw=True),
-    SaveLandmark(Landmark.MARY, icon_path='icons/mary.png', depth=0, depth_angle=270),
+    SaveLandmark(Landmark.MARY, icon_path='icons/mary.png', depth=51, depth_angle=270),
     )
 
 AngleIronToMaryTruncated = (
