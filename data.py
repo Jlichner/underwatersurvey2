@@ -213,6 +213,44 @@ MooringBlock1ToMooringBlock5ViaMooringBlocks = (
     Jump(length_ft=25, length_in=10, angle=145),
 )
 
+ConroyToOxygenTanks = (
+    Jump(length_ft=6, length_in=4, angle=20),
+    Jump(length_ft=4, length_in=2, angle=305),
+    SurveyedLine(length_ft=26, length_in=6, angle=5),
+    Stake(),
+    SurveyedLine(length_ft=40, length_in=10, angle=340),
+    Stake(),
+    SurveyedLine(length_ft=54, length_in=11, angle=350),
+    Stake(),
+    SurveyedLine(length_ft=41, length_in=9, angle=300),
+    Stake(),
+    SurveyedLine(length_ft=33, length_in=3, angle=30),
+    Stake(),
+    SurveyedLine(length_ft=27, length_in=7, angle=15),
+    Stake(),
+    SurveyedLine(length_ft=26, length_in=5, angle=0),
+    TieOff(),
+    SurveyedLine(length_ft=22, length_in=4, angle=28),
+    TieOff(),
+    SurveyedLine(length_ft=19, length_in=10, angle=5),
+    TieOff(),    
+    SurveyedLine(length_ft=28, length_in=0, angle=10),
+    TieOff(),
+    SurveyedLine(length_ft=19, length_in=8, angle=0),
+    TieOff(),
+    SurveyedLine(length_ft=42, length_in=10, angle=10),
+    TieOff(), # Originally a stake
+    SurveyedLine(length_ft=37, length_in=10, angle=0),
+    TieOff(),
+    Jump(length_ft=2, length_in=0, angle=298),
+    )
+
+ConroyToOxygenTanksTruncated = (
+    Jump(length_ft=6, length_in=4, angle=20),
+    Jump(length_ft=4, length_in=2, angle=305),
+    UnsurveyedLine(length_ft=75, angle=5, alt_text='        To Oxygen Tanks'),
+    )
+
 CarToLisasGift = (
     SurveyedLine(length_ft=38, length_in=6, angle=56),
     Stake(),
@@ -420,7 +458,7 @@ UmbrellaToOxygenTanks = (
 )
 
 UmbrellaToOxygenTanksTruncated = (
-    UnsurveyedLine(length_ft=75, angle=335, alt_text='To Oxygen Tanks      '),
+    UnsurveyedLine(length_ft=75, angle=335, alt_text='To Oxygen Tanks        '),
 )
 
 RockIslandBottleClockwise = (

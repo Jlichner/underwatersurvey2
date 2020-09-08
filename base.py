@@ -70,25 +70,22 @@ def __degrees(radians):
 def __meters(meters):
     return meters * 3.28084
 
-def draw_compass_rose(length=100):
-    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
+def draw_compass_rose(ax, corner_coordinates, zoom):
+    ((x_min, y_min), (x_max, y_max)) = corner_coordinates
+    x = 0.989 * x_min + 0.011 * x_max
+    y = 0.76 * y_min + 0.24 * y_max
+    im = OffsetImage(plt.imread('icons/north.png'), zoom=zoom)
+    im.image.axes = ax
+    im_ab = AnnotationBbox(im, (x, y), frameon=False)
+    ax.add_artist(im_ab)
 
-    (center_x, center_y) = (x_min + length, y_max - length)
+def draw_scale(corner_coordinates, fontsize, feet, meters):
+    ((x_min, y_min), (x_max, y_max)) = corner_coordinates
 
-    # magnetic_north_x = center_x + length * cos(__radians(-__MAGNETIC_DECLINATION))
-    # magnetic_north_y = center_y + length * sin(__radians(-__MAGNETIC_DECLINATION))
-    (north_x, north_y) = (center_x, center_y + length)
-    (east_x, east_y) = (center_x + length, center_y)
-    (south_x, south_y) = (center_x, center_y - length)
-    (west_x, west_y) = (center_x - length, center_y)
-    plt.plot([south_x, north_x], [south_y, north_y], color='black', linewidth=2, marker='^', markersize=5)
-    plt.plot([west_x, east_x], [west_y, east_y], color='black', linewidth=1, marker=None)
-    # plt.plot([center_x, magnetic_north_x], [center_y, magnetic_north_y], color='black', linewidth=3, marker = '^')
-    plt.text(x=center_x + length / 16, y=center_y + length / 2, s='N', ha='left', va='center', fontsize=8)
-
-def draw_scale(x, y_min, y_max, fontsize, feet, meters):
-
+    x_diff = x_max - x_min
+    x = x_min + 0.0175 * x_diff
     y_diff = y_max - y_min
+    y = y_min + 0.037 * y_diff
 
     depth = .001 * fontsize * y_diff
     distance = .004 * fontsize * y_diff
@@ -99,10 +96,10 @@ def draw_scale(x, y_min, y_max, fontsize, feet, meters):
     for i in range(0, len(feet) - 1):
         x1 = x + feet[i]
         x2 = x + feet[i + 1]
-        plt.text(s='{}'.format(feet[i]), x=x1, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        plt.text(s='{}'.format(feet[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
         if i == len(feet) - 2:
-            plt.text(s='       {} feet'.format(feet[i + 1]), x=x2, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')
-        corners = ((x1, y_min), (x2, y_min), (x2, y_min + depth), (x1, y_min + depth))
+            plt.text(s='       {} feet'.format(feet[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
         plt.gca().add_line(block)
         if color == 'white':
@@ -113,24 +110,20 @@ def draw_scale(x, y_min, y_max, fontsize, feet, meters):
     # meters
     # feet
     color='white'
-    y_min = y_min + distance
+    y = y + distance
     for i in range(0, len(meters) - 1):
         x1 = x + __meters(meters[i])
         x2 = x + __meters(meters[i + 1])
-        plt.text(s='{}'.format(meters[i]), x=x1, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')            
+        plt.text(s='{}'.format(meters[i]), x=x1, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')            
         if i == len(meters) - 2:
-            plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y_min + text_distance, ha='center', fontsize=fontsize, va='bottom')
-        corners = ((x1, y_min), (x2, y_min), (x2, y_min + depth), (x1, y_min + depth))
+            plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
+        corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
         plt.gca().add_line(block)
         if color == 'white':
             color = 'black'
         elif color == 'black':
             color = 'white'
-
-def add_copyright(fontsize):
-    ((x_min, y_min), (x_max, y_max)) = __CORNER_COORDINATES
-    plt.text(x_min, y_min, '© 2020 NORTHEAST UNDERWATER EXPLORERS ALL RIGHTS RESERVED', fontsize=fontsize, horizontalalignment='left')
 
 def draw(ax,
         input_landmark,
@@ -186,8 +179,8 @@ def draw(ax,
                     im.image.axes = ax
                     im_ab = AnnotationBbox(im, __LANDMARK_COORDINATES[data.landmark], frameon=False)
                     if not data.transparent_icon:
-                        # plt.plot(x, y, color='#aadaff', marker='s', markersize=landmark_markersize, zorder=data.zorder)
-                        plt.plot(x, y, color='white', marker='s', markersize=landmark_markersize, zorder=data.zorder)
+                        color='#aadaff'
+                        plt.plot(x, y, color=color, marker='s', markeredgecolor=color, markeredgewidth=0.0, markersize=landmark_markersize, zorder=data.zorder)
                     ax.add_artist(im_ab)
             if include_depth and data.depth is not None and data.depth_angle is not None:
                 x = x + depth_distance * data.depth_distance_zoom * cos(__radians(data.depth_angle))
@@ -331,6 +324,7 @@ def draw_boat_ramp():
     (x, y) = (x + width * cos(__radians(angle - 90)),  y + width * sin(__radians(angle - 90)))
     corners += [(x, y)]
     boat_ramp = Polygon(xy=corners, closed=True, color='#e5e3df', zorder=0)
+# markerfacecolor=data.color, markeredgecolor=data.color, markeredgewidth=0.0
 
     plt.gca().add_line(boat_ramp)
 

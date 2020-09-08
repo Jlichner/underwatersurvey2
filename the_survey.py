@@ -1,5 +1,4 @@
 from base import (
-    add_copyright,
     corner_coordinates,
     draw,
     draw_between_landmarks,
@@ -19,6 +18,7 @@ from data import (
     BobsArrowToIslander,
     BypassEndToBobsArrow,
     CarToLisasGift,
+    ConroyToOxygenTanks,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
     MaryToFourWay,
@@ -85,6 +85,8 @@ draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerR
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, **draw_kwargs)
 
+draw_between_landmarks(ax, Landmark.CONROY, Landmark.OXYGEN_TANKS, ConroyToOxygenTanks, **draw_kwargs)
+
 draw(ax, Landmark.CAR, CarToLisasGift, **draw_kwargs)
 
 ######
@@ -144,7 +146,7 @@ draw_between_landmarks(ax, Landmark.KIBBETTS, Landmark.WRECK_2, KibbettsToWreck2
 
 ((x_min, y_min), (x_max, y_max)) = corner_coordinates()
 y_max = y_max + 125
-y_min = y_min - 200
+y_min = y_min - 400
 x_avg = (x_min + x_max) / 2
 x_min = x_avg - 5 * (y_max - y_min) / 6
 x_max = x_avg + 5 * (y_max - y_min) / 6
@@ -152,7 +154,8 @@ x_max = x_avg + 5 * (y_max - y_min) / 6
 plt.axis('off')
 plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica Neue', fontsize=FONTSIZE, fontweight='bold')
 plt.text(x=(x_min + x_max) / 2, y=(0.99 * y_max + 0.01 * y_min), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.318 * FONTSIZE, ha='center', va='top')
-plt.text(x=(-0.06 * x_max + 1.06 * x_min), y=(- 0.05 * y_max + 1.05 * y_min), s='© 2020 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
+plt.text(x=x_min, y=(- 0.05 * y_max + 1.05 * y_min), s='© 2020 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
+plt.text(x=x_max, y=(- 0.05 * y_max + 1.05 * y_min), s='v1.0 September 2020', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='right', va='top')
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 
@@ -163,10 +166,10 @@ plt.ylim(y_min, y_max)
 #####
 
 # draw_compass_rose()
-draw_scale(x_min, y_min, y_max, fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
 draw_platforms(fontsize=None)
 draw_boat_ramp()
-# add_copyright(fontsize=0.78 * FONTSIZE)
+draw_scale(corner_coordinates=((x_min, y_min), (x_max, y_max)), fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
+draw_compass_rose(ax, corner_coordinates=((x_min, y_min), (x_max, y_max)), zoom=0.05)
 
 #####
 #
@@ -189,7 +192,7 @@ CONROY = Line2D([0], [0], label='Conroy')
 CRIBBING = Line2D([0], [0], label='Cribbing')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
-MARY = Line2D([0], [0], label='Virgin Mary Statue')
+MARY = Line2D([0], [0], label='Mary')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 SHIPWRECK = Line2D([0], [0], label='Shipwreck')
