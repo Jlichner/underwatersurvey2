@@ -57,6 +57,12 @@ class Landmark(Enum):
     TRACTOR_TIRE = 36
     MARY =37
     CRIBBING=38
+    CAFE = 39
+    ISLANDER_PLATFORM = 40
+    SPOOKY_TREE = 41
+    JUG = 42
+    ISLANDER = 43
+    HOOP = 44
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -138,10 +144,10 @@ BarToPlatform = (
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
     SurveyedLine(length_in=9, angle=325),
-    SaveLandmark(Landmark.MOORING_BLOCK_20FT, depth_angle=200, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_20FT, depth_angle=200, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
-    # SaveLandmark(Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
-    SaveLandmark(Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
+    # SaveLandmark(landmark=Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(landmark=Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 SkeletonToMooringBlock2ViaPokerRun = (
@@ -150,9 +156,9 @@ SkeletonToMooringBlock2ViaPokerRun = (
     TieOff(),
     SurveyedLine(length_ft=72, angle=50),
     TieOff(force_draw=True),
-    SaveLandmark(Landmark.BOAT_RAMP_1),
+    SaveLandmark(landmark=Landmark.BOAT_RAMP_1),
     MarinaLine(length_ft=35, length_in=10, angle=60),
-    SaveLandmark(Landmark.BOAT_RAMP_2),
+    SaveLandmark(landmark=Landmark.BOAT_RAMP_2),
     TieOff(force_draw=True),
     SurveyedLine(length_ft=20, length_in=8, angle=50),
     Jump(length_ft=8, angle=315),
@@ -187,7 +193,7 @@ SkeletonToMooringBlock2ViaMooringBlocks = (
 
 MooringBlock2ToMooringBlock1 = (
     Jump(length_ft=25, length_in=9, angle=230),
-    SaveLandmark(Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_1, icon_path='icons/mooringblock.png', transparent_icon=True),
     )
 
 MooringBlock1ToMooringBlock5ViaPokerRun = (
@@ -199,7 +205,7 @@ MooringBlock1ToMooringBlock5ViaPokerRun = (
     Jump(length_ft=6, length_in=4, angle=200),
     SurveyedLine(length_ft=49, length_in=2, angle=160),
     TieOff(),
-    SaveLandmark(Landmark.ANGLE_IRON),
+    SaveLandmark(landmark=Landmark.ANGLE_IRON),
     SurveyedLine(length_ft=65, length_in=10, angle=75),
     TieOff(),
     SurveyedLine(length_ft=12, length_in=1, angle=75),
@@ -413,7 +419,7 @@ UmbrellaToRockIsland = (
     Stake(),
     SurveyedLine(length_ft=22, angle=310, flip_text_side=True),
     SurveyedLine(length_ft=15, angle=40),
-    SaveLandmark(Landmark.ROWBOAT, icon_path='icons/shipwreck.png'),
+    SaveLandmark(landmark=Landmark.ROWBOAT, icon_path='icons/shipwreck.png'),
     Jump(length_ft=15, angle=220),
     SurveyedLine(length_ft=15, angle=315, flip_text_side=True),
     Stake(),
@@ -429,7 +435,7 @@ UmbrellaToRockIsland = (
     Stake(),
     SurveyedLine(length_ft=15, angle=325),
     Stake(),
-    SaveLandmark(Landmark.ROCK_ISLAND_BOTTLE)
+    SaveLandmark(landmark=Landmark.ROCK_ISLAND_BOTTLE)
     )
 
 UmbrellaToOxygenTanks = (
@@ -454,7 +460,7 @@ UmbrellaToOxygenTanks = (
     SurveyedLine(length_ft=32, length_in=6, angle=280),
     Stake(),
     SurveyedLine(length_ft=27, angle=280),
-    SaveLandmark(Landmark.OXYGEN_TANKS, depth=66, depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
+    SaveLandmark(landmark=Landmark.OXYGEN_TANKS, depth=66, depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png'),
 )
 
 UmbrellaToOxygenTanksTruncated = (
@@ -482,7 +488,7 @@ RockIslandBottleClockwise = (
     Stake(),
     SurveyedLine(length_ft=48, angle=250),
     TieOff(),
-    SaveLandmark(Landmark.ROCK_ISLAND_T)
+    SaveLandmark(landmark=Landmark.ROCK_ISLAND_T)
     )
 
 RockIslandTClockwise = (
@@ -515,7 +521,7 @@ AngleIronToMary = (
     TieOff(),
     SurveyedLine(length_ft=9, angle=250, alt_text=''),
     TieOff(force_draw=True),
-    SaveLandmark(Landmark.MARY, icon_path='icons/mary.png', depth=51, depth_angle=270),
+    SaveLandmark(landmark=Landmark.MARY, icon_path='icons/mary.png', depth=51, depth_angle=270),
     )
 
 AngleIronToMaryTruncated = (
@@ -526,7 +532,7 @@ MaryToFourWay = (
     SurveyedLine(length_ft=63, angle=315),
     TieOff(),
     SurveyedLine(length_ft=42, angle=315, flip_text_side=True),
-    SaveLandmark(Landmark.FOUR_WAY),
+    SaveLandmark(landmark=Landmark.FOUR_WAY),
     )
 
 JJJ = (
@@ -560,7 +566,7 @@ JJJ = (
     TieOff(),
     SurveyedLine(length_ft=53, angle=230),
     TieOff(),
-    SaveLandmark(Landmark.BYPASS_END_JJJ),
+    SaveLandmark(landmark=Landmark.BYPASS_END_JJJ),
     )
 
 FourWayToNatesTieoff = (
@@ -582,7 +588,7 @@ FourWayToNatesTieoff = (
     SurveyedLine(length_ft=34, angle=330),
     Stake(),
     SurveyedLine(length_ft=59, angle=10),
-    SaveLandmark(Landmark.NATES_TIEOFF, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png'),
+    SaveLandmark(landmark=Landmark.NATES_TIEOFF, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png'),
     )
 
 NatesTieoffToRockIsland = (
@@ -634,7 +640,7 @@ FourWayToBypassEndSixtyFoot = (
     SurveyedLine(length_ft=30, angle=160),
     TieOff(),
     SurveyedLine(length_ft=26, angle=175),
-    SaveLandmark(Landmark.BYPASS_END_SIXTY_FOOT),
+    SaveLandmark(landmark=Landmark.BYPASS_END_SIXTY_FOOT),
     )
 
 BypassEndToBobsArrow = (
@@ -646,7 +652,7 @@ BypassEndToBobsArrow = (
     TieOff(),
     SurveyedLine(length_ft=50, angle=220),
     Arrow(distance=0, angle=40),
-    SaveLandmark(Landmark.BOBS_ARROW)
+    SaveLandmark(landmark=Landmark.BOBS_ARROW)
     )
 
 BobsArrowToEmmaMunsen = (
@@ -659,10 +665,10 @@ BobsArrowToEmmaMunsen = (
     SurveyedLine(length_ft=65, angle=5),
     SurveyedLine(length_ft=50, angle=5),
     SurveyedLine(length_ft=22, angle=355),
-    SaveLandmark(Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png')
+    SaveLandmark(landmark=Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png')
 )
 
-BobsArrowToIslander = (
+BobsArrowToIslanderPlatform = (
     SurveyedLine(length_ft=25, angle=220),
     TieOff(),
     SurveyedLine(length_ft=104, angle=250),
@@ -683,14 +689,44 @@ BobsArrowToIslander = (
     SurveyedLine(length_ft=58, angle=200),
     TieOff(),
     SurveyedLine(length_ft=54, angle=150),
-    SaveLandmark(Landmark.TRACTOR_TIRE, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png'),
+    SaveLandmark(landmark=Landmark.TRACTOR_TIRE, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png'),
     SurveyedLine(length_ft=48, angle=132),
-    SaveLandmark(Landmark.CRIBBING, icon_path='icons/cribbing.png'),
+    SaveLandmark(landmark=Landmark.CRIBBING, icon_path='icons/cribbing.png'),
+    Jump(length_ft=0, angle=0), # TODO
+    SurveyedLine(length_ft=37, angle=210),
+    TieOff(),
+    SurveyedLine(length_ft=48, angle=176),
+    SurveyedLine(length_ft=66, angle=232),
+    SaveLandmark(landmark=Landmark.CAFE, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-273-coffee-mug@3x.png'),
+    SurveyedLine(length_ft=85, angle=230),
+    TieOff(),
+    SurveyedLine(length_ft=61, angle=220),
+    TieOff(),
+    SurveyedLine(length_ft=62, angle=220),
+    TieOff(),
+    SurveyedLine(length_ft=34, angle=230),
+    SaveLandmark(landmark=Landmark.ISLANDER_PLATFORM),
 )
+
+CafeToSpookyTreeToIslander = (
+    SurveyedLine(length_ft=91, angle=250),
+    TieOff(),
+    SurveyedLine(length_ft=53, angle=335),
+    SaveLandmark(landmark=Landmark.SPOOKY_TREE, icon_path='icons/spookytree.png'),
+    SurveyedLine(length_ft=47, angle=205),
+    SurveyedLine(length_ft=51, angle=205),
+    SaveLandmark(landmark=Landmark.JUG),
+    TieOff(), # THIS IS THE JUG
+    Jump(length_ft=94, angle=240),
+    SaveLandmark(landmark=Landmark.HOOP, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-154-square-empty@2x.png', transparent_icon=True),
+    Jump(length_ft=87, angle=240),
+    Jump(length_ft=40, angle=240), # THIS IS A FUDGE, ISLANDER IS 120 FEET LONG but we measured nearer to the stern
+    SaveLandmark(landmark=Landmark.ISLANDER, icon_path='icons/islander.png', transparent_icon=True),
+    )
     
 
 ExampleData = (
-    SaveLandmark(Landmark.MY_BOAT, icon_path='icons/shipwreck.png'),
+    SaveLandmark(landmark=Landmark.MY_BOAT, icon_path='icons/shipwreck.png'),
     SurveyedLine(length_ft=100, angle=90),
     Stake(),
     UnsurveyedLine(length_ft=100, angle=45, alt_text='(Unsurveyed line)'),

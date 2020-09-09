@@ -5,6 +5,7 @@ from base import (
     draw_boat_ramp,
     draw_circuit,
     draw_compass_rose,
+    draw_islander_platforms,
     draw_platforms,
     draw_scale,
     get_landmark_coordinates,
@@ -15,8 +16,9 @@ from data import (
     AngleIronToMary,
     BarToPlatform,
     BobsArrowToEmmaMunsen,
-    BobsArrowToIslander,
+    BobsArrowToIslanderPlatform,
     BypassEndToBobsArrow,
+    CafeToSpookyTreeToIslander,
     CarToLisasGift,
     ConroyToOxygenTanks,
     FourWayToBypassEndSixtyFoot,
@@ -52,12 +54,12 @@ ax.set_aspect(aspect='equal')
 
 FONTSIZE=30
 LANDMARK_ZOOM=40
-LEGEND_IMAGE_STRETCH=(-2, 7)
-LEGEND_IMAGE_OFFSET=(-1, 3)
+LEGEND_IMAGE_STRETCH=(-5, 7)
+LEGEND_IMAGE_OFFSET=(-2, 3)
 
 draw_kwargs = {
-    'depth_distance': 1.10 * FONTSIZE,
-    'depth_fontsize': 0.30 * FONTSIZE,
+    'depth_distance': 1.3 * FONTSIZE,
+    'depth_fontsize': 0.29 * FONTSIZE,
     'draw_tieoffs': True,
     'include_depth': True,
     'include_mooringblocks': False,
@@ -110,11 +112,13 @@ draw_circuit(ax, Landmark.FOUR_WAY, FourWayToBypassEndSixtyFoot, JJJ, **draw_kwa
 
 draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, **draw_kwargs)
 
-draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslander, **draw_kwargs)
+draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslanderPlatform, **draw_kwargs)
 
 draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, **draw_kwargs)
 
 draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, **draw_kwargs)
+
+draw(ax, Landmark.CAFE, CafeToSpookyTreeToIslander, **draw_kwargs)
 
 ######
 #
@@ -167,6 +171,7 @@ plt.ylim(y_min, y_max)
 
 # draw_compass_rose()
 draw_platforms(fontsize=None)
+draw_islander_platforms(fontsize=None)
 draw_boat_ramp()
 draw_scale(corner_coordinates=((x_min, y_min), (x_max, y_max)), fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
 draw_compass_rose(ax, corner_coordinates=((x_min, y_min), (x_max, y_max)), zoom=0.05)
@@ -188,31 +193,37 @@ MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='re
 
 ANCHOR = Line2D([0], [0], label='Anchor')
 CAR = Line2D([0], [0], label='Car')
+CAFE = Line2D([0], [0], label='Underwater Cafe')
 CONROY = Line2D([0], [0], label='Conroy')
 CRIBBING = Line2D([0], [0], label='Cribbing')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
+HOOP = Line2D([0], [0], label='Hoop')
 MARY = Line2D([0], [0], label='Mary')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 SHIPWRECK = Line2D([0], [0], label='Shipwreck')
 SKELETON = Line2D([0], [0], label='Skeleton')
 TRACTOR_TIRE = Line2D([0], [0], label='Big tire')
+TREE = Line2D([0], [0], label='Spooky tree')
 UMBRELLA = Line2D([0], [0], label='Umbrella')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+cafe_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-273-coffee-mug@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 cribbing_handler = ImageHandler(image_path='icons/cribbing.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+hoop_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-154-square-empty@2x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 tractor_tire_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+tree_handler = ImageHandler(image_path='icons/spookytree.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
@@ -229,32 +240,38 @@ ax.legend(
         ANCHOR,
         ARROW,
         CAR,
+        CAFE,
         CONROY,
         CRIBBING,
         EMMA_MUNSEN_TUGBOAT,
         GIFT,
+        HOOP,
         MARY,
         NATES_TIEOFF,
         OXYGEN,
         SHIPWRECK,
         SKELETON,
         TRACTOR_TIRE,
+        TREE,
         UMBRELLA,
         WHEEL,
         ],
     handler_map={
         ANCHOR: anchor_handler,
         CAR: car_handler,
+        CAFE: cafe_handler,
         CONROY: conroy_handler,
         CRIBBING: cribbing_handler,
         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
         GIFT: gift_handler,
+        HOOP: hoop_handler,
         MARY: mary_handler,
         NATES_TIEOFF: nates_tieoff_handler,
         OXYGEN: oxygen_handler,
         SHIPWRECK: shipwreck_handler,
         SKELETON: skeleton_handler,
         TRACTOR_TIRE: tractor_tire_handler,
+        TREE: tree_handler,
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
         },

@@ -311,6 +311,29 @@ def draw_platforms(fontsize):
         (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
         plt.text(x=x_mid, y=y_mid, s='30\'  ', color='white', fontsize=fontsize, rotation=-angle, alpha=3, ha='center', va='center')
  
+def draw_islander_platforms(fontsize):
+    length = 16
+    width = 11
+    angle = 180
+
+    (x, y) = __LANDMARK_COORDINATES[Landmark.ISLANDER_PLATFORM]
+    x -= 5 # fudge
+    y -= 4 # fudge
+    corners = [(x, y)]
+    (x, y) = (x + width * cos(__radians(angle)),  y + width * sin(__radians(angle)))
+    corners += [(x, y)]
+    (x, y) = (x + length * cos(__radians(angle + 90)),  y + length * sin(__radians(angle + 90)))
+    corners += [(x, y)]
+    (x, y) = (x + width * cos(__radians(angle + 180)),  y + width * sin(__radians(angle + 180)))
+    corners += [(x, y)]
+    platform = Polygon(xy=corners, closed=True, color='black')
+
+    plt.gca().add_line(platform)
+
+    if fontsize:
+        (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
+        plt.text(x=x_mid, y=y_mid, s='27\'  ', color='white', fontsize=fontsize, rotation=-angle, alpha=3, ha='center', va='center')
+
 def draw_boat_ramp():
     length = 60
     width = (35 + 10 / 12) / 3
