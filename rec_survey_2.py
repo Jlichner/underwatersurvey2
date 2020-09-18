@@ -37,7 +37,7 @@ fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
 FONTSIZE=60
-LANDMARK_ZOOM=80
+LANDMARK_ZOOM=60
 LEGEND_IMAGE_STRETCH=(-17, 7.5)
 LEGEND_IMAGE_OFFSET=(-8, 4)
 
@@ -48,10 +48,11 @@ draw_kwargs = {
     'include_depth': True,
     'include_mooringblocks': False,
     'include_text': False,
-    'landmark_markersize': 16,
+    'landmark_markersize': 10,
     'landmark_zoom': LANDMARK_ZOOM,
+    'linewidth': 1,
     'text_fontsize': 13,
-    'tieoff_size': 6,
+    'tieoff_size': 4.5,
 }
 
 ######

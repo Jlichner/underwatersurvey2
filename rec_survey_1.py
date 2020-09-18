@@ -1,7 +1,6 @@
 from base import (
     corner_coordinates,
     draw,
-    draw_between_landmarks,
     draw_boat_ramp,
     draw_circuit,
     draw_compass_rose,
@@ -49,6 +48,7 @@ draw_kwargs = {
     'include_text': True,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
+    'linewidth': 1,
     'text_fontsize': 13,
     'tieoff_size': 6,
 }

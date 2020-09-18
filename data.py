@@ -63,6 +63,8 @@ class Landmark(Enum):
     JUG = 42
     ISLANDER = 43
     HOOP = 44
+    BENS_T = 45
+    JOSHS_WRECK = 35
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -144,7 +146,7 @@ BarToPlatform = (
     Arrow(distance=8, angle=150),
     # TieOff(), JP's tent
     SurveyedLine(length_in=9, angle=325),
-    SaveLandmark(landmark=Landmark.MOORING_BLOCK_20FT, depth_angle=200, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
+    SaveLandmark(landmark=Landmark.MOORING_BLOCK_20FT, depth_angle=210, depth=20, depth_distance_zoom=0.8, icon_path='icons/mooringblock.png', transparent_icon=True),
     SurveyedLine(length_ft=44, length_in=8, angle=310),
     # SaveLandmark(landmark=Landmark.SKELETON, depth=64,depth_angle=50, depth_distance_zoom=1.15, icon_path='icons/mooringblock.png', transparent_icon=True),
     SaveLandmark(landmark=Landmark.SKELETON, icon_path='icons/mooringblock.png', transparent_icon=True),
@@ -162,7 +164,7 @@ SkeletonToMooringBlock2ViaPokerRun = (
     TieOff(force_draw=True),
     SurveyedLine(length_ft=20, length_in=8, angle=50),
     Jump(length_ft=8, angle=315),
-    SaveLandmark(landmark=Landmark.CAR, depth_angle=123, depth=62, depth_distance_zoom=1.2, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
+    SaveLandmark(landmark=Landmark.CAR, depth_angle=10, depth=62, depth_distance_zoom=0.8, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png'),
     Jump(length_ft=8, angle=315),
     SurveyedLine(length_ft=19, length_in=7, angle=300),
     TieOff(),
@@ -228,11 +230,9 @@ ConroyToOxygenTanks = (
     Stake(),
     SurveyedLine(length_ft=54, length_in=11, angle=350),
     Stake(),
-    SurveyedLine(length_ft=41, length_in=9, angle=300),
+    SurveyedLine(length_ft=45, length_in=5, angle=320),
     Stake(),
-    SurveyedLine(length_ft=33, length_in=3, angle=30),
-    Stake(),
-    SurveyedLine(length_ft=27, length_in=7, angle=15),
+    SurveyedLine(length_ft=39, length_in=6, angle=320),
     Stake(),
     SurveyedLine(length_ft=26, length_in=5, angle=0),
     TieOff(),
@@ -309,7 +309,7 @@ CarToLisasGift = (
 )
 
 CarToLisasGiftTruncated = (
-    UnsurveyedLine(length_ft=90, angle=56, alt_text='To Lisa\'s Gift', flip_text_side=True),
+    UnsurveyedLine(length_ft=90, angle=56, alt_text='      To Lisa\'s Gift', flip_text_side=True),
 )
 
 LisasGiftToKibbetts = (
@@ -333,7 +333,7 @@ KibbettsToWreck2 = (
     SurveyedLine(length_ft=82, length_in=6, angle=61),
 )
 
-LisasGiftNortheast = (
+LisasGiftToBensT = (
     SurveyedLine(length_ft=50, length_in=5, angle=72),
     Stake(),
     SurveyedLine(length_ft=50, length_in=4, angle=72),
@@ -355,6 +355,10 @@ LisasGiftNortheast = (
     UnsurveyedLine(length_ft=50, angle=60),
     Jump(length_ft=50, angle=240),
     Arrow(angle=240),
+    SaveLandmark(landmark=Landmark.BENS_T),
+    )
+
+BensTNorthwest = (
     SurveyedLine(length_ft=80, length_in=6, angle=334),
     SurveyedLine(length_ft=20, length_in=3, angle=334),
     SurveyedLine(length_ft=28, angle=314),
@@ -363,6 +367,33 @@ LisasGiftNortheast = (
     Jump(length_ft=8, angle=350),
     SaveLandmark(landmark=Landmark.WRECK_2, depth=49, icon_path='icons/shipwreck.png'),
     )
+
+BensTToJoshsWreck = (
+    SurveyedLine(length_ft=50, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=50, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=53, length_in=1, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=94, length_in=6, angle=60),
+    TieOff(),
+    UnsurveyedLine(length_ft=150, angle=60),
+    Jump(length_ft=150, angle=240),
+    Jump(length_ft=3, angle=334), # NOTE(stpyang): Tie-offs at opposite ends of log
+    SurveyedLine(length_ft=50, length_in=6, angle=92),
+    TieOff(),
+    SurveyedLine(length_ft=37, length_in=3, angle=110),
+    TieOff(),
+    SurveyedLine(length_ft=43, angle=124),
+    TieOff(),
+    SaveLandmark(Landmark.JOSHS_WRECK, icon_path='icons/shipwreck.png')
+)
 
 UmbrellaToRockIsland = (
     Jump(length_ft=18, angle=20),
@@ -498,7 +529,38 @@ RockIslandTClockwise = (
     )
 
 RockIslandBottleCounterClockwise = (
-    UnsurveyedLine(length_ft=50, angle=45, alt_text=''),
+    SurveyedLine(length_ft=60, length_in=3, angle=40),
+    TieOff(),
+    SurveyedLine(length_ft=59, length_in=5, angle=40),
+    TieOff(),
+    SurveyedLine(length_ft=53, length_in=5, angle=40),
+    TieOff(),
+    SurveyedLine(length_ft=17, angle=60),
+    Stake(),
+    SurveyedLine(length_ft=84, angle=50),
+    SurveyedLine(length_ft=48, angle=50), # BROKEN
+    Jump(length_ft=48, angle=230),
+    Jump(length_ft=84, angle=230),
+    Jump(length_ft=17, angle=240),
+    SurveyedLine(length_ft=33, angle=40),
+    TieOff(),
+    SurveyedLine(length_ft=15, length_in=7, angle=35),
+    TieOff(),
+    SurveyedLine(length_ft=37, angle=40),
+    SurveyedLine(length_ft=20, length_in=6, angle=40),
+    SurveyedLine(length_ft=30, length_in=4, angle=30),
+    SurveyedLine(length_ft=16, length_in=4, angle=20),
+    SurveyedLine(length_ft=15, length_in=3, angle=10),
+    TieOff(),
+    SurveyedLine(length_ft=3, length_in=4, angle=315),
+    TieOff(),
+    SurveyedLine(length_ft=10, length_in=4, angle=358),
+    TieOff(),
+    SurveyedLine(length_ft=6, length_in=1, angle=260),
+    TieOff(),
+    SurveyedLine(length_ft=7, length_in=7, angle=305),
+    TieOff(),
+    UnsurveyedLine(length_ft=100, angle=260),
     )
 
 AngleIronToMary = (
@@ -661,10 +723,10 @@ BobsArrowToEmmaMunsen = (
     SurveyedLine(length_ft=49, angle=355),
     SurveyedLine(length_ft=22, angle=345),
     Stake(),
-    SurveyedLine(length_ft=70, angle=10),
-    SurveyedLine(length_ft=65, angle=5),
-    SurveyedLine(length_ft=50, angle=5),
-    SurveyedLine(length_ft=22, angle=355),
+    UnsurveyedLine(length_ft=70, angle=10),
+    UnsurveyedLine(length_ft=65, angle=5),
+    UnsurveyedLine(length_ft=50, angle=5),
+    UnsurveyedLine(length_ft=22, angle=355),
     SaveLandmark(landmark=Landmark.EMMA_MUNSEN, icon_path='icons/tugboat.png')
 )
 

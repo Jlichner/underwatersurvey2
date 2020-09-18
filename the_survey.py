@@ -15,6 +15,8 @@ from base import (
 from data import (
     AngleIronToMary,
     BarToPlatform,
+    BensTToJoshsWreck,
+    BensTNorthwest,
     BobsArrowToEmmaMunsen,
     BobsArrowToIslanderPlatform,
     BypassEndToBobsArrow,
@@ -27,7 +29,7 @@ from data import (
     JJJ,
     KibbettsToWreck2,
     Landmark,
-    LisasGiftNortheast,
+    LisasGiftToBensT,
     LisasGiftToKibbetts,
     MooringBlock1ToMooringBlock5ViaMooringBlocks,
     MooringBlock1ToMooringBlock5ViaPokerRun,
@@ -64,10 +66,11 @@ draw_kwargs = {
     'include_depth': True,
     'include_mooringblocks': False,
     'include_text': False,
-    'landmark_markersize': 4,
+    'landmark_markersize': 6,
     'landmark_zoom': LANDMARK_ZOOM,
+    'linewidth': 0.5,
     'text_fontsize': 8,
-    'tieoff_size': 3,
+    'tieoff_size': 2,
 }
 
 
@@ -138,7 +141,11 @@ draw(ax, Landmark.ROCK_ISLAND_T, RockIslandTClockwise, **draw_kwargs)
 
 draw(ax, Landmark.LISAS_GIFT, LisasGiftToKibbetts, **draw_kwargs)
 
-draw(ax, Landmark.LISAS_GIFT, LisasGiftNortheast, **draw_kwargs)
+draw(ax, Landmark.LISAS_GIFT, LisasGiftToBensT, **draw_kwargs)
+
+draw(ax, Landmark.BENS_T, BensTToJoshsWreck, **draw_kwargs)
+
+draw(ax, Landmark.BENS_T, BensTNorthwest, **draw_kwargs)
 
 draw_between_landmarks(ax, Landmark.KIBBETTS, Landmark.WRECK_2, KibbettsToWreck2, **draw_kwargs)
 
@@ -173,7 +180,7 @@ plt.ylim(y_min, y_max)
 draw_platforms(fontsize=None)
 draw_islander_platforms(fontsize=None)
 draw_boat_ramp()
-draw_scale(corner_coordinates=((x_min, y_min), (x_max, y_max)), fontsize=0.25 * FONTSIZE, feet=(0, 100, 200, 300, 400, 500), meters=(0, 50, 100, 150))
+draw_scale(corner_coordinates=((x_min, y_min), (x_max, y_max)), fontsize=0.25 * FONTSIZE, feet=(0, 250, 500, 750, 1000), meters=(0, 100, 200, 300))
 draw_compass_rose(ax, corner_coordinates=((x_min, y_min), (x_max, y_max)), zoom=0.05)
 
 #####
@@ -199,13 +206,14 @@ CRIBBING = Line2D([0], [0], label='Cribbing')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 HOOP = Line2D([0], [0], label='Hoop')
+ISLANDER = Line2D([0], [0], label='Islander')
 MARY = Line2D([0], [0], label='Mary')
 NATES_TIEOFF = Line2D([0], [0], label='Nate\'s fugly tieoff')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 SHIPWRECK = Line2D([0], [0], label='Shipwreck')
 SKELETON = Line2D([0], [0], label='Skeleton')
+SPOOKY_TREE = Line2D([0], [0], label='Spooky tree')
 TRACTOR_TIRE = Line2D([0], [0], label='Big tire')
-TREE = Line2D([0], [0], label='Spooky tree')
 UMBRELLA = Line2D([0], [0], label='Umbrella')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
@@ -217,13 +225,14 @@ cribbing_handler = ImageHandler(image_path='icons/cribbing.png', image_stretch=L
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 hoop_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-154-square-empty@2x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+islander_handler = ImageHandler(image_path='icons/islander.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 nates_tieoff_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-233-lasso@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 shipwreck_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 skeleton_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+spookytree_handler = ImageHandler(image_path='icons/spookytree.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 tractor_tire_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-137-cogwheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
-tree_handler = ImageHandler(image_path='icons/spookytree.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-14-beach-umbrella@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
@@ -233,28 +242,30 @@ ax.legend(
     handles=[
         SURVEYED_LINE,
         MARINA_LINE,
-        # UNSURVEYED_LINE,
+        UNSURVEYED_LINE,
         STAKE,
         TIE_OFF,
-
-        ANCHOR,
         ARROW,
-        CAR,
-        CAFE,
-        CONROY,
-        CRIBBING,
-        EMMA_MUNSEN_TUGBOAT,
-        GIFT,
+
+        ISLANDER,
         HOOP,
-        MARY,
-        NATES_TIEOFF,
-        OXYGEN,
-        SHIPWRECK,
-        SKELETON,
+        SPOOKY_TREE,
+        CAFE,
+        CRIBBING,
         TRACTOR_TIRE,
-        TREE,
+        EMMA_MUNSEN_TUGBOAT,
+        NATES_TIEOFF,
+        MARY,
+        OXYGEN,
+        CONROY,
+        ANCHOR,
         UMBRELLA,
+        CAR,
         WHEEL,
+        GIFT,
+        SHIPWRECK,
+
+        # SKELETON,
         ],
     handler_map={
         ANCHOR: anchor_handler,
@@ -265,13 +276,14 @@ ax.legend(
         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,
         GIFT: gift_handler,
         HOOP: hoop_handler,
+        ISLANDER: islander_handler,
         MARY: mary_handler,
         NATES_TIEOFF: nates_tieoff_handler,
         OXYGEN: oxygen_handler,
         SHIPWRECK: shipwreck_handler,
         SKELETON: skeleton_handler,
+        SPOOKY_TREE: spookytree_handler,
         TRACTOR_TIRE: tractor_tire_handler,
-        TREE: tree_handler,
         UMBRELLA: umbrella_handler,
         WHEEL: wheel_handler,
         },

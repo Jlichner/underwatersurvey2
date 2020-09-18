@@ -50,6 +50,7 @@ draw_kwargs = {
     'include_text': False,
     'landmark_markersize': 16,
     'landmark_zoom': LANDMARK_ZOOM,
+    'linewidth': 0.75,
     'text_fontsize': 15,
     'tieoff_size': 6,
 }

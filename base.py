@@ -138,6 +138,7 @@ def draw(ax,
         include_text=None,
         landmark_markersize=None,
         landmark_zoom=None,
+        linewidth=None,
         text_fontsize=None,
         tieoff_size=None,
         ):
@@ -151,7 +152,7 @@ def draw(ax,
             length = (data.length_ft + data.length_in / 12) * stretch
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
-            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=1, zorder=1)
+            plt.plot([x0, x1], [y0, y1], color=data.color, linestyle=data.linestyle, linewidth=linewidth, zorder=1)
             mid_x = (x0 + x1) / 2 + 6 * sin(__radians(angle))
             mid_y = (y0 + y1) / 2 - 6 * cos(__radians(angle))
             mid_x = (x0 + x1) / 2 + 6 * sin(__radians(angle))
