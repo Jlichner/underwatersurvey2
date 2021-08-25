@@ -310,7 +310,7 @@ def draw_platforms(fontsize):
 
     if fontsize:
         (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
-        plt.text(x=x_mid, y=y_mid, s='30\'  ', color='white', fontsize=fontsize, rotation=-angle, alpha=3, ha='center', va='center')
+        plt.text(x=x_mid, y=y_mid, s='30\'  ', color='white', fontsize=fontsize, rotation=-angle, ha='center', va='center')
  
 def draw_islander_platforms(fontsize):
     length = 16

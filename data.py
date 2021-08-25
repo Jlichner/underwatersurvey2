@@ -65,6 +65,8 @@ class Landmark(Enum):
     HOOP = 44
     BENS_T = 45
     JOSHS_WRECK = 35
+    TAHITI_TIGER = 36
+    SAILBOAT = 37
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -219,6 +221,17 @@ MooringBlock1ToMooringBlock5ViaMooringBlocks = (
     Jump(length_ft=21, length_in=2, angle=140),
     SaveLandmark(landmark=Landmark.MOORING_BLOCK_3, icon_path='icons/mooringblock.png', transparent_icon=True),
     Jump(length_ft=25, length_in=10, angle=145),
+)
+
+AnchorToSailboat = (
+    SurveyedLine(length_ft=72, length_in=11, angle=340),
+    Stake(),
+    SurveyedLine(length_ft=51, length_in=3, angle=330),    
+    SaveLandmark(landmark=Landmark.SAILBOAT, depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-408-sailboat@3x.png'),
+)
+
+AnchorToSailboatTruncated = (
+    UnsurveyedLine(length_ft=90, angle=340, alt_text='To Sailboat'),
 )
 
 ConroyToOxygenTanks = (

@@ -12,6 +12,7 @@ from base import (
     ImageHandler,
     )
 from data import (
+    AnchorToSailboat,
     AngleIronToMary,
     BarToPlatform,
     CarToLisasGift,
@@ -65,6 +66,8 @@ draw(ax, Landmark.BAR, BarToPlatform, **draw_kwargs)
 
 draw_circuit(ax, Landmark.SKELETON, SkeletonToMooringBlock2ViaPokerRun, SkeletonToMooringBlock2ViaMooringBlocks, **draw_kwargs)
 
+draw(ax, Landmark.ANCHOR, AnchorToSailboat, **draw_kwargs)
+
 draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 
 draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
@@ -104,8 +107,8 @@ x_max = x_avg + 5 * (y_max - y_min) / 6
 plt.axis('off')
 plt.title('BONNIE CASTLE SCUBA PARK', fontname ='Helvetica Neue', fontsize=FONTSIZE, fontweight='bold')
 plt.text(x=(x_min + x_max) / 2, y=(0.99 * y_max + 0.01 * y_min), s='A project of Bonnie Castle Resort, All About Scuba, Blue Foot Diving, and Northeast Underwater Explorers', fontname ='Helvetica', fontsize=0.318 * FONTSIZE, ha='center', va='top')
-plt.text(x=x_min, y=(- 0.05 * y_max + 1.05 * y_min), s='© 2020 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
-plt.text(x=x_max, y=(- 0.05 * y_max + 1.05 * y_min), s='v1.0 September 2020', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='right', va='top')
+plt.text(x=x_min, y=(- 0.05 * y_max + 1.05 * y_min), s='© 2021 NORTHEAST UNDERWATER EXPLORERS', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='left', va='top')
+plt.text(x=x_max, y=(- 0.05 * y_max + 1.05 * y_min), s='v1.1 September 2021', fontname ='Helvetica', fontsize=0.22 * FONTSIZE, ha='right', va='top')
 plt.xlim(x_min, x_max)
 plt.ylim(y_min, y_max)
 
@@ -131,12 +134,14 @@ GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 KIBBETTS = Line2D([0], [0], label='Kibbett\'s')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 MARY = Line2D([0], [0], label='Mary')
+SAILBOAT = Line2D([0], [0], label='Sailboat')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 kibbetts_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+sailboat_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-408-sailboat@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 ax.legend(
@@ -147,6 +152,7 @@ ax.legend(
         KIBBETTS,
         MARY,
         OXYGEN,
+        SAILBOAT,
         WHEEL,
     ],
     handler_map={
@@ -154,6 +160,7 @@ ax.legend(
         KIBBETTS: kibbetts_handler,
         MARY: mary_handler,
         OXYGEN: oxygen_handler,
+        SAILBOAT: sailboat_handler,
         WHEEL: wheel_handler,
         },
     labelspacing=0.6,
