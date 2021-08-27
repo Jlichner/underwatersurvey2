@@ -225,9 +225,9 @@ MooringBlock1ToMooringBlock5ViaMooringBlocks = (
 
 AnchorToSailboat = (
     SurveyedLine(length_ft=72, length_in=11, angle=340),
-    Stake(),
+    Stake(), # Tahiti tiger, depth 69'
     SurveyedLine(length_ft=51, length_in=3, angle=330),    
-    SaveLandmark(landmark=Landmark.SAILBOAT, depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-408-sailboat@3x.png'),
+    SaveLandmark(landmark=Landmark.SAILBOAT, depth=66, depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-408-sailboat@3x.png'),
 )
 
 AnchorToSailboatTruncated = (

@@ -295,5 +295,5 @@ ax.legend(
 
 print('{} total line surveyed'.format(total_surveyed()))
 
-# plt.savefig('maps/the_survey.png', transparent=True)
+plt.savefig('maps/the_survey.png', transparent=True)
 plt.savefig('maps/the_survey.pdf')
