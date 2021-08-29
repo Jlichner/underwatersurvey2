@@ -64,9 +64,11 @@ class Landmark(Enum):
     ISLANDER = 43
     HOOP = 44
     BENS_T = 45
-    JOSHS_WRECK = 35
-    TAHITI_TIGER = 36
-    SAILBOAT = 37
+    JOSHS_WRECK = 45
+    TAHITI_TIGER = 46
+    SAILBOAT = 47
+    ROCK_ISLAND_T2 = 48
+    CATHERINE_Y = 49
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -532,7 +534,7 @@ RockIslandBottleClockwise = (
     Stake(),
     SurveyedLine(length_ft=48, angle=250),
     TieOff(),
-    SaveLandmark(landmark=Landmark.ROCK_ISLAND_T)
+    SaveLandmark(landmark=Landmark.ROCK_ISLAND_T),
     )
 
 RockIslandTClockwise = (
@@ -548,13 +550,9 @@ RockIslandBottleCounterClockwise = (
     TieOff(),
     SurveyedLine(length_ft=53, length_in=5, angle=40),
     TieOff(),
+    SaveLandmark(Landmark.ROCK_ISLAND_T2),
     SurveyedLine(length_ft=17, angle=60),
     Stake(),
-    SurveyedLine(length_ft=84, angle=50),
-    SurveyedLine(length_ft=48, angle=50), # BROKEN
-    Jump(length_ft=48, angle=230),
-    Jump(length_ft=84, angle=230),
-    Jump(length_ft=17, angle=240),
     SurveyedLine(length_ft=33, angle=40),
     TieOff(),
     SurveyedLine(length_ft=15, length_in=7, angle=35),
@@ -574,6 +572,44 @@ RockIslandBottleCounterClockwise = (
     SurveyedLine(length_ft=7, length_in=7, angle=305),
     TieOff(),
     UnsurveyedLine(length_ft=100, angle=260),
+    )
+
+RockIslandT2ToCatherine = (
+    SurveyedLine(length_ft=90, angle=55),
+    SurveyedLine(length_ft=40, length_in=8, angle=55),
+    Stake(),
+    SurveyedLine(length_ft=90, angle=20),
+    SurveyedLine(length_ft=36, length_in=10, angle=20),    
+    TieOff(),
+    SurveyedLine(length_ft=40, length_in=9, angle=20),    
+    TieOff(),
+    SurveyedLine(length_ft=22, angle=20),    
+    TieOff(),
+    SurveyedLine(length_ft=89, length_in=1, angle=15),
+    Stake(),
+    SurveyedLine(length_ft=73, length_in=11, angle=0),
+    Stake(),
+    SurveyedLine(length_ft=45, length_in=8, angle=0),
+    Stake(),
+    SurveyedLine(length_ft=43, length_in=10, angle=45),
+    Stake(),
+    SurveyedLine(length_ft=68, length_in=8, angle=45),
+    Stake(),
+    SurveyedLine(length_ft=37, length_in=7, angle=45),    
+    TieOff(),
+    SurveyedLine(length_ft=29, length_in=8, angle=45),    
+    TieOff(),
+    SurveyedLine(length_ft=70, length_in=3, angle=55),    
+    TieOff(),
+    SurveyedLine(length_ft=35, length_in=3, angle=50),    
+    SurveyedLine(length_ft=15, length_in=11, angle=50),    
+    TieOff(),
+    SurveyedLine(length_ft=35, length_in=0, angle=60),    
+    SurveyedLine(length_ft=3, length_in=0, angle=150),    
+    SurveyedLine(length_ft=3, length_in=0, angle=120),    
+    SurveyedLine(length_ft=6, length_in=10, angle=145),    
+    SurveyedLine(length_ft=21, length_in=11, angle=145),
+    SaveLandmark(Landmark.CATHERINE_Y),
     )
 
 AngleIronToMary = (

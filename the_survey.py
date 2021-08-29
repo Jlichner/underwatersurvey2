@@ -39,6 +39,7 @@ from data import (
     RockIslandBottleClockwise,
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
+    RockIslandT2ToCatherine,
     SkeletonToMooringBlock2ViaMooringBlocks,
     SkeletonToMooringBlock2ViaPokerRun,
     UmbrellaToOxygenTanks,
@@ -103,10 +104,13 @@ draw(ax, Landmark.CAR, CarToLisasGift, **draw_kwargs)
 #
 ######
 
-
 draw(ax, Landmark.UMBRELLA, UmbrellaToRockIsland, **draw_kwargs)
 
 draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, **draw_kwargs)
+
+draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, **draw_kwargs)
+
+draw(ax, Landmark.ROCK_ISLAND_T2, RockIslandT2ToCatherine, **draw_kwargs)
 
 draw(ax, Landmark.ANGLE_IRON, AngleIronToMary, **draw_kwargs)
 
@@ -121,8 +125,6 @@ draw(ax, Landmark.BYPASS_END_JJJ, BypassEndToBobsArrow, **draw_kwargs)
 draw(ax, Landmark.BOBS_ARROW, BobsArrowToIslanderPlatform, **draw_kwargs)
 
 draw(ax, Landmark.BOBS_ARROW, BobsArrowToEmmaMunsen, **draw_kwargs)
-
-draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, **draw_kwargs)
 
 draw(ax, Landmark.CAFE, CafeToSpookyTreeToIslander, **draw_kwargs)
 
