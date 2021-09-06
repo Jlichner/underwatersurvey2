@@ -68,7 +68,8 @@ class Landmark(Enum):
     TAHITI_TIGER = 46
     SAILBOAT = 47
     ROCK_ISLAND_T2 = 48
-    CATHERINE_Y = 49
+    CATHERINE_COOKIE = 49
+    CATHERINE = 50
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -597,7 +598,7 @@ RockIslandT2ToCatherine = (
     Stake(),
     SurveyedLine(length_ft=37, length_in=7, angle=45),    
     TieOff(),
-    SurveyedLine(length_ft=29, length_in=8, angle=45),    
+    SurveyedLine(length_ft=29, length_in=8, angle=15),    
     TieOff(),
     SurveyedLine(length_ft=70, length_in=3, angle=55),    
     TieOff(),
@@ -609,8 +610,28 @@ RockIslandT2ToCatherine = (
     SurveyedLine(length_ft=3, length_in=0, angle=120),    
     SurveyedLine(length_ft=6, length_in=10, angle=145),    
     SurveyedLine(length_ft=21, length_in=11, angle=145),
-    SaveLandmark(Landmark.CATHERINE_Y),
+    SaveLandmark(Landmark.CATHERINE_COOKIE),
+    SurveyedLine(length_ft=24, length_in=5, angle=100),    
+    Stake(),
+    SurveyedLine(length_ft=20, length_in=7, angle=135),    
+    Stake(),
+    SurveyedLine(length_ft=50, length_in=0, angle=125),    
+    Stake(),
+    SurveyedLine(length_ft=40, length_in=11, angle=130),    
+    Stake(),
+    SurveyedLine(length_ft=27, length_in=0, angle=125),
+    SaveLandmark(landmark=Landmark.CATHERINE, icon_path='icons/catherine.png')
     )
+
+CatherineCookieToUnknown = (
+    SurveyedLine(length_ft=16, length_in=9, angle=190),
+    TieOff(),
+    SurveyedLine(length_ft=22, length_in=5, angle=185),
+    TieOff(),
+    SurveyedLine(length_ft=85, length_in=0, angle=215),
+    SurveyedLine(length_ft=21, length_in=3, angle=215),
+    UnsurveyedLine(length_ft=50, angle=290), # Rounds a corner
+)
 
 AngleIronToMary = (
     SurveyedLine(length_ft=78, angle=222),

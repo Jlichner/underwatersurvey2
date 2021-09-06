@@ -23,6 +23,7 @@ from data import (
     BypassEndToBobsArrow,
     CafeToSpookyTreeToIslander,
     CarToLisasGift,
+    CatherineCookieToUnknown,
     ConroyToOxygenTanks,
     FourWayToBypassEndSixtyFoot,
     FourWayToNatesTieoff,
@@ -62,8 +63,8 @@ LEGEND_IMAGE_STRETCH=(-5, 7)
 LEGEND_IMAGE_OFFSET=(-2, 3)
 
 draw_kwargs = {
-    'depth_distance': 1.3 * FONTSIZE,
-    'depth_fontsize': 0.29 * FONTSIZE,
+    'depth_distance': 1.75 * FONTSIZE,
+    'depth_fontsize': 0.2 * FONTSIZE,
     'draw_tieoffs': True,
     'include_depth': True,
     'include_mooringblocks': False,
@@ -111,6 +112,8 @@ draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleCounterClockwise, **draw_k
 draw(ax, Landmark.ROCK_ISLAND_BOTTLE, RockIslandBottleClockwise, **draw_kwargs)
 
 draw(ax, Landmark.ROCK_ISLAND_T2, RockIslandT2ToCatherine, **draw_kwargs)
+
+draw(ax, Landmark.CATHERINE_COOKIE, CatherineCookieToUnknown, **draw_kwargs)
 
 draw(ax, Landmark.ANGLE_IRON, AngleIronToMary, **draw_kwargs)
 
@@ -206,6 +209,7 @@ MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='re
 ANCHOR = Line2D([0], [0], label='Anchor')
 CAR = Line2D([0], [0], label='Car')
 CAFE = Line2D([0], [0], label='Underwater Cafe')
+CATHERINE = Line2D([0], [0], label='Catherine')
 CONROY = Line2D([0], [0], label='Conroy')
 CRIBBING = Line2D([0], [0], label='Cribbing')
 EMMA_MUNSEN_TUGBOAT = Line2D([0], [0], label='Emma Munsen tugboat')
@@ -225,6 +229,7 @@ WHEEL = Line2D([0], [0], label='Wagon wheels')
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 cafe_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-273-coffee-mug@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+catherine_handler = ImageHandler(image_path='icons/catherine.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 conroy_handler = ImageHandler(image_path='icons/conroy.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 cribbing_handler = ImageHandler(image_path='icons/cribbing.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 emma_munsen_tugboat_handler = ImageHandler(image_path='icons/tugboat.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -269,6 +274,7 @@ ax.legend(
         WHEEL,
         GIFT,
         SHIPWRECK,
+        CATHERINE,
 
         # SKELETON,
         ],
@@ -276,6 +282,7 @@ ax.legend(
         ANCHOR: anchor_handler,
         CAR: car_handler,
         CAFE: cafe_handler,
+        CATHERINE: catherine_handler,
         CONROY: conroy_handler,
         CRIBBING: cribbing_handler,
         EMMA_MUNSEN_TUGBOAT: emma_munsen_tugboat_handler,

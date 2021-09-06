@@ -38,7 +38,7 @@ fig.set_size_inches(18, 12)
 ax.set_aspect(aspect='equal')
 
 FONTSIZE=30
-LANDMARK_ZOOM=80
+LANDMARK_ZOOM=60
 LEGEND_IMAGE_STRETCH=(-17, 11)
 LEGEND_IMAGE_OFFSET=(-8, 5)
 
@@ -142,6 +142,7 @@ GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 KIBBETTS = Line2D([0], [0], label='Kibbett\'s')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
 MARY = Line2D([0], [0], label='Mary')
+SAILBOAT = Line2D([0], [0], label='Sailboat')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -152,8 +153,9 @@ umbrella_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/
 
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 kibbetts_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
-mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+mary_handler = ImageHandler(image_path='icons/mary.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+sailboat_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-408-sailboat@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 wheel_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-677-car-wheel@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 
 ax.legend(
@@ -170,8 +172,9 @@ ax.legend(
 
         GIFT,
         KIBBETTS,
-        MARY,
         OXYGEN,
+        MARY,
+        SAILBOAT,
         WHEEL,
     ],
     handler_map={
@@ -183,8 +186,9 @@ ax.legend(
 
         GIFT: gift_handler,
         KIBBETTS: kibbetts_handler,
-        MARY: mary_handler,
         OXYGEN: oxygen_handler,
+        MARY: mary_handler,
+        SAILBOAT: sailboat_handler,
         WHEEL: wheel_handler,
         },
     labelspacing=0.6,
