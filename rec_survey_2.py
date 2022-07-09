@@ -25,6 +25,8 @@ from data import (
     SkeletonToMooringBlock2ViaMooringBlocks,
     SkeletonToMooringBlock2ViaPokerRun,
     UmbrellaToOxygenTanks,
+    SailboatToUmbrella,
+    SailboatToBasketballHoop,
 )
 
 import matplotlib
@@ -73,6 +75,10 @@ draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, **draw_kwargs)
+
+draw_between_landmarks(ax, Landmark.SAILBOAT, Landmark.SAILBOATTOUMBRELLASTAKE, SailboatToUmbrella, **draw_kwargs)
+
+draw_between_landmarks(ax, Landmark.SAILBOAT, Landmark.UMBRELLA, SailboatToBasketballHoop, **draw_kwargs)
 
 draw_between_landmarks(ax, Landmark.CONROY, Landmark.OXYGEN_TANKS, ConroyToOxygenTanks, **draw_kwargs)
 
@@ -130,6 +136,7 @@ draw_compass_rose(ax, corner_coordinates=((x_min, y_min), (x_max, y_max)), zoom=
 #
 #####
 
+BASKETBALL = Line2D([0], [0], label='Basketball hoop')
 GIFT = Line2D([0], [0], label='Lisa\'s Gift')
 KIBBETTS = Line2D([0], [0], label='Kibbett\'s')
 OXYGEN = Line2D([0], [0], label='Oxygen bottles')
@@ -137,6 +144,7 @@ MARY = Line2D([0], [0], label='Mary')
 SAILBOAT = Line2D([0], [0], label='Sailboat')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
+basketball_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-384-basketball@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 gift_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-70-gift@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 kibbetts_handler = ImageHandler(image_path='icons/shipwreck.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 oxygen_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-256-oxygen-bottles@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -148,6 +156,7 @@ ax.legend(
     framealpha=0.0,
     fontsize=0.30 * FONTSIZE,
     handles=[
+        BASKETBALL,
         GIFT,
         KIBBETTS,
         OXYGEN,

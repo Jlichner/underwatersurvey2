@@ -1,4 +1,4 @@
-from data import Arrow, MarinaLine, Landmark, SurveyedLine, UnsurveyedLine, Jump, RemovedLine, RemovedStake, SaveLandmark
+from data import Arrow, SavedStake, MarinaLine, Landmark, SurveyedLine, UnsurveyedLine, Jump, RemovedLine, RemovedStake, SaveLandmark
 
 from math import atan, cos, pi, sin, sqrt
 
@@ -193,7 +193,9 @@ def draw(ax,
             angle = data.angle + rotation - __MAGNETIC_DECLINATION
             (x1, y1) = (x0 + length * cos(__radians(angle)), y0 + length * sin(__radians(angle)))
             curser = (x1, y1)
-        elif (clazz == 'Stake' or clazz == 'RemovedStake'):
+        elif (clazz in ('SavedStake', 'Stake','RemovedStake')):
+            if clazz == 'SavedStake' and data.landmark:
+                __LANDMARK_COORDINATES[data.landmark] = curser
             if draw_tieoffs:
                 (x, y) = curser
                 plt.plot(x, y, color=data.color, marker=data.marker, markersize=tieoff_size, zorder=data.zorder)

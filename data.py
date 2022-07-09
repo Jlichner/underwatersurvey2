@@ -70,6 +70,8 @@ class Landmark(Enum):
     ROCK_ISLAND_T2 = 48
     CATHERINE_COOKIE = 49
     CATHERINE = 50
+    SAILBOATTOUMBRELLASTAKE = 51
+    BASKETBALL_HOOP = 52
 
 @dataclass(frozen=True)
 class AbstractLine:
@@ -124,6 +126,10 @@ class Stake:
     marker: str = 's'
     zorder: int = 2
     text: str = None
+
+@dataclass(frozen=True)
+class SavedStake(Stake, SaveLandmark):
+    pass
 
 @dataclass(frozen=True)
 class RemovedStake(Stake):
@@ -235,6 +241,23 @@ AnchorToSailboat = (
 
 AnchorToSailboatTruncated = (
     UnsurveyedLine(length_ft=90, angle=340, alt_text='To Sailboat'),
+)
+
+SailboatToUmbrella = (
+    SurveyedLine(length_ft=42, length_in=9, angle=70),
+    Stake(),
+    SurveyedLine(length_ft=37, length_in=0, angle=75),
+    Stake(),
+    SurveyedLine(length_ft=44, length_in=9, angle=70),
+    Stake(), # UmbrellaStake
+)
+
+# We then ran the tape measure from port stern of the sailboat to the umbrella #Which is 172’ 6”
+# At the 84 foot mark we set the basket ball hoop
+SailboatToBasketballHoop = (
+    Jump(length_ft=84, angle=111),
+    SaveLandmark(landmark=Landmark.BASKETBALL_HOOP,depth_angle=270, icon_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-384-basketball@3x.png'),
+    Jump(length_ft=88, length_in=6, angle=111),
 )
 
 ConroyToOxygenTanks = (
@@ -491,7 +514,7 @@ UmbrellaToOxygenTanks = (
     SurveyedLine(length_ft=49, length_in=6, angle=335),
     Stake(),
     SurveyedLine(length_ft=49, length_in=4, angle=330),
-    Stake(),
+    SavedStake(landmark=Landmark.SAILBOATTOUMBRELLASTAKE),
     SurveyedLine(length_ft=49, angle=335),
     Stake(),
     SurveyedLine(length_ft=19, length_in=10, angle=320),

@@ -41,6 +41,8 @@ from data import (
     RockIslandBottleCounterClockwise,
     RockIslandTClockwise,
     RockIslandT2ToCatherine,
+    SailboatToBasketballHoop,
+    SailboatToUmbrella,
     SkeletonToMooringBlock2ViaMooringBlocks,
     SkeletonToMooringBlock2ViaPokerRun,
     UmbrellaToOxygenTanks,
@@ -94,6 +96,10 @@ draw(ax, Landmark.MOORING_BLOCK_2, MooringBlock2ToMooringBlock1, **draw_kwargs)
 draw_circuit(ax, Landmark.MOORING_BLOCK_1, MooringBlock1ToMooringBlock5ViaPokerRun, MooringBlock1ToMooringBlock5ViaMooringBlocks, **draw_kwargs)
 
 draw(ax, Landmark.UMBRELLA, UmbrellaToOxygenTanks, **draw_kwargs)
+
+draw_between_landmarks(ax, Landmark.SAILBOAT, Landmark.SAILBOATTOUMBRELLASTAKE, SailboatToUmbrella, **draw_kwargs)
+
+draw_between_landmarks(ax, Landmark.SAILBOAT, Landmark.UMBRELLA, SailboatToBasketballHoop, **draw_kwargs)
 
 draw_between_landmarks(ax, Landmark.CONROY, Landmark.OXYGEN_TANKS, ConroyToOxygenTanks, **draw_kwargs)
 
@@ -207,6 +213,7 @@ REMOVED_LINE = Line2D([0], [0], label='Removed line', color='lightgrey', linesty
 MARINA_LINE = Line2D([0], [0], label='CAUTION: Boat traffic overhead', color='red', linestyle='solid')
 
 ANCHOR = Line2D([0], [0], label='Anchor')
+BASKETBALL = Line2D([0], [0], label='Basketball hoop')
 CAR = Line2D([0], [0], label='Car')
 CAFE = Line2D([0], [0], label='Underwater Cafe')
 CATHERINE = Line2D([0], [0], label='Catherine')
@@ -227,6 +234,7 @@ UMBRELLA = Line2D([0], [0], label='Umbrella')
 WHEEL = Line2D([0], [0], label='Wagon wheels')
 
 anchor_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-258-anchor@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
+basketball_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-384-basketball@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 car_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-6-car@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 cafe_handler = ImageHandler(image_path='glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-273-coffee-mug@3x.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
 catherine_handler = ImageHandler(image_path='icons/catherine.png', image_stretch=LEGEND_IMAGE_STRETCH, image_offset=LEGEND_IMAGE_OFFSET)
@@ -269,17 +277,20 @@ ax.legend(
         OXYGEN,
         CONROY,
         ANCHOR,
+        BASKETBALL,
         UMBRELLA,
         CAR,
         WHEEL,
         GIFT,
         SHIPWRECK,
         CATHERINE,
+        BASKETBALL,
 
         # SKELETON,
         ],
     handler_map={
         ANCHOR: anchor_handler,
+        BASKETBALL: basketball_handler,
         CAR: car_handler,
         CAFE: cafe_handler,
         CATHERINE: catherine_handler,
