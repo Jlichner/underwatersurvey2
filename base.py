@@ -101,7 +101,7 @@ def draw_scale(corner_coordinates, fontsize, feet, meters):
             plt.text(s='       {} feet'.format(feet[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
         corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
-        plt.gca().add_line(block)
+        plt.gca().add_patch(block)
         if color == 'white':
             color = 'black'
         elif color == 'black':
@@ -119,7 +119,7 @@ def draw_scale(corner_coordinates, fontsize, feet, meters):
             plt.text(s='            {} meters'.format(meters[i + 1]), x=x2, y=y + text_distance, ha='center', fontsize=fontsize, va='bottom')
         corners = ((x1, y), (x2, y), (x2, y + depth), (x1, y + depth))
         block = Polygon(xy=corners, closed=True, facecolor=color, edgecolor='black')
-        plt.gca().add_line(block)
+        plt.gca().add_patch(block)
         if color == 'white':
             color = 'black'
         elif color == 'black':
@@ -307,8 +307,8 @@ def draw_platforms(fontsize):
     (x, y) = (x + length2 * cos(__radians(angle - 270)),  y + length2 * sin(__radians(angle - 270)))
     platform2 = Polygon(xy=corners2, closed=True, color='black')
 
-    plt.gca().add_line(platform1)
-    plt.gca().add_line(platform2)
+    plt.gca().add_patch(platform1)
+    plt.gca().add_patch(platform2)
 
     if fontsize:
         (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
@@ -331,7 +331,7 @@ def draw_islander_platforms(fontsize):
     corners += [(x, y)]
     platform = Polygon(xy=corners, closed=True, color='black')
 
-    plt.gca().add_line(platform)
+    plt.gca().add_patch(platform)
 
     if fontsize:
         (x_mid, y_mid) = (x + length2 * cos(__radians(angle)) / 2, y + length2 * sin(__radians(angle)) / 2)
@@ -352,7 +352,7 @@ def draw_boat_ramp():
     boat_ramp = Polygon(xy=corners, closed=True, color='#e5e3df', zorder=0)
 # markerfacecolor=data.color, markeredgecolor=data.color, markeredgewidth=0.0
 
-    plt.gca().add_line(boat_ramp)
+    plt.gca().add_patch(boat_ramp)
 
 def draw_skeleton(ax, x, y, depth_fontsize=None, depth=None, depth_angle=None, depth_distance=None, landmark_zoom=25):
     im = OffsetImage(plt.imread('glyphicons-pro/glyphicons-basic-2-3/png/glyphicons-basic-500-skull@3x.png'), zoom=landmark_zoom/ax.figure.dpi)

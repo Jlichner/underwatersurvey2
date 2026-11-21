@@ -64,7 +64,7 @@ class Landmark(Enum):
     ISLANDER = 43
     HOOP = 44
     BENS_T = 45
-    JOSHS_WRECK = 45
+    JOSHS_WRECK = 53  # was 45, the same as BENS_T, which drew BensTNorthwest from Josh's wreck
     TAHITI_TIGER = 46
     SAILBOAT = 47
     ROCK_ISLAND_T2 = 48
