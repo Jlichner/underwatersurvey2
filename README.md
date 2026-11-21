@@ -76,4 +76,8 @@ ExampleData = (
 
 A python function loops through each array of data and calls basic matplotlib functions to create the map and legend using some basic convenience functions in `base.py`.
 
-To generate a new version of the map, make sure you have set up the packages installed in `requirements.txt` and simply run `python survey.py`.
+To generate a new version of the map, make sure you have set up the packages installed in `requirements.txt` and simply run `python the_survey.py`. It saves the map to `maps/the_survey.png` and `maps/the_survey.pdf`.
+
+## Web version
+
+The survey map is also drawn live on [limitless-diving.com](https://limitless-diving.com) under Site maps, from the same data. The `tools/` folder of the limitless-diving-forms repository has the scripts that export `data.py` and the draw order in `the_survey.py` for it.
